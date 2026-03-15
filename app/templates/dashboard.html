@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<div class="container py-5">
+  <h2 class="text-center mb-4">FarmIQ Intelligence Dashboard</h2>
+
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Crop Dataset</h5>
+          {% if crop_stats %}
+            <p class="card-text">Total records: {{ crop_stats.total_rows }}</p>
+            <p class="card-text">Supported crops: {{ crop_stats.unique_count }}</p>
+          {% else %}
+            <p class="card-text">Crop dataset is not available.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Agents</h5>
+          <p class="card-text">6 feature agents and 1 orchestrator coordinate predictions.</p>
+          <ul class="mb-0">
+            <li>Crop recommendation</li>
+            <li>Fertilizer suggestion</li>
+            <li>Plant disease detection</li>
+            <li>Weather risk</li>
+            <li>Yield estimation</li>
+            <li>Market insight</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">How To Use</h5>
+          <p class="card-text">Start on Home, then use Crop, Fertilizer, and Disease pages.</p>
+          <p class="card-text">You can also ask quick questions using the chat assistant.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if yield_stats %}
+  <div class="mt-5">
+    <h3 class="mb-3">Average Yield By Crop</h3>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th>Crop</th>
+            <th>Average Yield ({{ yield_stats[0].unit }})</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in yield_stats %}
+          <tr>
+            <td>{{ row.crop }}</td>
+            <td>{{ '%.2f'|format(row.avg_yield) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}
+

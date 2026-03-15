@@ -206,6 +206,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('disease_prediction') }}">Disease</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+        </li>
       </ul>
     </div>
   </div>
@@ -262,6 +265,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           <li><a href="{{ url_for('crop_recommend') }}" class="text-light">Crop Recommendation</a></li>
           <li><a href="{{ url_for('fertilizer_recommendation') }}" class="text-light">Fertilizer Recommendation</a></li>
           <li><a href="{{ url_for('disease_prediction') }}" class="text-light">Disease Prediction</a></li>
+          <li><a href="{{ url_for('dashboard') }}" class="text-light">Dashboard</a></li>
         </ul>
       </div>
       <div class="col-md-4">
@@ -286,7 +290,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
   <div id="chat-messages"></div>
   <div id="chat-input">
     <input type="text" id="userInput" placeholder="Ask a question..." />
-    <button onclick="sendMessage()">Send</button>
+    <button type="button" onclick="sendMessage()">Send</button>
+    <button type="button" onclick="startVoice()">🎤</button>
   </div>
 </div>
 
@@ -334,31 +339,64 @@ function toggleChat() {
   box.style.display = (box.style.display === 'flex') ? 'none' : 'flex';
 }
 
-function sendMessage() {
+function appendMessage(sender, text) {
+  const chat = document.getElementById('chat-messages');
+  const safe = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  chat.innerHTML += `<div><b>${sender}:</b> ${safe}</div>`;
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function sendMessage() {
   const input = document.getElementById('userInput');
   const msg = input.value.trim();
   if (!msg) return;
-
-  const chat = document.getElementById('chat-messages');
-  chat.innerHTML += `<div><b>You:</b> ${msg}</div>`;
-
-  // Basic hardcoded reply logic (can be upgraded)
-  let reply = "Sorry, I didn't get that.";
-
-  if (msg.toLowerCase().includes('crop')) {
-    reply = "Based on your soil, I suggest Rice or Maize.";
-  } else if (msg.toLowerCase().includes('fertilizer')) {
-    reply = "Use Urea or DAP depending on your soil test.";
-  } else if (msg.toLowerCase().includes('disease')) {
-    reply = "Upload a leaf image in Disease section for analysis.";
-  }
-
-  setTimeout(() => {
-    chat.innerHTML += `<div><b>FarmAI:</b> ${reply}</div>`;
-    chat.scrollTop = chat.scrollHeight;
-  }, 500);
-
+  appendMessage("You", msg);
   input.value = '';
+  try {
+    const response = await fetch("{{ url_for('api_assistant') }}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: msg })
+    });
+    const data = await response.json();
+    appendMessage("FarmAI", data.reply || "I could not generate a reply.");
+    speakText(data.reply);
+  } catch (e) {
+    appendMessage("FarmAI", "There was a problem reaching the assistant.");
+  }
+}
+
+let recognition = null;
+
+if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SpeechRecognition();
+  recognition.lang = "en-IN";
+  recognition.onresult = function(event) {
+    const transcript = event.results[0][0].transcript;
+    const input = document.getElementById('userInput');
+    input.value = transcript;
+    sendMessage();
+  };
+}
+
+function startVoice() {
+  if (recognition) {
+    recognition.start();
+  } else {
+    alert("Voice recognition is not supported in this browser.");
+  }
+}
+
+function speakText(text) {
+  if (!window.speechSynthesis) {
+    return;
+  }
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "en-IN";
+  window.speechSynthesis.speak(utterance);
 }
 </script>
 

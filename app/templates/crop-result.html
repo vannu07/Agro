@@ -5,9 +5,24 @@
   <div class="result-card">
     <i class="fa fa-leaf recommendation-icon"></i>
     <h1>You should grow <i>{{ prediction }}</i> in your farm</h1>
+    {% if orchestration and orchestration.agents %}
+    <div class="mt-4 text-left">
+      {% set weather = orchestration.agents.get('weather') %}
+      {% set yield_agent = orchestration.agents.get('yield') %}
+      {% set market = orchestration.agents.get('market') %}
+      {% if weather and weather.status == 'ok' %}
+      <p>Weather in {{ weather.data.city }}: {{ weather.data.temperature }}°C, {{ weather.data.humidity }}% humidity (risk: {{ weather.data.risk_level }}).</p>
+      {% endif %}
+      {% if yield_agent and yield_agent.status == 'ok' %}
+      <p>Average historical yield for {{ yield_agent.data.crop }}: {{ '%.2f'|format(yield_agent.data.avg_yield) }} {{ yield_agent.data.unit }}.</p>
+      {% endif %}
+      {% if market and market.status == 'ok' %}
+      <p>Approximate market price: ₹{{ '%.0f'|format(market.data.price_per_quintal) }} per quintal.</p>
+      {% endif %}
+    </div>
+    {% endif %}
     <a href="{{ url_for('crop_recommend') }}" class="btn btn-light back-btn">Predict Again</a>
   </div>
 </div>
 
 {% endblock %}
-
