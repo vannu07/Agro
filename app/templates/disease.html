@@ -1,64 +1,95 @@
 {% extends 'layout.html' %} {% block body %}
 
+<!-- =========================================================================
+     DISEASE PATHOLOGIST — PREMIUM AGENTIC INTERFACE
+     ========================================================================= -->
+<section class="hero-cinematic vh-100 position-relative overflow-hidden d-flex align-items-center">
+    <!-- Cinematic Background -->
+    <div class="hero-cinematic-bg" style="background-image: url('https://images.unsplash.com/photo-1599403332034-297eb04f58c4?auto=format&fit=crop&q=80&w=2000'); filter: saturate(0.8) brightness(0.8);"></div>
+    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(15, 23, 42, 0.7) 0%, rgba(255,255,255,0.95) 100%);"></div>
+    <div class="hero-cinematic-grid"></div>
 
-<style>
-  html body {
-    background-color: rgb(206, 206, 228);
-  }
-</style>
-<br /><br />
-  <h2 class="text-center mb-4" style="color: black;">
-    <b>Find out which disease has affected your plant</b>
-  </h2>
-  <br />
-  <br>
+    <div class="container position-relative z-index-100" style="padding-top: 100px;">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 stagger-load">
+                
+                <!-- Agent Header -->
+                <div class="text-center mb-5">
+                    <div class="nav-item mb-4 d-inline-block">
+                        <div class="glass-panel d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; border-radius: 20px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bug"><path d="m8 2 1.88 1.88"/><path d="M14.12 3.88 16 2"/><path d="M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"/><path d="M12 20c-4.97 0-9-4.03-9-9 0-4.97 4.03-9 9-9s9 4.03 9 9c0 4.97-4.03 9-9 9Z"/><path d="M12 20v-9"/><path d="M6.53 9C4.6 8.8 3 7.1 3 5"/><path d="M6.53 13C4.6 13.2 3 14.9 3 17"/><path d="M17.47 9c1.93-.2 3.53-1.9 3.53-4"/><path d="M17.47 13c1.93.2 3.53 1.9 3.53 4"/></svg>
+                        </div>
+                    </div>
+                    <h1 class="fluid-4xl font-weight-bold text-white mb-2" style="letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                        Plant <span class="text-gradient-danger">Pathologist</span>
+                    </h1>
+                    <p class="text-white-50 fluid-base mx-auto" style="max-width: 500px;">Deep vision agents for instant diagnosis of leaf diseases and pathogens.</p>
+                </div>
 
-<div style="
-    width: 350px;
-    height: 50rem;
-    margin: 0px auto;
-    color: black;
-    border-radius: 25px;
-    padding: 10px 10px;
-    font-weight: bold;
-  ">
+                <!-- Elite Diagnostic Panel -->
+                <div class="glass-panel p-5" style="border-radius: 32px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <form action="{{ url_for('disease_prediction') }}" method="POST" enctype="multipart/form-data" class="elite-form">
+                        
+                        <div class="form-elite-group mb-5">
+                            <label for="file" class="upload-zone-elite d-block" id="drop-area">
+                                <div id="preview-container" class="mb-4 d-none">
+                                    <img id="image-preview" src="#" class="img-fluid rounded-4 shadow-2xl" style="max-height: 280px; width: 100%; object-fit: cover;">
+                                </div>
+                                <div id="upload-placeholder">
+                                    <div class="upload-icon-wrap mx-auto mb-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white opacity-50"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="m9 15 3-3 3 3"/></svg>
+                                    </div>
+                                    <h4 class="text-white font-weight-bold mb-2">Initialize Leaf Scan</h4>
+                                    <p class="text-white-50 small mb-0">Drag diagnostic telemetry or click to select</p>
+                                </div>
+                                <input type="file" name="file" id="file" class="d-none" onchange="previewImage(event)" required>
+                            </label>
+                        </div>
 
-  
+                        <div class="glass-panel p-3 mb-5" style="background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234,179,8,0.2); border-radius: 16px;">
+                            <div class="d-flex align-items-center text-warning small font-weight-bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                                TIP: Ensure natural lighting for 99.2% diagnostic accuracy.
+                            </div>
+                        </div>
 
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-elite btn-elite-glow w-100 py-3" style="font-size: 1.1rem; border-radius: 16px; background: linear-gradient(135deg, #ef4444, #b91c1c); border: none;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+                                Execute AI Diagnosis
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-   <div class="form-card" data-aos="fade-up">
-    <form method="POST" enctype="multipart/form-data">
-      <div class="form-group text-center">
-        <label for="file" class="form-label"><b>Please Upload a Leaf Image</b></label>
-        <input
-          type="file"
-          name="file"
-          class="form-control-file"
-          id="inputfile"
-          onchange="preview_image(event)"
-          required
-        />
-      </div>
-
-      <div class="text-center my-4">
-        <img id="output-image" class="img-fluid rounded shadow-sm" style="max-height: 250px;" />
-      </div>
-
-      <div class="text-center">
-        <button type="submit" class="btn btn-success btn-submit">Predict</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<script type="text/javascript">
-  function preview_image(event) {
+<script>
+function previewImage(event) {
     const reader = new FileReader();
-    reader.onload = function () {
-      document.getElementById('output-image').src = reader.result;
+    reader.onload = function() {
+        const output = document.getElementById('image-preview');
+        output.src = reader.result;
+        document.getElementById('preview-container').classList.remove('d-none');
+        document.getElementById('upload-placeholder').classList.add('d-none');
+        
+        // GSAP Preview Entrance
+        gsap.from("#preview-container", { scale: 0.9, opacity: 0, duration: 0.5, ease: "back.out(1.7)" });
     }
     reader.readAsDataURL(event.target.files[0]);
-  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    gsap.from(".stagger-load > *", {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power4.out"
+    });
+});
 </script>
 
 {% endblock %}

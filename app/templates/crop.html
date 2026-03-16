@@ -1,160 +1,114 @@
 {% extends 'layout.html' %} {% block body %}
 
-<style>
+<!-- =========================================================================
+     CROP ADVISOR — PREMIUM AGENTIC INTERFACE
+     ========================================================================= -->
+<section class="hero-cinematic vh-100 position-relative overflow-hidden d-flex align-items-center">
+    <!-- AI-Themed Cinematic Background -->
+    <div class="hero-cinematic-bg" style="background-image: url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=2070&auto=format&fit=crop'); filter: saturate(0.8) brightness(0.9);"></div>
+    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 50%, rgba(255,255,255,0.9) 100%);"></div>
+    <div class="hero-cinematic-grid"></div>
 
-    html body {
-      background-color: rgb(206, 206, 228);
+    <div class="container position-relative z-index-100" style="padding-top: 100px;">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 stagger-load">
+                
+                <!-- Agent Header -->
+                <div class="text-center mb-5">
+                    <div class="nav-item mb-4 d-inline-block">
+                        <div class="glass-panel d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; border-radius: 20px; background: rgba(52, 211, 153, 0.1); border: 1px solid rgba(52, 211, 153, 0.2);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sprout"><path d="M7 20h10"/><path d="M10 20c5.5 0 5.5-10 10-10"/><path d="M10 20c0-5.5 10-5.5 10-10"/><path d="M12 20a10 10 0 0 0 10-10c0-5.5-4.5-10-10-10a10 10 0 0 0-10 10c0 5.5 4.5 10 10 10Z"/></svg>
+                        </div>
+                    </div>
+                    <h1 class="fluid-4xl font-weight-bold text-white mb-2" style="letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                        Crop <span class="text-gradient-primary">Advisor</span>
+                    </h1>
+                    <p class="text-white-50 fluid-base mx-auto" style="max-width: 500px;">AI-driven soil telemetry analysis for optimal yield strategy.</p>
+                </div>
 
-      
-  }
+                <!-- Elite Form Panel -->
+                <div class="glass-panel p-5" style="border-radius: 32px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <form method="POST" action="{{ url_for('crop_prediction') }}" class="elite-form">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-elite-group">
+                                    <input type="number" id="nitrogen" name="nitrogen" class="glass-input text-white" placeholder=" " required>
+                                    <label for="nitrogen" class="glass-label">Nitrogen (N)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-elite-group">
+                                    <input type="number" id="phosphorous" name="phosphorous" class="glass-input text-white" placeholder=" " required>
+                                    <label for="phosphorous" class="glass-label">Phosphorous (P)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-elite-group">
+                                    <input type="number" id="pottasium" name="pottasium" class="glass-input text-white" placeholder=" " required>
+                                    <label for="pottasium" class="glass-label">Potassium (K)</label>
+                                </div>
+                            </div>
+                        </div>
 
-  
-</style>
-<!--Form Section-->
-<br /><br />
-  <h2 class="text-center mb-4" style="color: black;">
-    <b>Find out the most suitable crop to grow in your farm</b>
-  </h2>
-<br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-elite-group">
+                                    <input type="number" step="0.01" id="ph" name="ph" class="glass-input text-white" placeholder=" " required>
+                                    <label for="ph" class="glass-label">Soil pH Level</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-elite-group">
+                                    <input type="number" step="0.01" id="rainfall" name="rainfall" class="glass-input text-white" placeholder=" " required>
+                                    <label for="rainfall" class="glass-label">Rainfall (mm)</label>
+                                </div>
+                            </div>
+                        </div>
 
-<div
-  style="
-    width: 350px;
-    height: 50rem;
-    margin: 0px auto;
-    color: black;
-    border-radius: 25px;
-    padding: 10px 10px;
-  "
->
-<div class="form-card" data-aos="fade-up">
-  <form method="POST" action="{{ url_for('crop_prediction') }}">
-    <div class="form-group">
-  <label for="Nitrogen" class="form-label">
-    <i class="fa fa-flask text-success"></i> Nitrogen
-    <span data-toggle="tooltip" title="Enter the nitrogen value from your soil report">🛈</span>
-  </label>
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <span class="input-group-text"><i class="fa fa-leaf"></i></span>
-    </div>
-    <input
-      type="number"
-      class="form-control"
-      id="Nitrogen"
-      name="nitrogen"
-      placeholder="e.g., 50"
-      required
-    />
-  </div>
-</div>
-    <div class="form-group">
-  <label for="Phosphorous" class="form-label">
-    <i class="fa fa-flask text-success"></i> Phosphorous
-    <span data-toggle="tooltip" title="Enter the Phosphorous value from your soil report">🛈</span>
-  </label>
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <span class="input-group-text"><i class="fa fa-leaf"></i></span>
-    </div>
-      <input
-        type="number"
-        class="form-control"
-        id="Phosphorous"
-        name="phosphorous"
-        placeholder="Enter the value (example:50)"
-        style="font-weight: bold"
-        required
-      />
-    </div>
-    </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="form-elite-group">
+                                    <select onchange="print_city('state', this.selectedIndex);" id="sts" name="stt" class="glass-input text-white" required>
+                                        <option value="" disabled selected></option>
+                                    </select>
+                                    <label for="sts" class="glass-label">State</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-elite-group">
+                                    <select id="state" name="city" class="glass-input text-white" required>
+                                        <option value="" disabled selected></option>
+                                    </select>
+                                    <label for="state" class="glass-label">City</label>
+                                </div>
+                            </div>
+                        </div>
+                        <script language="javascript">print_state("sts");</script>
 
-    <div class="form-group">
-  <label for="Pottasium" class="form-label">
-    <i class="fa fa-flask text-success"></i> Pottasium
-    <span data-toggle="tooltip" title="Enter the pottasium value from your soil report">🛈</span>
-  </label>
-  <div class="input-group">
-    <div class="input-group-prepend">
-      <span class="input-group-text"><i class="fa fa-leaf"></i></span>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-elite btn-elite-glow w-100 py-3" style="font-size: 1.1rem; border-radius: 16px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                                Orchestrate Strategy
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-      <input
-        type="number"
-        class="form-control"
-        id="Pottasium"
-        name="pottasium"
-        placeholder="Enter the value (example:50)"
-        style="font-weight: bold"
-        required
-      />
-    </div>
-    </div>
-    <div class="form-group">
-      <label for="ph" style="font-size: 17px"><b>ph level</b></label>
-      <input
-        type="number"
-        step="0.01"
-        class="form-control"
-        id="ph"
-        name="ph"
-        placeholder="Enter the value"
-        style="font-weight: bold"
-        required
-      />
-    </div>
-    <div class="form-group">
-      <label for="Rainfall" style="font-size: 17px"><b>Rainfall (in mm)</b></label>
-      <input
-        type="number"
-        step="0.01"
-        class="form-control"
-        id="Rainfall"
-        name="rainfall"
-        placeholder="Enter the value"
-        style="font-weight: bold"
-        required
-      />
-    </div>
-    <div class="form-group">
-      <label for="State" style="font-size: 17px "><b>State</b></label>
-      <select
-        onchange="print_city('state', this.selectedIndex);"
-        id="sts"
-        name="stt"
-        class="form-control"
-        style="font-weight: bold; color: black;"
-        
-        required
-      ></select>
-      <br />
-      <label for="City" style="font-size: 17px"><b>City</b></label>
-      <select
-        id="state"
-        class="form-control"
-        name="city"
-        style="font-weight: bold; color: black;"
-        required
-      ></select>
-      <script language="javascript">
-        print_state("sts");
-      </script>
-    </div>
+</section>
 
-    <div class="d-flex justify-content-center">
-      <button
-        type="submit"
-        class="btn btn-info"
-        style="color: black; font-weight: bold; width: 130px; height:50px; border-radius:12px; font-size: 21px;"
-      >
-        Predict
-      </button>
-    </div>
-  </form>
-</div>
-</div>
-
-
-
-<!-- Form section -->
+<!-- Elite Stagger Entrance -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    gsap.from(".stagger-load > *", {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power4.out"
+    });
+});
+</script>
 
 {% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'layout.html' %} {% block body %}
+
+<!-- =========================================================================
+     SUSTAINABILITY ADVISOR — PREMIUM AGENTIC INTERFACE
+     ========================================================================= -->
+<section class="hero-cinematic vh-100 position-relative overflow-hidden d-flex align-items-center">
+    <!-- Cinematic Background -->
+    <div class="hero-cinematic-bg" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=2000'); filter: saturate(0.8) brightness(0.8);"></div>
+    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 50%, rgba(255,255,255,0.9) 100%);"></div>
+    <div class="hero-cinematic-grid"></div>
+
+    <div class="container position-relative z-index-100" style="padding-top: 100px;">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 stagger-load">
+                
+                <!-- Agent Header -->
+                <div class="text-center mb-5">
+                    <div class="nav-item mb-4 d-inline-block">
+                        <div class="glass-panel d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; border-radius: 20px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-recycle"><path d="M7 11V7a5 5 0 0 1 10 0v4"/><path d="M11 21a4 4 0 0 0 4-4v-1h-4a4 4 0 0 1-4 4Z"/><path d="M11 11H7a4 4 0 0 0-4 4v1h4a4 4 0 0 1 4-4Z"/></svg>
+                        </div>
+                    </div>
+                    <h1 class="fluid-4xl font-weight-bold text-white mb-2" style="letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                        Sustain <span class="text-gradient-primary">Master</span>
+                    </h1>
+                    <p class="text-white-50 fluid-base mx-auto" style="max-width: 500px;">Generative ecological agents for long-term soil protection and harvest rotation.</p>
+                </div>
+
+                <!-- Elite Form Panel -->
+                <div class="glass-panel p-5" style="border-radius: 32px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <!-- FIX: Added missing form tag found in viewed file -->
+                    <form method="POST" action="{{ url_for('sustainability_advisor_result') }}" class="elite-form">
+                        <div class="form-elite-group mb-5">
+                            <select name="crop" class="glass-input text-white" required>
+                                <option value="" disabled selected></option>
+                                {% for crop in crops %}
+                                <option value="{{ crop }}">{{ crop }}</option>
+                                {% endfor %}
+                            </select>
+                            <label class="glass-label">Current Cultivation Module (Active Crop)</label>
+                        </div>
+
+                        <div class="row mb-5">
+                            <div class="col-4">
+                                <div class="form-elite-group">
+                                    <input type="number" name="n" class="glass-input text-white text-center" placeholder=" " required>
+                                    <label class="glass-label w-100 text-center">N</label>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-elite-group">
+                                    <input type="number" name="p" class="glass-input text-white text-center" placeholder=" " required>
+                                    <label class="glass-label w-100 text-center">P</label>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-elite-group">
+                                    <input type="number" name="k" class="glass-input text-white text-center" placeholder=" " required>
+                                    <label class="glass-label w-100 text-center">K</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-2">
+                            <button type="submit" class="btn btn-elite btn-elite-glow w-100 py-3" style="font-size: 1.1rem; border-radius: 16px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2 lucide lucide-leaf"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                                Orchestrate Sustainability Plan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Elite Stagger Entrance -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    gsap.from(".stagger-load > *", {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power4.out"
+    });
+});
+</script>
+
+{% endblock %}

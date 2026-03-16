@@ -1,98 +1,108 @@
-{% extends 'layout.html' %}
-{% block body %}
-<style>
-  html body {
-    background-color: rgb(206, 206, 228);
-  }
-</style>
+{% extends 'layout.html' %} {% block body %}
 
-<div class="container form-section">
-  <h2 class="text-center mb-4" style="color: black;">
-    <b>Get informed advice on fertilizer based on soil</b>
-  </h2>
+<!-- =========================================================================
+     FERTILIZER ADVISOR — PREMIUM AGENTIC INTERFACE
+     ========================================================================= -->
+<section class="hero-cinematic vh-100 position-relative overflow-hidden d-flex align-items-center">
+    <!-- Cinematic Background -->
+    <div class="hero-cinematic-bg" style="background-image: url('https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&q=80&w=2000'); filter: saturate(0.8) brightness(0.8);"></div>
+    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 50%, rgba(255,255,255,0.9) 100%);"></div>
+    <div class="hero-cinematic-grid"></div>
 
-  <div class="form-card" data-aos="fade-up">
-    <form method="POST" action="{{ url_for('fert_recommend') }}">
-      <div class="form-group">
-        <label for="Nitrogen" class="form-label"><b>Nitrogen</b></label>
-        <input
-          type="number"
-          class="form-control"
-          id="Nitrogen"
-          name="nitrogen"
-          placeholder="Enter the value (e.g., 50)"
-          required
-        />
-      </div>
+    <div class="container position-relative z-index-100" style="padding-top: 100px;">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 stagger-load">
+                
+                <!-- Agent Header -->
+                <div class="text-center mb-5">
+                    <div class="nav-item mb-4 d-inline-block">
+                        <div class="glass-panel d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; border-radius: 20px; background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.2);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flask-conical"><path d="M10 2v7.5l-5.4 9.7a2 2 0 0 0 1.7 2.8h11.4a2 2 0 0 0 1.7-2.8L14 9.5V2"/><path d="M8.5 2h7"/><path d="M7 16h10"/></svg>
+                        </div>
+                    </div>
+                    <h1 class="fluid-4xl font-weight-bold text-white mb-2" style="letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                        Nutrient <span class="text-gradient-accent">Lab</span>
+                    </h1>
+                    <p class="text-white-50 fluid-base mx-auto" style="max-width: 500px;">Optimize soil health with AI-balanced nutrient prescriptions.</p>
+                </div>
 
-      <div class="form-group">
-        <label for="Phosphorous" class="form-label"><b>Phosphorous</b></label>
-        <input
-          type="number"
-          class="form-control"
-          id="Phosphorous"
-          name="phosphorous"
-          placeholder="Enter the value (e.g., 50)"
-          required
-        />
-      </div>
+                <!-- Elite Form Panel -->
+                <div class="glass-panel p-5" style="border-radius: 32px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <form method="POST" action="{{ url_for('fert_recommend') }}" class="elite-form">
+                        <div class="form-elite-group mb-5">
+                            <select name="cropname" class="glass-input text-white" required>
+                                <option value="" disabled selected></option>
+                                <option value="rice">Rice</option>
+                                <option value="maize">Maize</option>
+                                <option value="chickpea">Chickpea</option>
+                                <option value="kidneybeans">Kidney Beans</option>
+                                <option value="pigeonpeas">Pigeon Peas</option>
+                                <option value="mothbeans">Moth Beans</option>
+                                <option value="mungbean">Mung Bean</option>
+                                <option value="blackgram">Black Gram</option>
+                                <option value="lentil">Lentil</option>
+                                <option value="pomegranate">Pomegranate</option>
+                                <option value="banana">Banana</option>
+                                <option value="mango">Mango</option>
+                                <option value="grapes">Grapes</option>
+                                <option value="watermelon">Watermelon</option>
+                                <option value="muskmelon">Muskmelon</option>
+                                <option value="apple">Apple</option>
+                                <option value="orange">Orange</option>
+                                <option value="papaya">Papaya</option>
+                                <option value="coconut">Coconut</option>
+                                <option value="cotton">Cotton</option>
+                                <option value="jute">Jute</option>
+                                <option value="coffee">Coffee</option>
+                            </select>
+                            <label class="glass-label">Target Cultivation Module (Crop)</label>
+                        </div>
 
-      <div class="form-group">
-        <label for="Pottasium" class="form-label"><b>Pottasium</b></label>
-        <input
-          type="number"
-          class="form-control"
-          id="Pottasium"
-          name="pottasium"
-          placeholder="Enter the value (e.g., 50)"
-          required
-        />
-      </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-elite-group">
+                                    <input type="number" name="nitrogen" class="glass-input text-white" placeholder=" " required>
+                                    <label class="glass-label">Nitrogen (N)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-elite-group">
+                                    <input type="number" name="phosphorous" class="glass-input text-white" placeholder=" " required>
+                                    <label class="glass-label">Phosphorous (P)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-elite-group">
+                                    <input type="number" name="pottasium" class="glass-input text-white" placeholder=" " required>
+                                    <label class="glass-label">Potassium (K)</label>
+                                </div>
+                            </div>
+                        </div>
 
-      <div class="form-group">
-        <label for="crop" class="form-label"><b>Crop you want to grow</b></label>
-        <select
-          name="cropname"
-          class="form-control"
-          id="crop"
-          required
-        >
-          <option selected disabled>Select crop</option>
-          <option>rice</option>
-          <option>maize</option>
-          <option>chickpea</option>
-          <option>kidneybeans</option>
-          <option>pigeonpeas</option>
-          <option>mothbeans</option>
-          <option>mungbean</option>
-          <option>blackgram</option>
-          <option>lentil</option>
-          <option>pomegranate</option>
-          <option>banana</option>
-          <option>mango</option>
-          <option>grapes</option>
-          <option>watermelon</option>
-          <option>muskmelon</option>
-          <option>apple</option>
-          <option>orange</option>
-          <option>papaya</option>
-          <option>coconut</option>
-          <option>cotton</option>
-          <option>jute</option>
-          <option>coffee</option>
-        </select>
-      </div>
+                        <div class="text-center mt-5">
+                            <button type="submit" class="btn btn-elite btn-elite-glow w-100 py-3" style="font-size: 1.1rem; border-radius: 16px; background: linear-gradient(135deg, var(--elite-accent), #d97706); border: none;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                                Generate Prescription
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-      <div class="text-center">
-        <button
-          type="submit"
-          class="btn btn-success btn-submit"
-        >
-          Predict
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
+<!-- Elite Stagger Entrance -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    gsap.from(".stagger-load > *", {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power4.out"
+    });
+});
+</script>
 
 {% endblock %}

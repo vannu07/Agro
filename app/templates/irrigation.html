@@ -1,0 +1,93 @@
+{% extends 'layout.html' %} {% block body %}
+
+<!-- =========================================================================
+     SMART IRRIGATION — PREMIUM AGENTIC INTERFACE
+     ========================================================================= -->
+<section class="hero-cinematic vh-100 position-relative overflow-hidden d-flex align-items-center">
+    <!-- Cinematic Background -->
+    <div class="hero-cinematic-bg" style="background-image: url('https://images.unsplash.com/photo-1592982537447-6f2a6a0c7c18?auto=format&fit=crop&q=80&w=2000'); filter: saturate(0.8) brightness(0.8);"></div>
+    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 50%, rgba(255,255,255,0.9) 100%);"></div>
+    <div class="hero-cinematic-grid"></div>
+
+    <div class="container position-relative z-index-100" style="padding-top: 100px;">
+        <div class="row justify-content-center">
+            <div class="col-lg-7 stagger-load">
+                
+                <!-- Agent Header -->
+                <div class="text-center mb-5">
+                    <div class="nav-item mb-4 d-inline-block">
+                        <div class="glass-panel d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; border-radius: 20px; background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.2);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-droplets"><path d="M7 16.3c2.2 0 4-1.8 4-4 0-3.3-4-8-4-8s-4 4.7-4 8c0 2.2 1.8 4 4 4Z"/><path d="M17 19c2.9 0 4-2.1 4-4.6 0-3.7-4-9.4-4-9.4s-4 5.7-4 9.4c0 2.5 1.1 4.6 4 4.6Z"/></svg>
+                        </div>
+                    </div>
+                    <h1 class="fluid-4xl font-weight-bold text-white mb-2" style="letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                        Smart <span class="text-gradient-primary">Irrigation</span>
+                    </h1>
+                    <p class="text-white-50 fluid-base mx-auto" style="max-width: 500px;">Hydration agents synchronized with 7-day high-resolution weather telemetry.</p>
+                </div>
+
+                <!-- Elite Form Panel -->
+                <div class="glass-panel p-5" style="border-radius: 32px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <form method="POST" action="{{ url_for('irrigation_result') }}" class="elite-form">
+                        <div class="form-elite-group mb-4">
+                            <select name="crop" class="glass-input text-white" required>
+                                <option value="" disabled selected></option>
+                                {% for crop in crops %}
+                                <option value="{{ crop }}">{{ crop }}</option>
+                                {% endfor %}
+                            </select>
+                            <label class="glass-label">Cultivation Module (Crop)</label>
+                        </div>
+
+                        <div class="form-elite-group mb-4">
+                            <input type="text" name="city" class="glass-input text-white" placeholder=" " required>
+                            <label class="glass-label">Geographic Hub (City)</label>
+                        </div>
+
+                        <div class="form-elite-group mb-5">
+                            <input type="date" name="sowing_date" class="glass-input text-white" required>
+                            <label class="glass-label">Initialization Date (Sowing)</label>
+                        </div>
+
+                        <div class="row g-3 mb-5">
+                            <div class="col-6">
+                                <div class="glass-panel p-3 text-center" style="background: rgba(255, 255, 255, 0.02); border-radius: 16px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2 lucide lucide-cloud-rain"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 14v6"/><path d="M8 14v6"/><path d="M12 16v6"/></svg>
+                                    <div class="small font-weight-bold text-white-50">Weather Sync</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="glass-panel p-3 text-center" style="background: rgba(255, 255, 255, 0.02); border-radius: 16px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2 lucide lucide-calendar-days"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+                                    <div class="small font-weight-bold text-white-50">Harvest Estimator</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-elite btn-elite-glow w-100 py-3" style="font-size: 1.1rem; border-radius: 16px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M12 2v20"/><path d="m4.93 4.93 14.14 14.14"/><path d="M22 12H2"/><path d="m19.07 4.93-14.14 14.14"/></svg>
+                                Calculate Hydration Matrix
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Elite Stagger Entrance -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    gsap.from(".stagger-load > *", {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power4.out"
+    });
+});
+</script>
+
+{% endblock %}

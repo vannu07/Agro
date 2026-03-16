@@ -1,0 +1,124 @@
+{% extends 'layout.html' %} {% block body %}
+
+<!-- =========================================================================
+     PRECISION YIELD — PREMIUM AGENTIC INTERFACE
+     ========================================================================= -->
+<section class="hero-cinematic vh-100 position-relative overflow-hidden d-flex align-items-center">
+    <!-- Cinematic Background -->
+    <div class="hero-cinematic-bg" style="background-image: url('https://images.unsplash.com/photo-1533510538091-b0db374789d0?auto=format&fit=crop&q=80&w=2000'); filter: saturate(0.8) brightness(0.7);"></div>
+    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 50%, rgba(255,255,255,0.9) 100%);"></div>
+    <div class="hero-cinematic-grid"></div>
+
+    <div class="container position-relative z-index-100" style="padding-top: 100px;">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 stagger-load">
+                
+                <!-- Agent Header -->
+                <div class="text-center mb-5">
+                    <div class="nav-item mb-4 d-inline-block">
+                        <div class="glass-panel d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; border-radius: 20px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-line-chart"><path d="M3 3v18h18"/><path d="m19 9-7 7-4-4-5 5"/></svg>
+                        </div>
+                    </div>
+                    <h1 class="fluid-4xl font-weight-bold text-white mb-2" style="letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                        Precision <span class="text-gradient-primary">Yield</span>
+                    </h1>
+                    <p class="text-white-50 fluid-base mx-auto" style="max-width: 500px;">District-level predictive modeling for massive harvest optimization.</p>
+                </div>
+
+                <!-- Elite Form Panel -->
+                <div class="glass-panel p-5" style="border-radius: 32px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <form method="POST" action="{{ url_for('yield_prediction_result') }}" class="elite-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-elite-group">
+                                    <select name="crop" class="glass-input text-white" required>
+                                        <option value="" disabled selected></option>
+                                        {% for crop in crops %}
+                                        <option value="{{ crop }}">{{ crop }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <label class="glass-label">Cultivation Module (Crop)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-elite-group">
+                                    <select name="state" class="glass-input text-white" required>
+                                        <option value="" disabled selected></option>
+                                        {% for state in states %}
+                                        <option value="{{ state }}">{{ state }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <label class="glass-label">Geographic Region (State)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-elite-group">
+                                    <select name="season" class="glass-input text-white" required>
+                                        <option value="" disabled selected></option>
+                                        {% for season in seasons %}
+                                        <option value="{{ season }}">{{ season }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <label class="glass-label">Temporal Window (Season)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-elite-group">
+                                    <input type="number" step="0.01" name="area" class="glass-input text-white" placeholder=" " required>
+                                    <label class="glass-label">Cultivation Area (Hectares)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-elite-group">
+                                    <input type="number" step="0.01" name="rainfall" class="glass-input text-white" placeholder=" " required>
+                                    <label class="glass-label">Expected Rainfall (mm)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-elite-group">
+                                    <input type="number" step="0.01" name="fertilizer" class="glass-input text-white" placeholder=" " required>
+                                    <label class="glass-label">Fertilizer Inputs (kg)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-elite-group">
+                                    <input type="number" step="0.01" name="pesticide" class="glass-input text-white" placeholder=" " required>
+                                    <label class="glass-label">Biocide Protocols (kg)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-elite btn-elite-glow w-100 py-3" style="font-size: 1.1rem; border-radius: 16px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="m21 21-4.3-4.3"/><circle cx="11" cy="11" r="8"/><path d="M11 8v6"/><path d="M8 11h6"/></svg>
+                                Forecast Production Capacity
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Elite Stagger Entrance -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    gsap.from(".stagger-load > *", {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power4.out"
+    });
+});
+</script>
+
+{% endblock %}
