@@ -1,6 +1,30 @@
-Data-processed
-New Plant Diseases Dataset(Augmented)
-test
-caffe
-models
+# Datasets & Temporary
+Data-processed/
+Data-raw/
+New\ Plant\ Diseases\ Dataset(Augmented)/
+test/
+caffe/
+models/
 app/Runtime.txt
+
+# Environment & Secrets
+.env
+.claude/
+.vscode/
+.venv/
+venv/
+ENV/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+.toast
+.lucid
+.idea/
+*.log
