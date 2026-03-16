@@ -1,0 +1,124 @@
+{% extends 'layout.html' %} 
+
+{% block body %}
+<section class="auth-gateway vh-100 position-relative overflow-hidden d-flex align-items-center justify-content-center" style="background: #f8fafc;">
+    <!-- Background Layer -->
+    <div class="position-absolute w-100 h-100" style="top: 0; left: 0; z-index: 0;">
+        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=2600" class="w-100 h-100" style="object-fit: cover; opacity: 0.15;" alt="Agri-Tech Background">
+        <div class="overlay-gradient-bright"></div>
+    </div>
+
+    <!-- Auth Content Content -->
+    <div class="container position-relative z-index-2">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="glass-panel-light p-5 g-auth-panel text-center">
+                    <!-- Multi-theme Logo -->
+                    <div class="auth-logo-wrapper mb-4">
+                        <img src="{{ url_for('static', filename='images/farmiq_logo_transparent_final_1773573015823.png') }}" class="auth-logo" alt="Krishi Mitr Logo">
+                    </div>
+                    
+                    <h1 class="fluid-3xl font-weight-bold mb-2 text-slate-900" style="letter-spacing: -2px;">Krishi <span class="text-gradient-primary">Mitr</span></h1>
+                    <p class="fluid-base mb-5" style="color: var(--text-muted); opacity: 0.8;">कृषि मित्र — India's Intelligent Farming Companion.</p>
+
+                    <div class="spacing-y-4">
+                        <div class="magnetic w-100">
+                            <a href="{{ url_for('login') }}" class="btn btn-elite btn-elite-glow w-100 py-3 mb-3">
+                                <i class="fa fa-user-circle-o mr-2"></i> Enter Ecosystem
+                            </a>
+                        </div>
+                        
+                        <div class="text-muted small mb-4">
+                            Secure enterprise-grade authentication powered by <span class="text-slate-900 font-weight-bold">Auth0</span>
+                        </div>
+                        
+                        <div class="divider-glass mb-4"></div>
+                        
+                        <div class="row no-gutters text-center">
+                            <div class="col-4 px-2">
+                                <div class="stat-mini">
+                                    <div class="h5 mb-0 text-slate-900 font-weight-bold">98%</div>
+                                    <div class="x-small text-muted">Accuracy</div>
+                                </div>
+                            </div>
+                            <div class="col-4 px-2">
+                                <div class="stat-mini">
+                                    <div class="h5 mb-0 text-slate-900 font-weight-bold">24/7</div>
+                                    <div class="x-small text-muted">Monitoring</div>
+                                </div>
+                            </div>
+                            <div class="col-4 px-2">
+                                <div class="stat-mini">
+                                    <div class="h5 mb-0 text-slate-900 font-weight-bold">6+</div>
+                                    <div class="x-small text-muted">AI Agents</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Page Specific Auth Styles */
+.auth-logo {
+    width: 80px;
+    height: auto;
+    /* Adjust for light background */
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.1));
+}
+
+.divider-glass {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+    width: 100%;
+}
+
+.stat-mini {
+    padding: 10px;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.x-small {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.g-auth-panel {
+    transform-style: preserve-3d;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // GSAP Entrance
+    const tl = gsap.timeline();
+    tl.from(".g-auth-panel", { 
+        y: 40, 
+        opacity: 0, 
+        duration: 1.2, 
+        ease: "power4.out" 
+    })
+    .from(".auth-logo", { 
+        scale: 0.5, 
+        opacity: 0, 
+        duration: 0.8, 
+        ease: "back.out(1.7)" 
+    }, "-=0.8")
+    .from(".stat-mini", { 
+        y: 10, 
+        opacity: 0, 
+        stagger: 0.1, 
+        duration: 0.5, 
+        ease: "power2.out" 
+    }, "-=0.4");
+});
+</script>
+{% endblock %}
