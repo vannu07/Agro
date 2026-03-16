@@ -1,0 +1,463 @@
+{
+  "projectId": "prj_uL53AHZ9uyZXGYxH0CFPEOdHI002",
+  "orgId": "team_vannu07",
+  "name": "Krishi Mitr - AI-Powered Smart Farming Assistant",
+  "version": "1.0.0",
+  "description": "A comprehensive AI and ML platform for Indian farmers providing crop recommendations, disease detection, fertilizer management, yield predictions, and sustainable farming guidance",
+  "buildCommand": "cd app && pip install -r ../requirements.txt",
+  "devCommand": "cd app && python app.py",
+  "public": true,
+  "framework": "flask",
+  "runtime": "python3.11",
+  "env": [
+    {
+      "key": "FLASK_ENV",
+      "value": "production",
+      "description": "Flask environment"
+    },
+    {
+      "key": "FLASK_SECRET_KEY",
+      "value": "your-secret-key-here",
+      "description": "Flask session secret key (min 32 chars)"
+    },
+    {
+      "key": "MONGODB_URI",
+      "value": "mongodb+srv://username:password@cluster.mongodb.net/krishi_mitr",
+      "description": "MongoDB Atlas connection string"
+    },
+    {
+      "key": "AUTH0_DOMAIN",
+      "value": "your-tenant.auth0.com",
+      "description": "Auth0 domain"
+    },
+    {
+      "key": "AUTH0_CLIENT_ID",
+      "value": "your-client-id",
+      "description": "Auth0 client ID"
+    },
+    {
+      "key": "AUTH0_CLIENT_SECRET",
+      "value": "your-client-secret",
+      "description": "Auth0 client secret"
+    },
+    {
+      "key": "WEATHER_API_KEY",
+      "value": "your-weather-api-key",
+      "description": "Weather API key from weatherapi.com"
+    },
+    {
+      "key": "GEMINI_API_KEY",
+      "value": "your-gemini-api-key",
+      "description": "Google Gemini API key"
+    }
+  ],
+  "regions": ["iad"],
+  "functions": {
+    "app/app.py": {
+      "memory": 1024,
+      "maxDuration": 60,
+      "runtime": "python3.11"
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "app/app.py"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/app"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/farm-iq(.*)",
+      "destination": "/",
+      "statusCode": 301
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "sourceMap": true,
+  "tags": [
+    "agriculture",
+    "ai",
+    "farming",
+    "ml",
+    "crop-management",
+    "india",
+    "sustainable-farming",
+    "disease-detection",
+    "yield-prediction"
+  ],
+  "keywords": [
+    "Krishi Mitr",
+    "agricultural AI",
+    "crop recommendation",
+    "disease detection",
+    "fertilizer management",
+    "yield prediction",
+    "smart farming",
+    "sustainable agriculture",
+    "farmer assistant",
+    "Indian agriculture"
+  ],
+  "features": {
+    "authentication": {
+      "provider": "auth0",
+      "enabled": true,
+      "description": "Auth0 authentication with custom user profiles"
+    },
+    "database": {
+      "provider": "mongodb",
+      "enabled": true,
+      "description": "MongoDB Atlas for user data and activity logging"
+    },
+    "aiAgents": {
+      "enabled": true,
+      "agents": [
+        {
+          "name": "Crop Recommendation",
+          "endpoint": "/crop-recommend",
+          "model": "google-gemini",
+          "description": "Recommends best crop based on soil, climate, and history"
+        },
+        {
+          "name": "Disease Detection",
+          "endpoint": "/disease-predict",
+          "model": "custom-ml",
+          "description": "Detects crop diseases from images"
+        },
+        {
+          "name": "Fertilizer Suggestion",
+          "endpoint": "/fertilizer",
+          "model": "google-gemini",
+          "description": "Suggests fertilizers based on crop and soil"
+        },
+        {
+          "name": "Yield Prediction",
+          "endpoint": "/yield",
+          "model": "xgboost",
+          "description": "Predicts crop yield based on historical data"
+        },
+        {
+          "name": "Sustainability Advisor",
+          "endpoint": "/sustainability",
+          "model": "google-gemini",
+          "description": "Provides sustainable farming practices and crop rotation"
+        },
+        {
+          "name": "Smart Irrigation",
+          "endpoint": "/irrigation",
+          "model": "custom",
+          "description": "Optimizes irrigation schedules based on weather"
+        },
+        {
+          "name": "Market Trends",
+          "endpoint": "/market-trends",
+          "model": "data-analysis",
+          "description": "Analyzes agricultural market trends"
+        },
+        {
+          "name": "AI Assistant",
+          "endpoint": "/api/assistant",
+          "model": "google-gemini",
+          "description": "General purpose farming assistant"
+        }
+      ]
+    },
+    "api": {
+      "enabled": true,
+      "endpoints": {
+        "health": "/api/health",
+        "agents": "/api/agents",
+        "recommendations": "/api/recommendations",
+        "predictions": "/api/predictions"
+      }
+    }
+  },
+  "pages": [
+    {
+      "path": "/",
+      "title": "Home",
+      "description": "Landing page with hero section"
+    },
+    {
+      "path": "/dashboard",
+      "title": "Dashboard",
+      "description": "User dashboard with AI agents"
+    },
+    {
+      "path": "/crop-recommend",
+      "title": "Crop Recommendation",
+      "description": "Crop suggestion form"
+    },
+    {
+      "path": "/disease-predict",
+      "title": "Disease Detection",
+      "description": "Disease detection form"
+    },
+    {
+      "path": "/fertilizer",
+      "title": "Fertilizer Suggestion",
+      "description": "Fertilizer recommendation form"
+    },
+    {
+      "path": "/yield",
+      "title": "Yield Prediction",
+      "description": "Yield prediction form"
+    },
+    {
+      "path": "/sustainability",
+      "title": "Sustainability Advisor",
+      "description": "Sustainable farming guide"
+    },
+    {
+      "path": "/irrigation",
+      "title": "Smart Irrigation",
+      "description": "Irrigation scheduling form"
+    },
+    {
+      "path": "/market-trends",
+      "title": "Market Trends",
+      "description": "Agricultural market analysis"
+    },
+    {
+      "path": "/profile",
+      "title": "User Profile",
+      "description": "User profile and history"
+    },
+    {
+      "path": "/showcase",
+      "title": "Frontend Showcase",
+      "description": "Frontend components and design system"
+    },
+    {
+      "path": "/about",
+      "title": "About",
+      "description": "About Krishi Mitr"
+    }
+  ],
+  "components": {
+    "styling": {
+      "system": "css",
+      "framework": "bootstrap",
+      "customCss": [
+        "design-system.css",
+        "components.css",
+        "animations.css"
+      ],
+      "colors": {
+        "primary": "#10B981",
+        "secondary": "#F59E0B",
+        "success": "#10B981",
+        "danger": "#EF4444",
+        "warning": "#F59E0B",
+        "info": "#3B82F6",
+        "dark": "#1F2937",
+        "light": "#F9FAFB"
+      },
+      "fonts": {
+        "primary": "system-ui, -apple-system",
+        "secondary": "menlo, monospace"
+      }
+    },
+    "animations": {
+      "count": 20,
+      "types": [
+        "fade",
+        "slide",
+        "scale",
+        "bounce",
+        "pulse",
+        "shimmer",
+        "ripple",
+        "typing",
+        "shake",
+        "swing"
+      ]
+    }
+  },
+  "structure": {
+    "app": {
+      "name": "Flask Application",
+      "path": "app/",
+      "entrypoint": "app.py",
+      "folders": {
+        "templates": "HTML templates (26 files)",
+        "static": {
+          "css": "3 design system CSS files (1,342 lines)",
+          "js": "Interactive JavaScript (295 lines)",
+          "images": "Asset images",
+          "fonts": "Web fonts"
+        },
+        "utils": {
+          "crop.py": "Crop recommendation logic",
+          "disease.py": "Disease detection logic",
+          "fertilizer.py": "Fertilizer suggestion logic",
+          "yield_logic.py": "Yield prediction logic",
+          "sustainability.py": "Sustainable farming advisor",
+          "irrigation.py": "Smart irrigation scheduler",
+          "db.py": "Database operations",
+          "validators.py": "Input validation"
+        }
+      }
+    },
+    "documentation": {
+      "guides": [
+        "START_HERE.md",
+        "SETUP.md",
+        "FRONTEND_GUIDE.md",
+        "PREVIEW_GUIDE.md"
+      ],
+      "references": [
+        "CSS_CLASSES_REFERENCE.md",
+        "FILES_MANIFEST.md",
+        "PROJECT_STRUCTURE.md"
+      ],
+      "summaries": [
+        "ACCOMPLISHMENTS.md",
+        "PROJECT_SUMMARY.md",
+        "IMPROVEMENTS.md"
+      ]
+    }
+  },
+  "statistics": {
+    "totalLines": 12000,
+    "cssLines": 1342,
+    "jsLines": 295,
+    "htmlTemplates": 26,
+    "pythonFiles": 15,
+    "documentationFiles": 18,
+    "components": 12,
+    "animations": 20,
+    "colors": 28
+  },
+  "technologies": [
+    {
+      "name": "Flask",
+      "version": "latest",
+      "category": "Backend"
+    },
+    {
+      "name": "MongoDB",
+      "version": "latest",
+      "category": "Database"
+    },
+    {
+      "name": "Auth0",
+      "version": "latest",
+      "category": "Authentication"
+    },
+    {
+      "name": "Google Gemini",
+      "version": "latest",
+      "category": "AI/ML"
+    },
+    {
+      "name": "Bootstrap",
+      "version": "4.3.1",
+      "category": "Frontend Framework"
+    },
+    {
+      "name": "Chart.js",
+      "version": "latest",
+      "category": "Data Visualization"
+    },
+    {
+      "name": "GSAP",
+      "version": "3.12.2",
+      "category": "Animations"
+    },
+    {
+      "name": "AOS",
+      "version": "2.3.1",
+      "category": "Animations"
+    },
+    {
+      "name": "scikit-learn",
+      "version": "latest",
+      "category": "ML Library"
+    },
+    {
+      "name": "XGBoost",
+      "version": "latest",
+      "category": "ML Library"
+    },
+    {
+      "name": "Pandas",
+      "version": "latest",
+      "category": "Data Processing"
+    },
+    {
+      "name": "NumPy",
+      "version": "latest",
+      "category": "Numerical Computing"
+    }
+  ],
+  "deployment": {
+    "platforms": [
+      "Vercel",
+      "Heroku",
+      "AWS",
+      "Docker",
+      "GCP"
+    ],
+    "requirements": {
+      "python": "3.11+",
+      "mongodb": "Required (Atlas)",
+      "auth0": "Required for authentication",
+      "gemini": "Required for AI features"
+    }
+  },
+  "status": {
+    "version": "1.0.0",
+    "stage": "production",
+    "lastUpdated": "2026-03-16",
+    "completeness": "100%",
+    "features": {
+      "backend": "Complete",
+      "frontend": "Complete",
+      "authentication": "Complete",
+      "database": "Complete",
+      "ai_agents": "Complete",
+      "documentation": "Complete",
+      "error_handling": "Complete",
+      "responsive_design": "Complete"
+    }
+  }
+}
