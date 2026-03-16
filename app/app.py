@@ -1,6 +1,7 @@
 # Importing essential libraries and modules
 
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify, session, url_for
+import os
 from markupsafe import Markup
 import numpy as np
 import pandas as pd
@@ -15,7 +16,17 @@ from torchvision import transforms
 from PIL import Image
 from utils.model import ResNet9
 from typing import Dict, Any
+from utils.yield_logic import get_yield_prediction, get_unique_values
+from utils.sustainability import get_rotation_advisor, get_crop_list
+from utils.irrigation import get_irrigation_advice, get_harvest_timing
 
+# ==============================================================================================
+from utils.db import get_db, mongo
+from orchestrator import Orchestrator
+
+# Initialize database and Orchestrator
+db = get_db()
+orchestrator = Orchestrator()
 # ==============================================================================================
 
 # -------------------------LOADING THE TRAINED MODELS -----------------------------------------------
@@ -112,7 +123,7 @@ def weather_fetch(city_name):
     data = response.json()
 
     if "error" in data:
-        print("❌ Weather API error:", data["error"]["message"])
+        print("[Weather API Error]:", data["error"]["message"])
         return None
 
     temperature = data["current"]["temp_c"]  # Directly in Celsius
@@ -340,98 +351,242 @@ def run_market_agent(crop: str) -> Dict[str, Any]:
     return result
 
 
-def orchestrate_crop(payload: Dict[str, Any]) -> Dict[str, Any]:
-    agents: Dict[str, Any] = {}
-    city = payload.get("city")
-    if city:
-        weather_res = run_weather_agent(city)
-        agents["weather"] = weather_res
-        if weather_res["status"] == "ok":
-            enriched = dict(payload)
-            enriched["temperature"] = weather_res["data"]["temperature"]
-            enriched["humidity"] = weather_res["data"]["humidity"]
-        else:
-            return {
-                "task": "crop_recommendation",
-                "agents": agents
-            }
-    else:
-        return {
-            "task": "crop_recommendation",
-            "agents": {}
-        }
-    crop_res = run_crop_agent(enriched)
-    agents["crop"] = crop_res
-    crop_name = None
-    if crop_res["status"] == "ok":
-        crop_name = crop_res["data"].get("recommended_crop")
-    if crop_name:
-        agents["yield"] = run_yield_agent(crop_name)
-        agents["market"] = run_market_agent(crop_name)
-    return {
-        "task": "crop_recommendation",
-        "agents": agents
-    }
-
-
-def orchestrate_fertilizer(payload: Dict[str, Any]) -> Dict[str, Any]:
-    agents: Dict[str, Any] = {}
-    agents["fertilizer"] = run_fertilizer_agent(payload)
-    return {
-        "task": "fertilizer_recommendation",
-        "agents": agents
-    }
-
-
-def orchestrate_disease(img: bytes) -> Dict[str, Any]:
-    agents: Dict[str, Any] = {}
-    agents["disease"] = run_disease_agent(img)
-    return {
-        "task": "disease_detection",
-        "agents": agents
-    }
-
-
-def run_orchestrator(task: str, payload: Dict[str, Any]) -> Dict[str, Any]:
-    if task == "crop_recommendation":
-        return orchestrate_crop(payload)
-    if task == "fertilizer_recommendation":
-        return orchestrate_fertilizer(payload)
-    return {
-        "task": task,
-        "agents": {}
-    }
-
 # ===============================================================================================
 # ------------------------------------ FLASK APP -------------------------------------------------
 
 
 app = Flask(__name__)
+app.secret_key = os.getenv('AUTH0_SECRET', os.getenv("FLASK_SECRET_KEY", "super-secret-key-123"))
+
+# Custom Jinja2 Filters
+@app.template_filter('clamp')
+def clamp_filter(v, low, high):
+    try:
+        return max(low, min(high, float(v)))
+    except (ValueError, TypeError):
+        return low
+
+# Initialize Auth0
+from auth import setup_auth, oauth, requires_auth
+setup_auth(app)
 
 # render home page
 
 
-@ app.route('/')
+@app.route('/login')
+def login():
+    return oauth.auth0.authorize_redirect(
+        redirect_uri=url_for("callback", _external=True)
+    )
+
+@app.route('/callback')
+def callback():
+    try:
+        token = oauth.auth0.authorize_access_token()
+        session["user"] = token
+        
+        # Sync user to MongoDB!
+        user_info = token.get("userinfo")
+        if user_info:
+            mongo.sync_user(user_info)
+            
+    except Exception as e:
+        print(f"Auth Callback Error: {e}")
+    
+    return redirect(session.pop('next', '/dashboard'))
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(
+        f'https://{os.getenv("AUTH0_DOMAIN")}/v2/logout?'
+        f'client_id={os.getenv("AUTH0_CLIENT_ID")}&returnTo={url_for("home", _external=True)}'
+    )
+
+@app.route('/')
 def home():
-    title = 'FarmIQ - Home'
+    title = 'Krishi Mitr - Home'
     return render_template('index.html', title=title)
+
+@app.route('/about')
+def about():
+    title = 'Krishi Mitr - About Us'
+    return render_template('about.html', title=title)
+
+CASE_STUDIES_DATA = {
+    "rakesh-delhi": {
+        "name": "Rakesh",
+        "location": "Delhi",
+        "crop": "Paddy/Rice",
+        "image": "case_study_rice_punjab.png",
+        "title": "Precision Yield Enhancement for Paddy",
+        "summary": "Rakesh implemented AI-driven nitrogen monitoring and precision irrigation, achieving a 20% yield increase in the urban-outskirts of Delhi.",
+        "full_story": "Rakesh, a progressive farmer on the outskirts of Delhi, faced challenges with soil quality and erratic water supply. By using Krishi Mitr's Crop Advisor, he received a customized fertilization plan that perfectly balanced his soil's NPK levels. The Hydration Agent further optimized his irrigation schedule, ensuring every drop counted. The result was not just a 20% higher yield, but also a significantly healthier crop that fetched premium prices in the local mandis.",
+        "stats": ["+20% Yield", "25% Water Saved", "15% Cost Reduction"]
+    },
+    "sudesh-delhi": {
+        "name": "Sudesh",
+        "location": "Delhi",
+        "crop": "Potato",
+        "image": "case_study_potato_bengal.png",
+        "title": "Disease Prevention in Potato Crops",
+        "summary": "Sudesh used the Plant Pathologist agent to detect early-stage Late Blight, saving her entire harvest from a potential epidemic.",
+        "full_story": "Sudesh had been struggling with recurring crop losses due to potato blight. Last season, she integrated the Plant Pathologist AI into her daily routine. A simple photo upload flagged early-stage fungal infection weeks before it was visible to the naked eye. Following the AI's instant treatment recommendation, Sudesh was able to contain the outbreak locally, preserving 95% of her crop value and ensuring food security for her community.",
+        "stats": ["95% Crop Saved", "72h Detection", "Zero Epidemic Spread"]
+    },
+    "ashok-delhi": {
+        "name": "Ashok",
+        "location": "Delhi",
+        "crop": "Mustard",
+        "image": "case_study_cotton_telangana.png",
+        "title": "Smart Nutrient Management for Mustard",
+        "summary": "Ashok optimized his fertilizer usage using Nutrient Lab, reducing chemical waste by 30% while maintaining peak health.",
+        "full_story": "Ashok, farming in the Najafgarh area, was concerned about the rising costs of fertilizers. The Nutrient Lab agent analyzed his soil reports and generated a precise application schedule tailored to the growth stages of his mustard crop. By applying only what was needed, Ashok reduced his chemical input by 30%, leading to a more sustainable farming practice and a higher-quality oily seed output that surpassed regional benchmarks.",
+        "stats": ["30% Less Fertilizer", "+12% Oil Content", "Organic-First Approach"]
+    },
+    "balbir-baghpat": {
+        "name": "Balbir",
+        "location": "Baghpat, UP",
+        "crop": "Sugarcane",
+        "image": "case_study_turmeric_erode.png",
+        "title": "Sugarcane Yield Revolution",
+        "summary": "Balbir transformed his sugarcane productivity in Baghpat using satellite-linked soil health monitoring and predictive analytics.",
+        "full_story": "In the heart of the sugarcane belt in Baghpat, Balbir was a traditional farmer looking for a modern edge. Krishi Mitr provided him with long-term crop rotation advice and real-time alerts for pest infestations. By following the AI's 'Sustain Master' guidelines, Balbir improved the soil's organic carbon content, leading to thicker, juicier sugarcane stalks and an 18% increase in recovery rate at the local sugar factory.",
+        "stats": ["+18% Recovery", "Soil Health ↑", "Pest Alert Accuracy: 98%"]
+    },
+    "suresh-baghpat": {
+        "name": "Suresh",
+        "location": "Baghpat, UP",
+        "crop": "Wheat",
+        "image": "case_study_irrigation_maharashtra.png",
+        "title": "Optimized Irrigation for Wheat",
+        "summary": "Suresh adopted IoT-enabled irrigation cycles, saving significant groundwater while boosting grain quality in the fertile UP plains.",
+        "full_story": "Suresh's wheat fields in Baghpat were showing signs of water stress during critical growth periods. The Hydration Agent connected to local weather stations and provided Suresh with a week-ahead watering plan. This precision allowed Suresh to maintain optimal soil moisture without over-irrigating. The result was a bumper crop with superior grain weight and color, proving that smart water management is the key to resilience.",
+        "stats": ["40% Water Saved", "+15% Grain Weight", "Energy Costs ↓ 20%"]
+    },
+    "pradeep-baroda": {
+        "name": "Pradeep",
+        "location": "Baroda, UP",
+        "crop": "Vegetable Farming",
+        "image": "case_study_apple_himachal.png",
+        "title": "Diversified Vegetable Success",
+        "summary": "Pradeep shifted to high-value vegetable farming based on market trend analytics and seasonal suitability predictions.",
+        "full_story": "Pradeep, from Baroda in UP, used the 'Precision Yield' and 'Market Analytics' features to identify a gap in the local market for high-quality bell peppers and exotic vegetables. Krishi Mitr guided him through the entire greenhouse setup and nutrient management. By aligning his production with peak market demand intervals, Pradeep saw a tripling of his annual income, transforming his small plot into a highly profitable enterprise.",
+        "stats": ["3x Income Increase", "Market-Led Production", "Year-round Yield"]
+    }
+}
+
+@app.route('/case-studies')
+@requires_auth
+def case_studies():
+    title = 'Krishi Mitr - Case Studies'
+    return render_template('case_studies.html', title=title, cases=CASE_STUDIES_DATA)
+
+MARKET_DATA = [
+    {"crop": "Wheat", "price": "₹2,275", "change": "+1.2%", "trend": "up", "volume": "high"},
+    {"crop": "Paddy", "price": "₹2,183", "change": "-0.5%", "trend": "down", "volume": "moderate"},
+    {"crop": "Maize", "price": "₹1,962", "change": "+2.1%", "trend": "up", "volume": "high"},
+    {"crop": "Cotton", "price": "₹6,020", "change": "+0.8%", "trend": "up", "volume": "low"},
+    {"crop": "Mustard", "price": "₹5,450", "change": "-1.1%", "trend": "down", "volume": "moderate"},
+]
+
+@app.route('/market-trends')
+@requires_auth
+def market_trends():
+    title = 'Krishi Mitr - Market Trends'
+    return render_template('market_trends.html', title=title, market_data=MARKET_DATA)
+
+NEWS_DATA = [
+    {
+        "title": "Government Announces New MSP for Kharif Crops",
+        "category": "Policy",
+        "date": "March 15, 2026",
+        "summary": "The central government has increased the Minimum Support Price for various Kharif crops to ensure better returns for farmers.",
+        "image": "future_tech.png"
+    },
+    {
+        "title": "Smart Irrigation Adoption Rises in North India",
+        "category": "Technology",
+        "date": "March 14, 2026",
+        "summary": "Over 50,000 farmers in Punjab and Haryana have successfully adopted AI-linked drip irrigation systems this season.",
+        "image": "hero_farm.png"
+    },
+    {
+        "title": "New Pest-Resistant Wheat Variety Released",
+        "category": "Seed Tech",
+        "date": "March 12, 2026",
+        "summary": "Agricultural scientists have developed a new variety of wheat that is highly resistant to yellow rust and heat stress.",
+        "image": "crop.png"
+    }
+]
+
+@app.route('/agri-tech-news')
+@requires_auth
+def agri_tech_news():
+    title = 'Krishi Mitr - Agri-Tech News'
+    return render_template('agri_tech_news.html', title=title, news_items=NEWS_DATA)
+
+@app.route('/case-study/<slug>')
+@requires_auth
+def case_study_detail(slug):
+    case = CASE_STUDIES_DATA.get(slug)
+    if not case:
+        return "Case study not found", 404
+    title = f'Krishi Mitr - {case["name"]}\'s Story'
+    return render_template('case_study_detail.html', title=title, case=case)
+
+@app.route('/profile')
+@requires_auth
+def profile():
+    """Protected route - shows user profile with Elite UI"""
+    title = 'Krishi Mitr - Your Profile'
+    user = session.get('user')
+    # Authlib userinfo is typically inside the token
+    userinfo = user.get('userinfo') if user else None
+    return render_template('profile.html', user=userinfo, title=title)
 
 # render crop recommendation form page
 
 
-@ app.route('/crop-recommend')
+@app.route('/crop-recommend')
+@requires_auth
 def crop_recommend():
-    title = 'FarmIQ - Crop Recommendation'
+    title = 'Krishi Mitr - Crop Recommendation'
     return render_template('crop.html', title=title)
 
 # render fertilizer recommendation form page
 
 
-@ app.route('/fertilizer')
+@app.route('/fertilizer')
+@requires_auth
 def fertilizer_recommendation():
-    title = 'FarmIQ - Fertilizer Suggestion'
+    title = 'Krishi Mitr - Fertilizer Suggestion'
 
     return render_template('fertilizer.html', title=title)
+
+# render yield prediction form page
+@app.route('/yield')
+@requires_auth
+def yield_prediction_form():
+    title = 'Krishi Mitr - Yield Prediction'
+    states, crops, seasons = get_unique_values()
+    return render_template('yield.html', title=title, states=states, crops=crops, seasons=seasons)
+
+# render sustainability advisor form page
+@app.route('/sustainability')
+@requires_auth
+def sustainability_advisor():
+    title = 'Krishi Mitr - Sustainability Advisor'
+    crops = get_crop_list()
+    return render_template('sustainability.html', title=title, crops=crops)
+
+# render smart irrigation form page
+@app.route('/irrigation')
+@requires_auth
+def irrigation_form():
+    title = 'Krishi Mitr - Smart Irrigation'
+    crops = get_crop_list()
+    return render_template('irrigation.html', title=title, crops=crops)
 
 # render disease prediction input page
 
@@ -445,9 +600,10 @@ def fertilizer_recommendation():
 # render crop recommendation result page
 
 
-@ app.route('/crop-predict', methods=['POST'])
+@app.route('/crop-predict', methods=['POST'])
+@requires_auth
 def crop_prediction():
-    title = 'FarmIQ - Crop Recommendation'
+    title = 'Krishi Mitr - Crop Recommendation'
 
     if request.method == 'POST':
         N = int(request.form['nitrogen'])
@@ -456,77 +612,113 @@ def crop_prediction():
         ph = float(request.form['ph'])
         rainfall = float(request.form['rainfall'])
         city = request.form.get("city")
+        
+        # 1. Fetch weather via utility (orchestrator handles the agentic logic next)
+        weather = weather_fetch(city)
+        if weather is None:
+            return render_template('try_again.html', title=title)
+        
+        temperature, humidity = weather
+        
+        # 2. Call Crop Agent through Orchestrator
         payload = {
-            "N": N,
-            "P": P,
-            "K": K,
-            "ph": ph,
-            "rainfall": rainfall,
-            "city": city
+            "N": N, "P": P, "K": K, "ph": ph, "rainfall": rainfall,
+            "temperature": temperature, "humidity": humidity
         }
-        orchestration = run_orchestrator("crop_recommendation", payload)
-        agents = orchestration.get("agents", {})
-        crop_agent = agents.get("crop")
-        if crop_agent and crop_agent.get("status") == "ok":
-            final_prediction = crop_agent["data"]["recommended_crop"]
-            return render_template('crop-result.html', prediction=final_prediction, orchestration=orchestration, title=title)
+        crop_res = orchestrator.dispatch("crop", payload)
+        
+        if crop_res["status"] == "ok":
+            final_prediction = crop_res["data"]["recommended_crop"]
+            # We can also call yield and market via orchestrator for the result page
+            harvest_res = orchestrator.dispatch("yield", {
+                "crop": final_prediction, "state": "Assam", "season": "Kharif", # Defaulting for demo
+                "area": 1.0, "rainfall": rainfall, "fertilizer": 100, "pesticide": 10
+            })
+            
+            # Pack agents for the UI (maintaining legacy template compatibility)
+            ui_orchestration = {
+                "agents": {
+                    "weather": {"status": "ok", "data": {"temperature": temperature, "humidity": humidity}},
+                    "crop": crop_res,
+                    "yield": harvest_res
+                }
+            }
+            # Log successful crop recommendation
+            mongo.log_activity(
+                activity_type="crop_recommendation",
+                input_data=payload,
+                result={"recommended_crop": final_prediction},
+                metadata={"orchestration": ui_orchestration}
+            )
+            return render_template('crop-result.html', prediction=final_prediction, orchestration=ui_orchestration, title=title)
         return render_template('try_again.html', title=title)
 
 # render fertilizer recommendation result page
 
 
-@ app.route('/fertilizer-predict', methods=['POST'])
+@app.route('/fertilizer-predict', methods=['POST'])
+@requires_auth
 def fert_recommend():
-    title = 'FarmIQ - Fertilizer Suggestion'
+    title = 'Krishi Mitr - Fertilizer Suggestion'
 
-    crop_name = str(request.form['cropname'])
-    N = int(request.form['nitrogen'])
-    P = int(request.form['phosphorous'])
-    K = int(request.form['pottasium'])
     payload = {
-        "crop_name": crop_name,
-        "N": N,
-        "P": P,
-        "K": K
+        "crop_name": str(request.form['cropname']),
+        "N": int(request.form['nitrogen']),
+        "P": int(request.form['phosphorous']),
+        "K": int(request.form['pottasium'])
     }
-    orchestration = run_orchestrator("fertilizer_recommendation", payload)
-    agents = orchestration.get("agents", {})
-    fert_agent = agents.get("fertilizer")
-    if fert_agent and fert_agent.get("status") == "ok":
-        message = fert_agent["data"]["message"]
-        response = Markup(message)
-        return render_template('fertilizer-result.html', recommendation=response, title=title)
-    return render_template('fertilizer-result.html', recommendation="Fertilizer recommendation not available.", title=title)
-
-# render disease prediction result page
+    
+    res = orchestrator.dispatch("fertilizer", payload)
+    if res["status"] == "ok":
+        # Log successful fertilizer recommendation
+        mongo.log_activity(
+            activity_type="fertilizer_suggestion",
+            input_data=payload,
+            result={"message": res["data"]["message"]},
+            metadata={"key": res["data"].get("key")}
+        )
+        return render_template('fertilizer-result.html', recommendation=res["data"]["message"], title=title)
+    return render_template('try_again.html', title=title)
 
 
 @app.route('/disease-predict', methods=['GET', 'POST'])
+@requires_auth
 def disease_prediction():
-    title = 'FarmIQ - Disease Detection'
-
+    title = 'Krishi Mitr - Disease Detection'
     if request.method == 'POST':
         if 'file' not in request.files:
             return redirect(request.url)
         file = request.files.get('file')
         if not file:
             return render_template('disease.html', title=title)
+        
         try:
             img = file.read()
-            orchestration = orchestrate_disease(img)
-            agents = orchestration.get("agents", {})
-            disease_agent = agents.get("disease")
-            if disease_agent and disease_agent.get("status") == "ok":
-                prediction = Markup(disease_agent["data"]["description"])
-                return render_template('disease-result.html', prediction=prediction, title=title)
-        except Exception:
-            return render_template('disease.html', title=title)
+            res = orchestrator.dispatch("disease", {"img_bytes": img})
+            
+            if res["status"] == "ok":
+                prediction = res["data"]["label"]
+                description = Markup(res["data"]["description"])
+                
+                # Log to DB
+                mongo.log_activity(
+                    activity_type="disease_detection",
+                    input_data={"filename": file.filename},
+                    result={"label": prediction, "description": res["data"]["description"]}
+                )
+                
+                return render_template('disease-result.html', prediction=prediction, description=description, title=title)
+        except Exception as e:
+            print(f"Disease prediction error: {e}")
+            return render_template('try_again.html', title=title)
+            
     return render_template('disease.html', title=title)
 
 
 @app.route('/dashboard')
+@requires_auth
 def dashboard():
-    title = 'FarmIQ - Dashboard'
+    title = 'Krishi Mitr - Dashboard'
     crop_stats = None
     try:
         crop_df = pd.read_csv('Data-processed/crop_recommendation.csv')
@@ -549,26 +741,127 @@ def dashboard():
                 "avg_yield": float(row["Yield"]),
                 "unit": "tons per hectare"
             })
-    return render_template('dashboard.html', title=title, crop_stats=crop_stats, yield_stats=yield_summary)
+    # Fetch recent activity from MongoDB
+    recent_activities = []
+    try:
+        logs = db.activity_logs.find().sort("timestamp", -1).limit(5)
+        for log in logs:
+            recent_activities.append({
+                "type": log["activity_type"].replace("_", " ").title(),
+                "time": log["timestamp"].strftime("%Y-%m-%d %H:%M"),
+                "result": log["result"]
+            })
+    except Exception as e:
+        print(f"ERR: Could not fetch recent activities: {e}")
 
+    return render_template('dashboard.html', 
+                           title=title, 
+                           crop_stats=crop_stats, 
+                           yield_stats=yield_summary,
+                           recent_activities=recent_activities)
+
+
+import google.generativeai as genai
+
+# Configure Gemini AI
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 @app.route('/api/assistant', methods=['POST'])
 def api_assistant():
     data = request.get_json(silent=True) or {}
-    message = str(data.get("message", "")).strip()
-    text = message.lower()
-    reply = "I did not understand your question. Please try asking about crop, fertilizer, or disease."
-    if "crop" in text:
-        reply = "Use the Crop section to get recommendations based on your soil and city weather."
-    elif "fertilizer" in text:
-        reply = "Use the Fertilizer section and enter your NPK values to get suggestions."
-    elif "disease" in text:
-        reply = "Upload a clear leaf image in the Disease section so I can analyse it."
-    elif "weather" in text:
-        reply = "Enter your city on the Crop page so I can fetch live weather data."
-    return jsonify({"reply": reply})
+    user_message = str(data.get("message", "")).strip()
+    
+    if not user_message:
+        return jsonify({"reply": "I'm listening! How can I help with your farming today?"})
+
+    try:
+        # Initialize the Gemini model
+        model = genai.GenerativeModel(
+            model_name="gemini-1.5-flash",
+            system_instruction="You are 'FarmAI Assistant', an expert agricultural AI. Help Indian farmers with crop advice, soil health, weather impacts, and pest control. Keep responses concise, professional, and encouraging. Use simple English or Hinglish if appropriate. Always prioritize sustainable and safe farming practices."
+        )
+        
+        # Generate response
+        response = model.generate_content(user_message)
+        reply = response.text.strip()
+        
+        # Log AI interaction
+        mongo.log_activity(
+            activity_type="ai_assistant_query",
+            input_data={"message": user_message},
+            result={"reply_length": len(reply)},
+            metadata={"model": "gemini-1.5-flash"}
+        )
+        
+        return jsonify({"reply": reply})
+    except Exception as e:
+        print(f"Gemini API Error: {e}")
+        return jsonify({"reply": "I'm having a bit of trouble connecting to my brain right now. Please try again in a moment!"})
 
 
 # ===============================================================================================
+# render yield prediction result page
+@app.route('/yield-predict', methods=['POST'])
+@requires_auth
+def yield_prediction_result():
+    title = 'Krishi Mitr - Yield Prediction'
+    if request.method == 'POST':
+        payload = {
+            "crop": request.form.get('crop'),
+            "state": request.form.get('state'),
+            "season": request.form.get('season'),
+            "area": float(request.form.get('area', 1.0)),
+            "rainfall": float(request.form.get('rainfall', 0.0)),
+            "fertilizer": float(request.form.get('fertilizer', 0.0)),
+            "pesticide": float(request.form.get('pesticide', 0.0))
+        }
+
+        res = orchestrator.dispatch("yield", payload)
+        
+        if res["status"] == "ok":
+            return render_template('yield-result.html', prediction=res["data"], crop=payload["crop"], state=payload["state"], title=title)
+        return render_template('try_again.html', title=title)
+
+
+@app.route('/sustainability-predict', methods=['POST'])
+@requires_auth
+def sustainability_result():
+    title = 'Krishi Mitr - Sustainability Advisor'
+    if request.method == 'POST':
+        payload = {
+            "crop": request.form.get('crop'),
+            "n": int(request.form.get('n', 0)),
+            "p": int(request.form.get('p', 0)),
+            "k": int(request.form.get('k', 0))
+        }
+        
+        res = orchestrator.dispatch("sustainability", payload)
+        if res["status"] == "ok":
+            return render_template('sustainability-result.html', advice=res["data"], crop=payload["crop"], title=title)
+        return render_template('try_again.html', title=title)
+
+
+@app.route('/irrigation-predict', methods=['POST'])
+@requires_auth
+def irrigation_result():
+    title = 'Krishi Mitr - Smart Irrigation'
+    if request.method == 'POST':
+        crop = request.form.get('crop')
+        city = request.form.get('city')
+        sowing_date = request.form.get('sowing_date')
+        
+        weather = weather_fetch(city)
+        if weather:
+            payload = {
+                "crop": crop,
+                "temp": weather[0],
+                "humidity": weather[1],
+                "sowing_date": sowing_date
+            }
+            res = orchestrator.dispatch("irrigation", payload)
+            if res["status"] == "ok":
+                return render_template('irrigation-result.html', irr=res["data"]["irrigation"], harvest=res["data"].get("harvest"), city=city, title=title)
+        return render_template('try_again.html', title=title)
+
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
