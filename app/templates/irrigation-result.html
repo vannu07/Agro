@@ -1,0 +1,120 @@
+{% extends 'layout.html' %} {% block body %}
+
+<!-- =========================================================================
+     IRRIGATION DASHBOARD — PREMIUM PERFORMANCE REPORT
+     ========================================================================= -->
+<section class="hero-cinematic min-vh-100 position-relative overflow-hidden d-flex align-items-center py-5">
+    <!-- Cinematic Background -->
+    <div class="hero-cinematic-bg" style="background-image: url('https://images.unsplash.com/photo-1592982537447-6f2a6a0c7c18?auto=format&fit=crop&q=80&w=2000'); filter: blur(4px) saturate(0.5);"></div>
+    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4) 0%, rgba(255,255,255,0.95) 100%);"></div>
+
+    <div class="container position-relative z-index-100" style="padding-top: 120px;">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-8 stagger-load">
+                <div class="d-inline-flex align-items-center mb-3">
+                    <span class="badge badge-elite-live mr-3">HYDRATION SYNC ACTIVE</span>
+                    <div class="pulse-green"></div>
+                </div>
+                <h1 class="fluid-5xl font-weight-bold text-slate-900 mb-0" style="letter-spacing: -3px;">Hydration <span class="text-gradient-primary">Management</span></h1>
+                <p class="fluid-base text-muted mt-3">Live telemetry analysis for {{ city | capitalize }} Geographic Sector.</p>
+            </div>
+        </div>
+
+        <div class="row g-4 stagger-load">
+            <!-- Irrigation Card -->
+            <div class="col-lg-6">
+                <div class="glass-panel p-5 h-100 shadow-xl" style="border-radius: 32px; background: rgba(255,255,255,0.9); border: 1px solid rgba(14, 165, 233, 0.1);">
+                    <div class="d-flex align-items-center mb-5">
+                        <div class="p-3 rounded-4 mr-4" style="background: rgba(14, 165, 233, 0.1); color: #0ea5e9;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-droplet"><path d="M7 16.3c2.2 0 4-1.8 4-4 0-3.3-4-8-4-8s-4 4.7-4 8c0 2.2 1.8 4 4 4Z"/><path d="M17 19c2.9 0 4-2.1 4-4.6 0-3.7-4-9.4-4-9.4s-4 5.7-4 9.4c0 2.5 1.1 4.6 4 4.6Z"/></svg>
+                        </div>
+                        <h4 class="font-weight-bold mb-0 text-slate-800">Hydration Synthesis</h4>
+                    </div>
+
+                    <div class="py-4 text-center mb-4">
+                        <p class="text-muted text-uppercase small font-weight-bold mb-1" style="letter-spacing: 2px;">Target Water Flow</p>
+                        <div class="fluid-5xl font-weight-bold text-info">{{ irr.water_need }} <span class="fluid-xl text-muted">L/m²</span></div>
+                    </div>
+
+                    <div class="glass-panel p-4 text-center mb-5" style="border-radius: 20px; background: {% if irr.color == 'danger' %}rgba(239, 68, 68, 0.05){% else %}rgba(16, 185, 129, 0.05){% endif %}; border: 2px dashed {% if irr.color == 'danger' %}rgba(239,68,68,0.3){% else %}rgba(16,185,129,0.3){% endif %};">
+                        <h5 class="font-weight-bold mb-1" style="color: {% if irr.color == 'danger' %}#ef4444{% else %}#10b981{% endif %};">{{ irr.status }}</h5>
+                        <p class="small text-muted mb-0 font-weight-bold uppercase">MODULE: {{ irr.crop | capitalize }}</p>
+                    </div>
+
+                    <div class="row g-3 text-center">
+                        <div class="col-6">
+                            <div class="glass-panel p-3 h-100" style="background: rgba(15, 23, 42, 0.02); border-radius: 16px;">
+                                <div class="fluid-lg font-weight-bold text-dark">{{ irr.weather.temp }}°C</div>
+                                <div class="small text-muted font-weight-bold uppercase">Temp</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="glass-panel p-3 h-100" style="background: rgba(15, 23, 42, 0.02); border-radius: 16px;">
+                                <div class="fluid-lg font-weight-bold text-dark">{{ irr.weather.humidity }}%</div>
+                                <div class="small text-muted font-weight-bold uppercase">Humidity</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Harvest Card -->
+            <div class="col-lg-6">
+                <div class="glass-panel p-5 h-100 shadow-xl" style="border-radius: 32px; background: rgba(255,255,255,0.9); border: 1px solid rgba(245, 158, 11, 0.1);">
+                    <div class="d-flex align-items-center mb-5">
+                        <div class="p-3 rounded-4 mr-4" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-check"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
+                        </div>
+                        <h4 class="font-weight-bold mb-0 text-slate-800">Growth Velocity</h4>
+                    </div>
+
+                    <div class="py-4 text-center mb-4">
+                        <p class="text-muted text-uppercase small font-weight-bold mb-1" style="letter-spacing: 2px;">Estimated Harvest Horizon</p>
+                        <div class="fluid-4xl font-weight-bold text-slate-900" style="letter-spacing: -1.5px;">{{ harvest.harvest_date }}</div>
+                    </div>
+
+                    <div class="mb-5">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="font-weight-bold small text-muted">CURRENT PHASE: <span class="text-warning">{{ harvest.stage | upper }}</span></span>
+                            <span class="font-weight-bold small text-primary">{{ harvest.progress }}% COMPLETE</span>
+                        </div>
+                        <div class="progress-wrap-expert" style="background: rgba(0,0,0,0.05); height: 10px;">
+                            <div class="progress-expert-bar bg-warning" style="width: {{ harvest.progress }}%"></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-4 text-center" style="background: #0f172a; border-radius: 20px; color: white;">
+                        <div class="fluid-4xl font-weight-bold mb-0 text-gradient-primary">{{ harvest.days_remaining }}</div>
+                        <p class="font-weight-bold text-white-50 small mb-0 uppercase" style="letter-spacing: 2px;">Days until Peak Maturity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5 stagger-load">
+            <a href="{{ url_for('irrigation_form') }}" class="btn btn-outline-elite px-5 py-3 mr-3" style="border-radius: 12px; font-weight: 700;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2 lucide lucide-rotate-ccw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                Sync Device
+            </a>
+            <button class="btn btn-elite px-5 py-3" style="border-radius: 12px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2 lucide lucide-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                Deploy Schedule
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Elite Stagger Entrance -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    gsap.from(".stagger-load > *", {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power4.out"
+    });
+});
+</script>
+
+{% endblock %}

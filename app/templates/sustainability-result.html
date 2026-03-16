@@ -1,0 +1,108 @@
+{% extends 'layout.html' %} {% block body %}
+
+<!-- =========================================================================
+     SUSTAINABILITY RESULT — PREMIUM ECOLOGICAL STRATEGY
+     ========================================================================= -->
+<section class="hero-cinematic min-vh-100 position-relative overflow-hidden d-flex align-items-center py-5">
+    <!-- Cinematic Background -->
+    <div class="hero-cinematic-bg" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=2000'); filter: blur(4px) saturate(0.5);"></div>
+    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(15, 23, 42, 0.6) 0%, rgba(255,255,255,0.95) 100%);"></div>
+
+    <div class="container position-relative z-index-100" style="padding-top: 120px;">
+        <div class="row">
+            
+            <!-- Result Main Column -->
+            <div class="col-lg-8 stagger-load">
+                <div class="glass-panel p-5 mb-4" style="border-radius: 32px; background: rgba(255,255,255,0.9); border: 1px solid rgba(16, 185, 129, 0.1); box-shadow: 0 40px 80px rgba(0,0,0,0.08);">
+                    
+                    <div class="d-flex align-items-center mb-5">
+                        <div class="d-inline-flex align-items-center justify-content-center mr-4" style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); border-radius: 16px; color: var(--elite-success);">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-leaf"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-muted font-weight-bold text-uppercase small mb-1" style="letter-spacing: 2px;">Environmental Intelligence</h4>
+                            <h2 class="fluid-3xl font-weight-bold text-slate-900" style="letter-spacing: -1.5px;">Ecological Strategy for {{ crop | capitalize }}</h2>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Rotation Block -->
+                    <div class="mb-5">
+                        <h5 class="font-weight-bold mb-4 text-slate-800 d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--elite-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 lucide lucide-refresh-cw"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
+                            Recommended Transition Matrix
+                        </h5>
+                        <div class="d-flex flex-wrap gap-3">
+                            {% for suggestion in advice.next_crop_suggestions %}
+                            <div class="glass-panel px-4 py-3 text-success font-weight-bold rounded-4 d-flex align-items-center" style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16,185,129,0.2);">
+                                <span class="dot-status bg-success mr-3"></span>
+                                {{ suggestion }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Soil Analysis Quote -->
+                    <div class="glass-panel p-5 mb-5" style="background: #ffffff; border-radius: 24px; border: 1px solid rgba(0,0,0,0.05);">
+                        <h6 class="text-primary font-weight-bold text-uppercase small mb-3">Health Synthesis</h6>
+                        <div class="fluid-lg" style="line-height: 1.8; color: #334155; font-weight: 500;">
+                            {{ advice.soil_analysis | safe }}
+                        </div>
+                    </div>
+
+                    <!-- Ecological Protocol Grid -->
+                    <div>
+                        <h5 class="font-weight-bold mb-4 text-slate-800">Operational Ecology Protocols</h5>
+                        <div class="row g-3">
+                            {% for tip in advice.sustainability_tips %}
+                            <div class="col-md-6">
+                                <div class="glass-panel p-3 h-100 d-flex align-items-center" style="background: rgba(15, 23, 42, 0.02); border-radius: 16px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 lucide lucide-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    <span class="small font-weight-bold text-muted">{{ tip }}</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Context -->
+            <div class="col-lg-4 stagger-load">
+                <div class="glass-panel p-5 mb-4" style="border-radius: 24px; background: #0f172a; color: white;">
+                    <h5 class="font-weight-bold mb-4">Soil Preservation</h5>
+                    <p class="text-white-50 small mb-4">Strategic orchestration of crop modules can reduce synthetic dependency by up to 25% across a 36-month window.</p>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="fluid-3xl font-weight-bold text-primary mr-4">85%</div>
+                        <div class="small text-white-50 font-weight-bold">SOIL VIGOR RECOVERY</div>
+                    </div>
+                    <div class="progress-wrap-expert" style="background: rgba(255,255,255,0.1);">
+                        <div class="progress-expert-bar" style="width: 85%"></div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-0 overflow-hidden" style="border-radius: 24px; min-height: 250px;">
+                    <div class="h-100 p-4 d-flex flex-column justify-content-end" style="background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%), url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&q=80&w=2000'); background-size: cover; background-position: center;">
+                        <h5 class="text-white font-weight-bold">Expert Consultation</h5>
+                        <p class="text-white-50 small mb-3">Connect with planetary bioscientists for advanced terra-management.</p>
+                        <a href="{{ url_for('sustainability_advisor') }}" class="btn btn-elite py-2 btn-sm w-fit">Recalculate Strategy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Elite Stagger Entrance -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    gsap.from(".stagger-load > *", {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power4.out"
+    });
+});
+</script>
+
+{% endblock %}

@@ -1,28 +1,156 @@
-{% extends 'layout.html' %} 
-{% block body %}
+{% extends 'layout.html' %} {% block body %}
 
-<div class="container result-container" data-aos="zoom-in" data-aos-duration="1000">
-  <div class="result-card">
-    <i class="fa fa-leaf recommendation-icon"></i>
-    <h1>You should grow <i>{{ prediction }}</i> in your farm</h1>
-    {% if orchestration and orchestration.agents %}
-    <div class="mt-4 text-left">
-      {% set weather = orchestration.agents.get('weather') %}
-      {% set yield_agent = orchestration.agents.get('yield') %}
-      {% set market = orchestration.agents.get('market') %}
-      {% if weather and weather.status == 'ok' %}
-      <p>Weather in {{ weather.data.city }}: {{ weather.data.temperature }}°C, {{ weather.data.humidity }}% humidity (risk: {{ weather.data.risk_level }}).</p>
-      {% endif %}
-      {% if yield_agent and yield_agent.status == 'ok' %}
-      <p>Average historical yield for {{ yield_agent.data.crop }}: {{ '%.2f'|format(yield_agent.data.avg_yield) }} {{ yield_agent.data.unit }}.</p>
-      {% endif %}
-      {% if market and market.status == 'ok' %}
-      <p>Approximate market price: ₹{{ '%.0f'|format(market.data.price_per_quintal) }} per quintal.</p>
-      {% endif %}
+<!-- =========================================================================
+     CROP RESULT — PREMIUM INTELLIGENCE REPORT
+     ========================================================================= -->
+<section class="hero-cinematic min-vh-100 position-relative overflow-hidden d-flex align-items-center py-5">
+    <!-- Cinematic Background -->
+    <div class="hero-cinematic-bg" style="background-image: url('https://images.unsplash.com/photo-1592982537447-7440770cbfc9?q=80&w=2070&auto=format&fit=crop');"></div>
+    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4) 0%, rgba(255,255,255,0.95) 100%);"></div>
+
+    <div class="container position-relative z-index-100" style="padding-top: 120px;">
+        <div class="row">
+            
+            <!-- Result Main Column -->
+            <div class="col-lg-8 stagger-load">
+                <div class="glass-panel p-5 mb-4" style="border-radius: 32px; background: rgba(255,255,255,0.7); border: 1px solid rgba(5, 150, 105, 0.1); box-shadow: 0 30px 60px rgba(0,0,0,0.05);">
+                    <div class="d-flex align-items-center mb-4">
+                        <span class="badge badge-elite-live mr-3">ORCHESTRATION COMPLETE</span>
+                        <div class="pulse-green"></div>
+                    </div>
+                    
+                    <h4 class="text-muted font-weight-bold text-uppercase small mb-2" style="letter-spacing: 2px;">Recommended Strategy</h4>
+                    <h1 class="fluid-5xl font-weight-bold mb-4" style="letter-spacing: -3px; color: var(--text-main);">
+                        Cultivate <span class="text-gradient-primary">{{ prediction | capitalize }}</span>
+                    </h1>
+                    
+                    <p class="fluid-base text-muted mb-5" style="max-width: 600px; line-height: 1.8;">
+                        Our neural networks have processed your regional telemetry. <b>{{ prediction | capitalize }}</b> is mathematically the most optimal choice for maximum yield in your environment.
+                    </p>
+
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="{{ url_for('fertilizer_recommendation') }}" class="btn btn-elite py-3 px-4" style="border-radius: 12px;">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M22 7.5V17c0 .5-.4 1-1 1H3c-.6 0-1-.5-1-1V7.5c0-.6.4-1.1 1-1.1h18c.6 0 1 .5 1 1.1Z"/><path d="M2 7a2 2 0 0 1 2-2h3"/><path d="M22 7a2 2 0 0 0-2-2h-3"/><path d="M2 13.5a2 2 0 0 1 2 2v2"/><path d="M22 13.5a2 2 0 0 0-2 2v2"/><path d="M11 5V3"/><path d="M12 5h-2"/><path d="M12 18v3"/><path d="M13 21h-2"/></svg> Nutrient Advisor
+                        </a>
+                        <a href="{{ url_for('crop_recommend') }}" class="btn btn-outline-elite py-3 px-4" style="border-radius: 12px; font-weight: 700;">
+                           Refine Telemetry
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Intelligence Grid -->
+                {% if orchestration and orchestration.agents %}
+                <div class="row">
+                    {% set weather = orchestration.agents.get('weather') %}
+                    {% set yield_agent = orchestration.agents.get('yield') %}
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="glass-panel p-4 h-100" style="background: rgba(255,255,255,0.4); border-radius: 24px;">
+                            <h5 class="font-weight-bold mb-4 d-flex align-items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 19.07-1.41-1.41"/><path d="M12 20v2"/><path d="m6.34 17.66-1.41 1.41"/><path d="M2 12h2"/><path d="m5.93 5.93-1.41-1.41"/><circle cx="12" cy="12" r="4"/></svg> Weather Context
+                            </h5>
+                            {% if weather and weather.status == 'ok' %}
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted small font-weight-bold uppercase">Temperature</span>
+                                <span class="font-weight-bold text-dark">{{ weather.data.temperature }}°C</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted small font-weight-bold uppercase">Humidity</span>
+                                <span class="font-weight-bold text-dark">{{ weather.data.humidity }}%</span>
+                            </div>
+                            <div class="mt-4 pt-3 border-top">
+                                <span class="badge badge-elite-live" style="background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.2);">
+                                    {{ weather.data.risk_level | upper }} CLIMATE RISK
+                                </span>
+                            </div>
+                            {% else %}
+                            <p class="small text-muted">Weather data temporarily unavailable.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="glass-panel p-4 h-100" style="background: rgba(255,255,255,0.4); border-radius: 24px;">
+                            <h5 class="font-weight-bold mb-4 d-flex align-items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M12 20a10 10 0 0 0 10-10c0-5.5-4.5-10-10-10a10 10 0 0 0-10 10c0 5.5 4.5 10 10 10Zm0 0V10"/></svg> Harvest Forecast
+                            </h5>
+                            {% if yield_agent and yield_agent.status == 'ok' %}
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted small font-weight-bold uppercase">Expected Yield</span>
+                                <span class="font-weight-bold text-success">{{ '%.2f'|format(yield_agent.data.avg_yield) }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted small font-weight-bold uppercase">Metric Unit</span>
+                                <span class="font-weight-bold text-dark">{{ yield_agent.data.unit }}</span>
+                            </div>
+                            <p class="small text-muted mt-3 italic">"{{ yield_agent.data.message }}"</p>
+                            {% else %}
+                            <p class="small text-muted">Yield prediction data unavailable.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar Actions -->
+            <div class="col-lg-4 stagger-load">
+                <div class="glass-panel p-4 mb-4" style="border-radius: 24px; background: #ffffff;">
+                    <h5 class="font-weight-bold mb-4">Next Performance Steps</h5>
+                    <div class="timeline-elite">
+                        <div class="d-flex mb-4">
+                            <div class="pill-icon mr-3" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                            </div>
+                            <div>
+                                <h6 class="font-weight-bold mb-1">Source Elite Seeds</h6>
+                                <p class="small text-muted mb-0">Procure high-vigor {{ prediction }} seeds optimized for your region.</p>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-4">
+                            <div class="pill-icon mr-3" style="background: rgba(234, 179, 8, 0.1); color: #eab308;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.3c2.2 0 4-1.8 4-4 0-3.3-4-8-4-8s-4 4.7-4 8c0 2.2 1.8 4 4 4Z"/><path d="M17 19c2.9 0 4-2.1 4-4.6 0-3.7-4-9.4-4-9.4s-4 5.7-4 9.4c0 2.5 1.1 4.6 4 4.6Z"/></svg>
+                            </div>
+                            <div>
+                                <h6 class="font-weight-bold mb-1">Configure Smart Water</h6>
+                                <p class="small text-muted mb-0">Sync your irrigation agent with the 7-day climate horizon.</p>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="pill-icon mr-3" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+                            </div>
+                            <div>
+                                <h6 class="font-weight-bold mb-1">Activate Biosecurity</h6>
+                                <p class="small text-muted mb-0">Initialize scheduled leaf-scan protocols to detect pathogens early.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-0 overflow-hidden" style="border-radius: 24px; min-height: 250px;">
+                    <div class="h-100 p-4 d-flex flex-column justify-content-end" style="background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%), url('https://images.unsplash.com/photo-1595841696677-5f8993f79927?q=80&w=1974&auto=format&fit=crop'); background-size: cover; background-position: center;">
+                        <h5 class="text-white font-weight-bold">Sustainable Mastery</h5>
+                        <p class="text-white-50 small mb-3">Learn how crop rotation advisor can boost your long-term output.</p>
+                        <a href="{{ url_for('sustainability_advisor') }}" class="btn btn-elite py-2 btn-sm w-fit">Explore Sustainability</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    {% endif %}
-    <a href="{{ url_for('crop_recommend') }}" class="btn btn-light back-btn">Predict Again</a>
-  </div>
-</div>
+</section>
+
+<!-- Elite Stagger Entrance -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    gsap.from(".stagger-load > *", {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power4.out"
+    });
+});
+</script>
 
 {% endblock %}
