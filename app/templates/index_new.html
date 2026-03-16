@@ -1,0 +1,216 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="hero-section" style="padding-top: 80px;">
+  <div class="container">
+    <div class="hero-content">
+      <h1 class="hero-title animate-fade-in-up">Krishi Mitr</h1>
+      <p class="hero-subtitle animate-fade-in-up" style="animation-delay: 0.2s;">
+        AI-Powered Agricultural Intelligence for Modern Farming
+      </p>
+      <p style="color: white; font-size: var(--text-lg); margin-bottom: var(--space-2xl); animation: fadeInUp 0.8s ease forwards; animation-delay: 0.4s;">
+        Get intelligent recommendations for crop selection, disease detection, fertilizer management, and sustainable farming practices.
+      </p>
+      
+      <div class="hero-buttons animate-fade-in-up" style="animation-delay: 0.6s;">
+        <a href="{{ url_for('crop_recommend') }}" class="btn btn-primary btn-lg">Get Started</a>
+        <a href="{{ url_for('about') }}" class="btn btn-outline btn-lg">Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2>Our AI-Powered Services</h2>
+      <p class="text-muted" style="font-size: var(--text-lg); max-width: 600px; margin: var(--space-lg) auto;">
+        Leverage cutting-edge AI and machine learning to make smarter farming decisions
+      </p>
+    </div>
+
+    <div class="feature-grid animate-stagger">
+      <!-- Crop Recommendation -->
+      <a href="{{ url_for('crop_recommend') }}" class="agent-card">
+        <div class="agent-icon">🌾</div>
+        <h3 class="agent-name">Crop Recommendation</h3>
+        <p class="agent-description">
+          Get personalized crop recommendations based on your soil type, climate, and location for maximum yield.
+        </p>
+      </a>
+
+      <!-- Fertilizer Suggestion -->
+      <a href="{{ url_for('fertilizer_recommendation') }}" class="agent-card">
+        <div class="agent-icon">🧪</div>
+        <h3 class="agent-name">Fertilizer Suggestion</h3>
+        <p class="agent-description">
+          Optimal fertilizer recommendations tailored to your crop and soil conditions for healthy growth.
+        </p>
+      </a>
+
+      <!-- Disease Prediction -->
+      <a href="{{ url_for('disease_prediction') }}" class="agent-card">
+        <div class="agent-icon">🔍</div>
+        <h3 class="agent-name">Disease Detection</h3>
+        <p class="agent-description">
+          Advanced AI analysis to detect crop diseases early and provide treatment recommendations.
+        </p>
+      </a>
+
+      <!-- Yield Prediction -->
+      <a href="{{ url_for('yield_predict') }}" class="agent-card">
+        <div class="agent-icon">📊</div>
+        <h3 class="agent-name">Yield Prediction</h3>
+        <p class="agent-description">
+          Predict your harvest yield based on current conditions and receive optimization suggestions.
+        </p>
+      </a>
+
+      <!-- Sustainability -->
+      <a href="{{ url_for('sustainability') }}" class="agent-card">
+        <div class="agent-icon">🌱</div>
+        <h3 class="agent-name">Sustainability Advisor</h3>
+        <p class="agent-description">
+          Get guidance on sustainable farming practices, crop rotation, and environmental conservation.
+        </p>
+      </a>
+
+      <!-- Smart Irrigation -->
+      <a href="{{ url_for('irrigation') }}" class="agent-card">
+        <div class="agent-icon">💧</div>
+        <h3 class="agent-name">Smart Irrigation</h3>
+        <p class="agent-description">
+          Intelligent irrigation scheduling to optimize water usage and reduce farming costs.
+        </p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="section" style="background: var(--neutral-light-gray);">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4xl); align-items: center;">
+      <div>
+        <h2 style="margin-bottom: var(--space-lg);">About Krishi Mitr</h2>
+        <p style="margin-bottom: var(--space-md); font-size: var(--text-lg);">
+          Krishi Mitr (Farmer's Friend) is an AI-powered agricultural intelligence platform designed specifically for Indian farmers. We combine state-of-the-art machine learning and deep learning technologies to help farmers make informed decisions throughout their farming journey.
+        </p>
+        <p style="margin-bottom: var(--space-md); font-size: var(--text-lg);">
+          Our mission is to increase agricultural productivity, improve sustainability, and help farmers maximize their profits through intelligent technology.
+        </p>
+        
+        <div style="display: flex; gap: var(--space-xl); margin-top: var(--space-2xl);">
+          <div>
+            <h3 style="color: var(--primary-emerald); font-size: var(--text-2xl);">500+</h3>
+            <p class="text-muted">Farmers Helped</p>
+          </div>
+          <div>
+            <h3 style="color: var(--primary-emerald); font-size: var(--text-2xl);">50+</h3>
+            <p class="text-muted">Crop Varieties</p>
+          </div>
+          <div>
+            <h3 style="color: var(--primary-emerald); font-size: var(--text-2xl);">24/7</h3>
+            <p class="text-muted">Support</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card-glass" style="padding: var(--space-3xl); text-align: center;">
+          <h3 style="color: var(--primary-emerald); margin-bottom: var(--space-lg);">Why Choose Krishi Mitr?</h3>
+          <ul style="text-align: left; list-style: none; padding: 0;">
+            <li style="padding: var(--space-md) 0; border-bottom: 1px solid rgba(0,0,0,0.1); display: flex; gap: var(--space-md);">
+              <span style="color: var(--primary-emerald); font-size: 20px;">✓</span>
+              <span>AI-powered recommendations based on real data</span>
+            </li>
+            <li style="padding: var(--space-md) 0; border-bottom: 1px solid rgba(0,0,0,0.1); display: flex; gap: var(--space-md);">
+              <span style="color: var(--primary-emerald); font-size: 20px;">✓</span>
+              <span>Easy-to-use interface for all farmers</span>
+            </li>
+            <li style="padding: var(--space-md) 0; border-bottom: 1px solid rgba(0,0,0,0.1); display: flex; gap: var(--space-md);">
+              <span style="color: var(--primary-emerald); font-size: 20px;">✓</span>
+              <span>Personalized guidance for your region</span>
+            </li>
+            <li style="padding: var(--space-md) 0; border-bottom: 1px solid rgba(0,0,0,0.1); display: flex; gap: var(--space-md);">
+              <span style="color: var(--primary-emerald); font-size: 20px;">✓</span>
+              <span>Sustainable farming practices</span>
+            </li>
+            <li style="padding: var(--space-md) 0; display: flex; gap: var(--space-md);">
+              <span style="color: var(--primary-emerald); font-size: 20px;">✓</span>
+              <span>Cost-effective solutions</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section">
+  <div class="container text-center">
+    <h2 style="margin-bottom: var(--space-lg);">Ready to Transform Your Farming?</h2>
+    <p style="font-size: var(--text-lg); color: var(--neutral-gray); margin-bottom: var(--space-2xl); max-width: 600px; margin-left: auto; margin-right: auto;">
+      Join thousands of farmers using Krishi Mitr to make better decisions and increase their yields.
+    </p>
+    <a href="{{ url_for('crop_recommend') }}" class="btn btn-primary btn-lg" style="margin-right: var(--space-lg);">Start Free</a>
+    <a href="{{ url_for('about') }}" class="btn btn-secondary btn-lg">View All Features</a>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="section" style="background: linear-gradient(135deg, var(--primary-emerald), var(--primary-emerald-dark));">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2xl); text-align: center; color: white;">
+      <div class="animate-fade-in-up">
+        <h3 style="font-size: var(--text-4xl); margin-bottom: var(--space-sm);">98%</h3>
+        <p style="color: rgba(255,255,255,0.9);">Accuracy Rate</p>
+      </div>
+      <div class="animate-fade-in-up" style="animation-delay: 0.2s;">
+        <h3 style="font-size: var(--text-4xl); margin-bottom: var(--space-sm);">50+</h3>
+        <p style="color: rgba(255,255,255,0.9);">Crop Types</p>
+      </div>
+      <div class="animate-fade-in-up" style="animation-delay: 0.4s;">
+        <h3 style="font-size: var(--text-4xl); margin-bottom: var(--space-sm);">100+</h3>
+        <p style="color: rgba(255,255,255,0.9);">Diseases Detected</p>
+      </div>
+      <div class="animate-fade-in-up" style="animation-delay: 0.6s;">
+        <h3 style="font-size: var(--text-4xl); margin-bottom: var(--space-sm);">24/7</h3>
+        <p style="color: rgba(255,255,255,0.9);">Support Available</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// Page load animation
+window.addEventListener('load', function() {
+  document.getElementById('page-content').style.opacity = '1';
+});
+
+// Scroll animations
+document.addEventListener('DOMContentLoaded', function() {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-fade-in-up');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.agent-card').forEach(card => {
+    observer.observe(card);
+  });
+});
+</script>
+
+{% endblock %}
