@@ -1,0 +1,497 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;900&display=swap');
+
+:root {
+    /* Enterprise-Grade HSL Palette (Agripilot Inspired) */
+    --h-primary: 158; /* Deep Forest */
+    --h-secondary: 160; /* Dark Teal */
+    --h-accent: 44; /* Harvest Gold */
+    
+    --primary: hsl(var(--h-primary), 40%, 28%);
+    --primary-light: hsl(var(--h-primary), 35%, 45%);
+    --primary-dark: hsl(var(--h-primary), 50%, 15%);
+    
+    --secondary: hsl(var(--h-secondary), 45%, 12%);
+    --secondary-light: hsl(var(--h-secondary), 25%, 25%);
+    
+    --accent: hsl(var(--h-accent), 100%, 48%);
+    --accent-light: hsl(var(--h-accent), 100%, 65%);
+    
+    --text-main: hsl(210, 24%, 16%);
+    --text-muted: hsl(210, 15%, 40%);
+    --text-light: hsl(0, 0%, 100%);
+    
+    --bg-main: #f8faf9;
+    --bg-surface: #ffffff;
+    
+    /* Structured Enterprise Shadows */
+    --shadow-pro: 
+        0 1px 3px rgba(0,0,0,0.12), 
+        0 1px 2px rgba(0,0,0,0.24);
+    --shadow-lg: 
+        0 10px 15px -3px rgba(0,0,0,0.1), 
+        0 4px 6px -2px rgba(0,0,0,0.05);
+    
+    /* Precision Spacing */
+    --space-xs: 0.25rem;
+    --space-sm: 0.75rem;
+    --space-md: 1.25rem;
+    --space-lg: 2.5rem;
+    --space-xl: 4rem;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: radial-gradient(circle at top right, hsla(var(--h-primary), 30%, 95%, 1), transparent 40%),
+                radial-gradient(circle at bottom left, hsla(var(--h-secondary), 20%, 95%, 1), transparent 40%),
+                var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--secondary);
+}
+
+/* Glassmorphism Utilities */
+.glass {
+    background: hsla(0, 0%, 100%, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid hsla(0, 0%, 100%, 0.4);
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-pro);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, hsla(0,0%,100%,0.3) 0%, transparent 100%);
+    border-radius: inherit;
+}
+
+.glass-dark {
+    background: hsla(222, 47%, 11%, 0.85);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid hsla(0, 0%, 100%, 0.1);
+    border-radius: 1.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Navigation (Enterprise Polish) */
+.navbar-modern {
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: var(--nav-height);
+    background: transparent;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.navbar-modern.scrolled {
+    background: #ffffff !important;
+    height: 75px;
+    box-shadow: var(--shadow-pro);
+    border-bottom: 2px solid var(--primary);
+}
+
+.navbar-brand img {
+    height: 40px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.navbar-modern.scrolled .navbar-brand img {
+    height: 32px;
+}
+
+.navbar-modern .nav-link {
+    font-weight: 500;
+    color: var(--text-main) !important;
+    margin: 0 0.5rem;
+    position: relative;
+}
+
+.navbar-modern .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.3s ease;
+}
+
+.navbar-modern .nav-link:hover::after {
+    width: 100%;
+}
+
+/* Premium Buttons */
+/* Premium Buttons (Agripilot Reference) */
+.btn-premium {
+    background: var(--primary);
+    color: white !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 0.8rem 2.2rem;
+    border-radius: 6px; /* Structured enterprise look */
+    border: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-pro);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-premium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    transform: skewX(-20deg);
+    transition: 0.6s ease;
+}
+
+.btn-premium:hover::before {
+    left: 150%;
+}
+
+.btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background: var(--primary-light);
+}
+
+.btn-premium:active {
+    transform: translateY(-1px);
+}
+
+/* Bento Cards */
+.bento-card {
+    background: var(--bg-surface);
+    backdrop-filter: blur(10px);
+    border: 1px solid hsla(0, 0%, 0%, 0.05);
+    border-radius: 2rem;
+    padding: 2.5rem;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.bento-card:hover {
+    transform: scale(1.02) translateY(-10px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-pro), var(--shadow-glow);
+    background: white;
+}
+
+.bento-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.25rem;
+    background: hsla(var(--h-primary), 84%, 39%, 0.1);
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+    transition: all 0.3s ease;
+}
+
+.bento-card:hover .bento-icon-wrapper {
+    background: var(--primary);
+    color: white;
+    transform: rotate(5deg);
+}
+
+/* Hero Section */
+.hero-glow {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0) 70%);
+    filter: blur(40px);
+    pointer-events: none;
+}
+
+/* Form Styling */
+.form-floating-label {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    transition: all 0.2s ease;
+}
+
+.form-floating-label:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px hsla(var(--h-primary), 84%, 39%, 0.1);
+    outline: none;
+}
+
+/* Utilities */
+.text-gradient {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.shadow-glow {
+    box-shadow: 0 0 25px hsla(var(--h-primary), 84%, 39%, 0.3);
+}
+
+.rounded-4 {
+    border-radius: 2rem !important;
+}
+
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+/* Animations */
+/* AI Chatbot Premium Styling */
+#chat-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 10px 25px -5px hsla(var(--h-primary), 84%, 39%, 0.5);
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#chat-toggle:hover {
+    transform: scale(1.1) rotate(10deg);
+}
+
+#chat-box {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 380px;
+    height: 500px;
+    background: var(--bg-surface);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsla(0, 0%, 100%, 0.4);
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-pro);
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+#chat-header {
+    background: var(--primary);
+    color: white;
+    padding: 1.25rem;
+    font-weight: 700;
+    font-family: 'Outfit';
+    display: flex;
+    justify-content: space-between;
+}
+
+#chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.msg {
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+    max-width: 85%;
+    font-size: 0.9rem;
+}
+
+.msg-bot {
+    background: white;
+    align-self: flex-start;
+    border-bottom-left-radius: 0.25rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.msg-user {
+    background: var(--primary);
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 0.25rem;
+}
+
+#chat-input {
+    padding: 1rem;
+    border-top: 1px solid hsla(0, 0%, 0%, 0.05);
+    display: flex;
+    gap: 0.5rem;
+}
+
+#chat-input input {
+    flex: 1;
+    border: none;
+    background: hsla(0, 0%, 0%, 0.03);
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    outline: none;
+}
+
+/* Footer Refinement */
+.footer-main {
+    background: var(--secondary);
+    color: hsla(0, 0%, 100%, 0.6);
+    padding: var(--space-xl) 0;
+}
+
+.footer-main h5 {
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.footer-link {
+    color: hsla(0, 0%, 100%, 0.6);
+    transition: color 0.3s ease;
+    text-decoration: none !important;
+}
+
+.footer-link:hover {
+    color: var(--primary-light);
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.float-anim {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* Future Technologies Section */
+.future-tech-section {
+    background-color: #f0f4f4; /* Subtle light gray-green matching reference */
+    padding: 100px 0;
+}
+
+.tech-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: var(--secondary);
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.tech-item:hover .tech-icon-wrapper {
+    transform: translateY(-5px);
+    color: var(--primary);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.drone-visual-wrapper {
+    position: relative;
+    padding-right: 50px;
+}
+
+.drone-line-art {
+    position: absolute;
+    bottom: -40px;
+    left: -20px;
+    z-index: 1;
+    opacity: 0.1;
+    pointer-events: none;
+    transform: rotate(-10deg);
+}
+
+.drone-img {
+    position: relative;
+    z-index: 2;
+    transition: all 0.5s ease;
+    filter: drop-shadow(0 30px 60px rgba(0,0,0,0.15));
+}
+
+.tech-list .tech-item {
+    transition: all 0.3s ease;
+}
+
+.tech-list .tech-item:hover {
+    transform: translateX(10px);
+}
+
+/* Hero Video Background (Agripilot Style) */
+.hero-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
+.hero-overlay-dark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%);
+    z-index: 1;
+}
+
+.hero-enterprise .container {
+    position: relative;
+    z-index: 2;
+}
