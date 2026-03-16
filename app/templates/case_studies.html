@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<!-- Cinematic Case Study Hero -->
+<section class="hero-cinematic" style="height: 60vh; min-height: 500px;">
+    <div class="hero-cinematic-bg" style="background-image: url('{{ url_for('static', filename='images/farm_background_1.jpg') }}'); filter: brightness(0.85);"></div>
+    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 60%, rgba(255,255,255,1) 100%);"></div>
+    
+    <div class="container h-100 d-flex align-items-center justify-content-center">
+        <div class="hero-cinematic-content text-center" style="padding-top: 4rem;">
+            <div class="intro-label mb-2 text-uppercase tracking-widest small font-weight-bold" style="color: var(--elite-accent);">Insights • Success Stories</div>
+            <h1 class="font-weight-bold text-white mb-4" style="font-size: clamp(3rem, 10vw, 6rem); text-shadow: 0 10px 30px rgba(0,0,0,0.6); letter-spacing: -2px; line-height: 1.1;">
+                Discover how <span style="background: linear-gradient(135deg, #a7f3d0 0%, #34d399 100%); -webkit-background-clip: text; -webkit-fill-color: transparent; background-clip: text;">Krishi Mitr</span> transforms lives across India.
+            </h1>
+        </div>
+    </div>
+</section>
+
+<!-- Case Studies Grid -->
+<section class="case-studies-page py-5">
+    <div class="container">
+        <div class="case-grid">
+            {% for slug, case in cases.items() %}
+            <div class="case-card" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+                <div class="case-img-wrap">
+                    <img src="{{ url_for('static', filename='images/' + case.image) }}" alt="{{ case.title }}">
+                    <div class="case-badge">{{ case.location }}</div>
+                </div>
+                <div class="case-content">
+                    <div class="case-meta">
+                        <span><i class="fa fa-user mr-1"></i> {{ case.name }}</span>
+                        <span><i class="fa fa-leaf mr-1"></i> {{ case.crop }}</span>
+                    </div>
+                    <h4>{{ case.title }}</h4>
+                    <p>{{ case.summary }}</p>
+                </div>
+                <div class="case-footer">
+                    <a href="{{ url_for('case_study_detail', slug=slug) }}" class="btn-case">Read Full Story <i class="fa fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Styling specifically for current page to handle hero overlap */
+    .case-studies-page {
+        background: #ffffff;
+        position: relative;
+        z-index: 10;
+        margin-top: -100px;
+        border-radius: 60px 60px 0 0;
+        box-shadow: 0 -20px 40px rgba(0,0,0,0.05);
+    }
+</style>
+{% endblock %}
