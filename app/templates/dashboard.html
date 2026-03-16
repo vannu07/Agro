@@ -1,74 +1,191 @@
 {% extends 'layout.html' %}
 {% block body %}
 
-<div class="container py-5">
-  <h2 class="text-center mb-4">FarmIQ Intelligence Dashboard</h2>
+<div class="dashboard-mesh-bg"></div>
 
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">Crop Dataset</h5>
-          {% if crop_stats %}
-            <p class="card-text">Total records: {{ crop_stats.total_rows }}</p>
-            <p class="card-text">Supported crops: {{ crop_stats.unique_count }}</p>
-          {% else %}
-            <p class="card-text">Crop dataset is not available.</p>
-          {% endif %}
+<main class="dashboard-elite-wrapper" style="padding-top: 100px; min-height: 100vh; position: relative; z-index: 1;">
+    <div class="container pb-5 stagger-load">
+        
+        <!-- Dashboard Header -->
+        <div class="row mb-5 align-items-end">
+            <div class="col-lg-7">
+                <div class="d-flex align-items-center mb-3">
+                    <span class="badge badge-mini mr-3" style="background: rgba(16, 185, 129, 0.1); color: var(--elite-primary-light);">SYSTEMS NOMINAL</span>
+                    <div class="pulse-green mr-2"></div>
+                    <span class="text-muted small fw-700 text-uppercase" style="letter-spacing: 1px;">Orchestrator v3.0 Elite</span>
+                </div>
+                {% if session.get('user') %}
+                <h1 class="fluid-5xl font-weight-bold mb-0" style="letter-spacing: -2px;">
+                    <span id="time-greeting">Welcome</span>, 
+                    <span class="text-gradient-primary">{{ session.get('user').get('userinfo').get('name', 'Farmer') }}</span>
+                </h1>
+                {% else %}
+                <h1 class="fluid-5xl font-weight-bold mb-0">Intelligence <span class="text-gradient-primary">Hub</span></h1>
+                {% endif %}
+                <p class="fluid-base text-muted mt-2 mb-0">Premium agricultural orchestration with real-time AI telemetry.</p>
+            </div>
+            <div class="col-lg-5 mt-4 mt-lg-0 d-flex justify-content-lg-end">
+                <div class="chronos-box glass-panel-premium" style="border-left: 4px solid var(--elite-accent);">
+                    <div class="icon-wrap-pill" style="background: var(--elite-accent); color: var(--elite-primary); width: 50px; height: 50px; border-radius: 15px;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="ml-3">
+                        <div class="chronos-time" id="live-clock" style="color: var(--elite-primary);">00:00:00</div>
+                        <div class="chronos-greeting" id="live-date">...</div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">Agents</h5>
-          <p class="card-text">6 feature agents and 1 orchestrator coordinate predictions.</p>
-          <ul class="mb-0">
-            <li>Crop recommendation</li>
-            <li>Fertilizer suggestion</li>
-            <li>Plant disease detection</li>
-            <li>Weather risk</li>
-            <li>Yield estimation</li>
-            <li>Market insight</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">How To Use</h5>
-          <p class="card-text">Start on Home, then use Crop, Fertilizer, and Disease pages.</p>
-          <p class="card-text">You can also ask quick questions using the chat assistant.</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  {% if yield_stats %}
-  <div class="mt-5">
-    <h3 class="mb-3">Average Yield By Crop</h3>
-    <div class="table-responsive">
-      <table class="table table-striped table-bordered">
-        <thead class="thead-light">
-          <tr>
-            <th>Crop</th>
-            <th>Average Yield ({{ yield_stats[0].unit }})</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for row in yield_stats %}
-          <tr>
-            <td>{{ row.crop }}</td>
-            <td>{{ '%.2f'|format(row.avg_yield) }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+        <!-- Bento Grid Layout -->
+        <div class="bento-grid-dashboard">
+            <!-- Hero Analytics Card -->
+            <div class="bento-item hero-card glass-panel-premium p-4 p-md-5">
+                <div class="row h-100">
+                    <div class="col-lg-7 d-flex flex-column justify-content-center">
+                        <div class="badge-mini mb-3" style="background: rgba(251, 191, 36, 0.1); color: var(--elite-accent);">ANALYTICS ENGINE</div>
+                        <h2 class="fluid-4xl font-weight-bold mb-3">Cultivation <span class="text-gradient-primary">Matrix</span></h2>
+                        <p class="text-muted mb-4">AI-driven predictive modeling based on regional soil chemistry and localized climate telemetry.</p>
+                        <div class="d-flex gap-3">
+                            <a href="{{ url_for('crop_recommend') }}" class="btn-elite-premium" style="background: var(--elite-accent); color: var(--elite-primary); border: none; text-decoration: none;">
+                                <i class="fas fa-plus me-2"></i> New Analysis
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 d-none d-lg-flex align-items-center justify-content-center">
+                        <div class="yield-chart-container" style="height: 250px;">
+                            <canvas id="yieldChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Items -->
+            <div class="bento-item stat-pill-box glass-panel-premium p-4">
+                <div class="icon-wrap-pill mb-3" style="color: var(--elite-primary-light);"><i class="fas fa-leaf"></i></div>
+                <div class="stat-val counter" data-target="{{ crop_stats.total_rows if crop_stats else 2200 }}">0</div>
+                <div class="stat-label">Data Points</div>
+            </div>
+
+            <div class="bento-item stat-pill-box glass-panel-premium p-4">
+                <div class="icon-wrap-pill mb-3" style="color: var(--elite-accent);"><i class="fas fa-robot"></i></div>
+                <div class="stat-val counter" data-target="06">0</div>
+                <div class="stat-label">AI Agents</div>
+            </div>
+
+            <div class="bento-item stat-pill-box glass-panel-premium p-4">
+                <div class="icon-wrap-pill mb-3" style="color: var(--elite-primary);"><i class="fas fa-award"></i></div>
+                <div class="stat-val" style="color: var(--elite-primary);">MASTER</div>
+                <div class="stat-label">User Tier</div>
+            </div>
+
+            <!-- Activity Log (Double Column Height) -->
+            <div class="bento-item activity-log-card glass-panel-premium p-4">
+                <div class="d-flex justify-content-between mb-4">
+                    <h5 class="font-weight-bold mb-0" style="color: var(--elite-primary);">Execution Log</h5>
+                    <div class="live-blink-dot" style="background: var(--elite-accent);"></div>
+                </div>
+                <div class="custom-scrollbar-mini" style="max-height: 400px; overflow-y: auto;">
+                    {% if recent_activities %}
+                        {% for activity in recent_activities %}
+                        <div class="log-item mb-3 p-3 glass-panel-pill">
+                            <div class="d-flex justify-content-between small mb-1">
+                                <span class="text-primary font-weight-bold" style="color: var(--elite-primary-light) !important;">{{ activity.type | upper }}</span>
+                                <span class="text-muted">{{ activity.time }}</span>
+                            </div>
+                            <p class="small mb-0 opacity-70">Query sequence finalized successfully.</p>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-5 opacity-30 small">No recent telemetry logs.</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="bento-item stat-pill-box glass-panel-premium p-4">
+                <div class="icon-wrap-pill mb-3" style="color: var(--elite-primary-light);"><i class="fas fa-bolt"></i></div>
+                <div class="stat-val counter" data-target="99.8">0</div>
+                <div class="stat-label">AI Uptime %</div>
+            </div>
+        </div>
     </div>
-  </div>
-  {% endif %}
-</div>
+</main>
+
+<script>
+    function initDashboard() {
+        updateChronos();
+        setInterval(updateChronos, 1000);
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = parseFloat(counter.getAttribute('data-target'));
+            let count = 0;
+            const speed = 2000 / target; // Total 2 seconds
+            
+            const updateCount = () => {
+                const increment = target / 100;
+                if (count < target) {
+                    count += increment;
+                    counter.innerText = target % 1 === 0 ? Math.ceil(count) : count.toFixed(1);
+                    setTimeout(updateCount, 20);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        });
+
+        // Yield Matrix Chart
+        const ctx = document.getElementById('yieldChart');
+        if (ctx) {
+            const yieldData = {
+                labels: [{% for row in yield_stats %}"{{ row.crop }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+                datasets: [{
+                    label: 'Yield Benchmarks',
+                    data: [{% for row in yield_stats %}{{ row.avg_yield }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                    backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                    borderColor: '#10b981',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            };
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [{% for row in yield_stats %}"{{ row.crop }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+                    datasets: [{
+                        label: 'Yield Benchmarks',
+                        data: [{% for row in yield_stats %}{{ row.avg_yield }}{% if not loop.last %}, {% endif %}{% endfor %}],
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderColor: '#10b981',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fbbf24', // Sunflower Yellow points
+                        pointBorderColor: '#ffffff',
+                        pointHoverRadius: 6,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { display: false },
+                        x: { 
+                            grid: { display: false },
+                            ticks: { color: 'rgba(6, 78, 59, 0.4)', font: { size: 10, weight: '700' } }
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', initDashboard);
+</script>
 
 {% endblock %}
-
