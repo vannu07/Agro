@@ -24,21 +24,32 @@
   "author": "Krishi Mitr Team",
   "license": "MIT",
   "scripts": {
-    "dev": "cd app && python app.py",
-    "start": "cd app && gunicorn -w 4 -b 0.0.0.0:5000 app:app",
-    "build": "pip install -r requirements.txt",
+    "dev": "next dev",
+    "build": "next build && cd app && pip install -r requirements.txt",
+    "start": "next start",
+    "flask": "cd app && python app.py",
+    "prod": "npm run build && npm start",
     "test": "pytest tests/ -v",
-    "lint": "flake8 app/",
-    "format": "black app/",
-    "showcase": "cd app && python app.py --open http://localhost:5000/showcase"
+    "lint": "next lint && flake8 app/",
+    "format": "prettier --write . && black app/",
+    "showcase": "next dev && cd app && python app.py"
   },
   "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "gsap": "^3.12.2",
     "chart.js": "^4.4.0",
     "aos": "^2.3.1"
   },
   "devDependencies": {
-    "prettier": "^3.0.0"
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "prettier": "^3.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0"
   },
   "engines": {
     "node": "18.x || 20.x",

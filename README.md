@@ -32,11 +32,28 @@ A comprehensive AI and ML platform for Indian farmers providing crop recommendat
 - Dependency management with requirements.txt
 - Ready for Heroku, AWS, Docker deployment
 
-**[Quick Start Guide →](./SETUP.md)**
+**[Quick Start Guide →](./RUN_PROJECT.md)**
+
+✅ **Modern Frontend Architecture** (NEW in v1.1)
+- Next.js 14 with TypeScript for type-safe development
+- Seamless Flask proxy integration for API calls
+- 3 comprehensive CSS files (1,342 lines) with design system
+- 20+ animations and interactive components
+- Fully responsive mobile-first design
+- Dark/light mode support
+
+**Quick Commands:**
+```bash
+npm install
+npm run dev  # Starts Next.js + proxies to Flask
+cd app && python app.py  # Run Flask backend
+```
+
+Visit: **http://localhost:3000** (Next.js frontend with Flask backend)
 
 ---
 
-#### A production-ready ML and DL platform which recommends the best crop to grow, manages fertilizers, predicts diseases, and promotes sustainable farming practices.
+#### A production-ready AI-powered agricultural platform with ML/DL models for crop recommendations, disease detection, yield predictions, fertilizer management, and sustainable farming guidance.
 
 ## DISCLAIMER ⚠️
 This is a POC(Proof of concept) kind-of project. The data used here comes up with no guarantee from the creator. So, don't use it for making farming decisions. If you do so, the creator is not responsible for anything. However, this project presents the idea that how we can use ML/DL into precision farming if developed at large scale and with authentic and verified data.
