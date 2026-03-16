@@ -1,4 +1,5 @@
 Flask
+Flask-Cors
 gunicorn
 numpy
 pandas
@@ -15,3 +16,9 @@ Pillow
 jupyter
 notebook
 nbconvert
+pymongo
+authlib
+python-dotenv
+google-generativeai
+cryptography
+markupsafe

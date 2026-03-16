@@ -863,5 +863,136 @@ def irrigation_result():
                 return render_template('irrigation-result.html', irr=res["data"]["irrigation"], harvest=res["data"].get("harvest"), city=city, title=title)
         return render_template('try_again.html', title=title)
 
+
+# ===============================================================================================
+# ERROR HANDLERS AND ADDITIONAL ROUTES
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """Handle 404 errors"""
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(e):
+    """Handle 500 errors"""
+    db.log_activity(
+        activity_type="error_500",
+        input_data={"path": request.path, "method": request.method},
+        metadata={"error": str(e)}
+    )
+    return render_template('500.html'), 500
+
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """Health check endpoint for monitoring"""
+    return jsonify({
+        "status": "healthy",
+        "service": "Krishi Mitr",
+        "version": "1.0.0",
+        "timestamp": str(pd.Timestamp.now())
+    }), 200
+
+@app.route('/api/agents', methods=['GET'])
+def list_agents():
+    """Get list of available agents"""
+    return jsonify({
+        "status": "ok",
+        "agents": [
+            {"name": "Crop Recommendation", "endpoint": "/crop-recommend"},
+            {"name": "Disease Detection", "endpoint": "/disease-predict"},
+            {"name": "Fertilizer Suggestion", "endpoint": "/fertilizer"},
+            {"name": "Yield Prediction", "endpoint": "/yield"},
+            {"name": "Sustainability Advisor", "endpoint": "/sustainability"},
+            {"name": "Smart Irrigation", "endpoint": "/irrigation"},
+            {"name": "Market Trends", "endpoint": "/market-trends"},
+            {"name": "AI Assistant", "endpoint": "/api/assistant"}
+        ]
+    }), 200
+
+@app.route('/disease')
+@requires_auth
+def disease_form():
+    """Render disease detection form"""
+    title = 'Krishi Mitr - Disease Detection'
+    return render_template('disease.html', title=title)
+
+@app.before_request
+def before_request():
+    """Pre-request handling"""
+    # Add security headers
+    pass
+
+@app.after_request
+def after_request(response):
+    """Post-request handling"""
+    # Add security headers
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    return response
+
+# ===============================================================================================
+# ERROR HANDLERS AND ADDITIONAL ROUTES
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """Handle 404 errors"""
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(e):
+    """Handle 500 errors"""
+    try:
+        mongo.log_activity(
+            activity_type="error_500",
+            input_data={"path": request.path, "method": request.method},
+            metadata={"error": str(e)}
+        )
+    except:
+        pass
+    return render_template('500.html'), 500
+
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    """Health check endpoint for monitoring"""
+    return jsonify({
+        "status": "healthy",
+        "service": "Krishi Mitr",
+        "version": "1.0.0",
+        "timestamp": str(pd.Timestamp.now())
+    }), 200
+
+@app.route('/api/agents', methods=['GET'])
+def list_agents():
+    """Get list of available agents"""
+    return jsonify({
+        "status": "ok",
+        "agents": [
+            {"name": "Crop Recommendation", "endpoint": "/crop-recommend"},
+            {"name": "Disease Detection", "endpoint": "/disease-predict"},
+            {"name": "Fertilizer Suggestion", "endpoint": "/fertilizer"},
+            {"name": "Yield Prediction", "endpoint": "/yield"},
+            {"name": "Sustainability Advisor", "endpoint": "/sustainability"},
+            {"name": "Smart Irrigation", "endpoint": "/irrigation"},
+            {"name": "Market Trends", "endpoint": "/market-trends"},
+            {"name": "AI Assistant", "endpoint": "/api/assistant"}
+        ]
+    }), 200
+
+@app.route('/disease')
+@requires_auth
+def disease_form():
+    """Render disease detection form"""
+    title = 'Krishi Mitr - Disease Detection'
+    return render_template('disease.html', title=title)
+
+@app.after_request
+def after_request(response):
+    """Post-request handling - add security headers"""
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    return response
+
 if __name__ == '__main__':
     app.run(debug=True)

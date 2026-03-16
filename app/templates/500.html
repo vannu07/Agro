@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Error - Krishi Mitr</title>
+    <link href="{{ url_for('static', filename='css/modern.css') }}" rel='stylesheet' type='text/css' />
+    <link href="{{ url_for('static', filename='css/elite.css') }}" rel='stylesheet' type='text/css' />
+    <style>
+        .error-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+        }
+        .error-content {
+            text-align: center;
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+        }
+        .error-code {
+            font-size: 120px;
+            font-weight: 900;
+            color: #f5576c;
+            margin: 0;
+            line-height: 1;
+        }
+        .error-title {
+            font-size: 32px;
+            color: #333;
+            margin: 20px 0 15px 0;
+            font-weight: 700;
+        }
+        .error-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .error-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-error {
+            padding: 12px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-home {
+            background: #f5576c;
+            color: white;
+        }
+        .btn-home:hover {
+            background: #e03a52;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(245, 87, 108, 0.3);
+        }
+        .btn-back {
+            background: #f0f0f0;
+            color: #333;
+        }
+        .btn-back:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        .error-illustration {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: shake 0.5s ease infinite;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-content">
+            <div class="error-illustration">⚠️</div>
+            <h1 class="error-code">500</h1>
+            <h2 class="error-title">Server Error</h2>
+            <p class="error-message">
+                Oops! Our AI agents seem to have hit a rough patch. 
+                Our team has been notified and we're working to fix this right away. 
+                Please try again in a few moments.
+            </p>
+            <div class="error-buttons">
+                <a href="{{ url_for('home') }}" class="btn-error btn-home">Return to Home</a>
+                <a href="{{ url_for('dashboard') }}" class="btn-error btn-back">Go to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,147 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main class="container-fluid mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Profile Card -->
+            <div class="card shadow-lg border-0 rounded-3 elite-card" style="margin-top: 40px;">
+                <div class="card-body p-5">
+                    <!-- User Avatar -->
+                    <div class="text-center mb-4">
+                        {% if user and user.picture %}
+                            <img src="{{ user.picture }}" 
+                                 alt="{{ user.name or 'User' }}" 
+                                 class="rounded-circle shadow"
+                                 style="width: 150px; height: 150px; object-fit: cover; border: 4px solid #667eea;">
+                        {% else %}
+                            <div class="rounded-circle mx-auto shadow"
+                                 style="width: 150px; height: 150px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+                                <span style="font-size: 60px; color: white;">👤</span>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- User Info -->
+                    <h1 class="text-center h3 font-weight-bold mb-2">
+                        {{ user.name if user else 'User' }}
+                    </h1>
+                    <p class="text-center text-muted mb-4">
+                        {{ user.email if user else 'No email' }}
+                    </p>
+
+                    <hr class="my-4">
+
+                    <!-- Profile Stats -->
+                    <div class="row text-center mb-4">
+                        <div class="col-md-4">
+                            <div class="p-3">
+                                <h4 class="text-primary font-weight-bold">0</h4>
+                                <p class="text-muted small">Crops Analyzed</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3">
+                                <h4 class="text-success font-weight-bold">0</h4>
+                                <p class="text-muted small">Recommendations</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3">
+                                <h4 class="text-warning font-weight-bold">0</h4>
+                                <p class="text-muted small">Saved Reports</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Quick Actions -->
+                    <div class="mb-4">
+                        <h5 class="font-weight-bold mb-3">Quick Actions</h5>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <a href="{{ url_for('crop_recommend') }}" class="btn btn-primary btn-block w-100 rounded-2">
+                                    🌾 Crop Recommendation
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="{{ url_for('disease_prediction') }}" class="btn btn-info btn-block w-100 rounded-2">
+                                    🔍 Disease Detection
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Settings -->
+                    <div class="mb-4">
+                        <h5 class="font-weight-bold mb-3">Account Settings</h5>
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action px-0 py-3 border-0">
+                                <span class="mr-2">⚙️</span> Edit Profile
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action px-0 py-3 border-0">
+                                <span class="mr-2">🔐</span> Change Password
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action px-0 py-3 border-0">
+                                <span class="mr-2">🔔</span> Notification Settings
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action px-0 py-3 border-0">
+                                <span class="mr-2">📊</span> View Analytics
+                            </a>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Logout Button -->
+                    <div class="text-center">
+                        <a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-lg rounded-2">
+                            🚪 Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Info Card -->
+            <div class="card shadow-lg border-0 rounded-3 elite-card mt-4" style="margin-bottom: 40px;">
+                <div class="card-body p-4">
+                    <h5 class="font-weight-bold mb-3">About Krishi Mitr</h5>
+                    <p class="text-muted">
+                        Krishi Mitr is your AI-powered agricultural assistant designed to help Indian farmers 
+                        make informed decisions about crop selection, disease management, and sustainable farming practices.
+                    </p>
+                    <p class="text-muted">
+                        Our advanced AI agents analyze your farm conditions and provide personalized recommendations 
+                        to maximize yield while promoting environmental sustainability.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<style>
+    .elite-card {
+        background: white;
+        transition: all 0.3s ease;
+    }
+
+    .elite-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2) !important;
+    }
+
+    .btn-block {
+        display: block;
+        width: 100%;
+    }
+
+    .list-group-item-action:hover {
+        background-color: #f8f9fa;
+        color: #667eea;
+        font-weight: 500;
+    }
+</style>
+
+{% endblock %}
