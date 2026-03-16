@@ -1,0 +1,220 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<main class="market-pulse-wrapper">
+    <!-- Market Hero -->
+    <section class="market-hero text-center text-white d-flex align-items-center justify-content-center">
+        <div class="hero-bg" style="background-image: url('{{ url_for('static', filename='images/farm_background_1.jpg') }}');"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="container position-relative z-index-10" style="padding-top: calc(var(--nav-height) + 60px);">
+            <div class="g-reveal-up">
+                <div class="intro-label mb-2 text-uppercase tracking-widest small font-weight-bold" style="color: var(--elite-accent);">Insights • Market Dynamics</div>
+                <h1 class="fluid-6xl font-weight-bold mb-4" style="letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.6);">Real-time <span class="text-gradient-primary">Market Intelligence</span> to maximize your harvest value.</h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Overview Grid -->
+    <section class="container py-120">
+        <div class="row mb-5 g-reveal-up">
+            <div class="col-lg-8">
+                <h2 class="fluid-4xl font-weight-bold text-dark">Mandi Price Index</h2>
+                <p class="text-muted">Live updates on commodity prices across major Indian markets.</p>
+            </div>
+            <div class="col-lg-4 text-lg-right d-flex align-items-center justify-content-lg-end">
+                <span class="pulse-live mr-2"></span>
+                <span class="small font-weight-bold text-uppercase opacity-70">Live Updates</span>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for item in market_data %}
+            <div class="col-lg-4 col-md-6 mb-4 g-reveal-up" style="transition-delay: {{ loop.index0 * 0.1 }}s;">
+                <div class="market-card glass-panel p-4 h-100 tilt-card">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div class="market-icon bg-primary-subtle text-primary">
+                            <i class="fa fa-shopping-basket"></i>
+                        </div>
+                        <div class="trend-badge {% if item.trend == 'up' %}trend-up{% else %}trend-down{% endif %}">
+                            <i class="fa fa-caret-{% if item.trend == 'up' %}up{% else %}down{% endif %} mr-1"></i>
+                            {{ item.change }}
+                        </div>
+                    </div>
+                    
+                    <h4 class="font-weight-bold text-dark mb-1">{{ item.crop }}</h4>
+                    <div class="price-value fluid-2xl font-weight-bold text-gradient-primary mb-3">{{ item.price }} <span class="small text-muted" style="font-size: 0.4em;">/ Quintal</span></div>
+                    
+                    <div class="d-flex justify-content-between align-items-center small text-muted">
+                        <span><i class="fa fa-bar-chart mr-1"></i> Volume: {{ item.volume | capitalize }}</span>
+                        <span><i class="fa fa-clock-o mr-1"></i> 2h ago</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Insight Charts -->
+    <section class="bg-footer py-120 text-white overflow-hidden">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-5 mb-lg-0 g-reveal-up">
+                    <h2 class="fluid-4xl font-weight-bold mb-4">Predictive <br><span class="text-gradient-primary">Price Analytics</span></h2>
+                    <p class="lead opacity-70 mb-5">Our AI agents analyze seasonal cycles and global demand-supply gaps to predict upcoming price surges.</p>
+                    <ul class="list-unstyled spacing-y-3">
+                        <li class="d-flex align-items-center"><i class="fa fa-check-circle text-primary mr-3"></i> 95% Historic Accuracy</li>
+                        <li class="d-flex align-items-center"><i class="fa fa-check-circle text-primary mr-3"></i> Pan-India Mandi Integration</li>
+                        <li class="d-flex align-items-center"><i class="fa fa-check-circle text-primary mr-3"></i> Early Surge Notifications</li>
+                    </ul>
+                </div>
+                <div class="col-lg-7 g-reveal-up" style="transition-delay: 0.2s;">
+                    <div class="glass-panel p-4 overflow-hidden">
+                        <canvas id="marketChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<style>
+    .market-pulse-wrapper { background: #ffffff; }
+    
+    .market-hero {
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        z-index: 1;
+        transform: scale(1.05);
+        animation: heroKenBurns 20s infinite alternate;
+    }
+    
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(2, 6, 23, 0.98) 0%, rgba(2, 6, 23, 0.6) 50%, rgba(2, 6, 23, 0.98) 100%);
+        z-index: 2;
+    }
+    
+    .market-card {
+        border-radius: 24px;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        cursor: pointer;
+    }
+    
+    .market-card:hover {
+        border-color: var(--elite-primary-light);
+        box-shadow: 0 20px 50px rgba(6, 78, 59, 0.1);
+    }
+    
+    .market-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+    }
+    
+    .trend-badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
+    
+    .trend-up { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+    .trend-down { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+    
+    .pulse-live {
+        width: 10px;
+        height: 10px;
+        background: #ef4444;
+        border-radius: 50%;
+        display: inline-block;
+        animation: pulseRed 2s infinite;
+    }
+
+    @keyframes pulseRed {
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+        70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+    
+    @keyframes heroKenBurns {
+        from { transform: scale(1); }
+        to { transform: scale(1.1); }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Vanilla Tilt initialization for 3D effect
+        const cards = document.querySelectorAll('.tilt-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+            });
+        });
+
+        // Chart.js implementation
+        const ctx = document.getElementById('marketChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Price Trending (Wheat)',
+                    data: [2100, 2150, 2275, 2300, 2250, 2400],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: 'white' } }
+                },
+                scales: {
+                    x: { ticks: { color: 'rgba(255,255,255,0.7)' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                    y: { ticks: { color: 'rgba(255,255,255,0.7)' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+            }
+        });
+
+        // GSAP Revelations
+        gsap.registerPlugin(ScrollTrigger);
+        const reveals = document.querySelectorAll('.g-reveal-up');
+        reveals.forEach(el => {
+            gsap.fromTo(el, { y: 60, opacity: 0 }, {
+                y: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
+                scrollTrigger: { trigger: el, start: 'top 85%' }
+            });
+        });
+    });
+</script>
+
+{% endblock %}
