@@ -1,0 +1,238 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<main class="about-elite-wrapper">
+    <!-- Hero Section with Slideshow Overlay -->
+    <section class="about-hero text-center text-white d-flex align-items-center justify-content-center">
+        <div class="slideshow-container">
+            <div class="slide-item active" style="background-image: url('{{ url_for('static', filename='images/farm_background.jpg') }}');"></div>
+            <div class="slide-item" style="background-image: url('{{ url_for('static', filename='images/hero_bright_farm.png') }}');"></div>
+            <div class="slide-item" style="background-image: url('{{ url_for('static', filename='images/core.jpg') }}');"></div>
+            <div class="slide-overlay" style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0.9) 100%);"></div>
+        </div>
+        
+        <div class="container position-relative z-index-10" style="padding-top: calc(var(--nav-height) + 60px);">
+            <div class="about-hero-content">
+                <span class="badge-elite-premium mb-3">Est. 2026</span>
+                <h1 class="fluid-6xl font-weight-bold mb-4" style="letter-spacing: -2px; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Orchestrating the <br><span class="text-gradient-primary">Fields of the Future</span></h1>
+                <p class="lead mx-auto mb-5" style="max-width: 700px; opacity: 0.9;">We bridge the gap between traditional wisdom and cutting-edge artificial intelligence to revolutionize agriculture at the root.</p>
+                <div class="scroll-indicator">
+                    <div class="mouse-icon"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="container py-120 g-reveal-up">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <div class="image-reveal-stack">
+                    <img src="{{ url_for('static', filename='images/crop_background.jpg') }}" alt="Mission" class="img-fluid rounded-32 shadow-xl main-reveal-img">
+                    <div class="reveal-shape-blob bg-primary opacity-10"></div>
+                </div>
+            </div>
+            <div class="col-lg-6 pl-lg-5">
+                <h2 class="fluid-4xl font-weight-bold text-dark mb-4">Empowering <span class="text-gradient-primary">One Million</span> Farmers</h2>
+                <p class="text-muted lead mb-4">Our journey began with a simple question: How can we make advanced technology accessible to the backbone of our nation? Krishi Mitr is the answer.</p>
+                <p class="text-muted mb-5">We provide modular, agentic AI solutions that process complex telemetry—from satellite data to soil sensors—turning it into actionable wisdom for every farmer, regardless of the size of their field.</p>
+                
+                <div class="row">
+                    <div class="col-6 mb-4">
+                        <div class="stat-pill glass-panel-light p-3">
+                            <h4 class="font-weight-bold text-primary mb-1">99.8%</h4>
+                            <p class="small text-muted mb-0">AI Uptime</p>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="stat-pill glass-panel-light p-3">
+                            <h4 class="font-weight-bold text-primary mb-1">38+</h4>
+                            <p class="small text-muted mb-0">Diseases Categorized</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section class="vision-grid-section bg-footer py-120 text-white overflow-hidden">
+        <div class="container">
+            <div class="text-center mb-5 g-reveal-up">
+                <h2 class="fluid-4xl font-weight-bold mb-3">The Three Pillars</h2>
+                <p class="lead opacity-60">Driving sustainable innovation through precision.</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 mb-4 g-reveal-up" style="transition-delay: 0.1s;">
+                    <div class="pillar-card glass-panel h-100 p-5">
+                        <div class="pillar-icon mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 19.07-1.41-1.41"/><path d="M12 20v2"/><path d="m6.34 17.66-1.41 1.41"/><path d="M2 12h2"/><path d="m4.93 4.93 1.41 1.41"/><circle cx="12" cy="12" r="4"/></svg></div>
+                        <h4 class="font-weight-bold mb-3">Precision</h4>
+                        <p class="opacity-70">Replacing guesswork with real-time analytics to optimize every resource.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 g-reveal-up" style="transition-delay: 0.2s;">
+                    <div class="pillar-card glass-panel h-100 p-5">
+                        <div class="pillar-icon mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.1 2 7a7 7 0 0 1-7 7c-1.1 0-2.3-.3-3-.8l-3.2 4.1c-.2.3-.6.3-.9.1-.3-.2-.3-.6-.1-.9Z"/></svg></div>
+                        <h4 class="font-weight-bold mb-3">Sustainability</h4>
+                        <p class="opacity-70">Ensuring the soil of today can thrive for the generations of tomorrow.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 g-reveal-up" style="transition-delay: 0.3s;">
+                    <div class="pillar-card glass-panel h-100 p-5">
+                        <div class="pillar-icon mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/><rect width="18" height="11" x="3" y="11" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg></div>
+                        <h4 class="font-weight-bold mb-3">Intelligence</h4>
+                        <p class="opacity-70">Agentic AI that learns and adapts to your specific regional challenges.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<style>
+    .about-elite-wrapper {
+        background: #ffffff;
+    }
+    
+    .about-hero {
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .slideshow-container {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+    }
+    
+    .slide-item {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transition: opacity 1.5s ease-in-out, transform 8s linear;
+        transform: scale(1);
+    }
+    
+    .slide-item.active {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    
+    .slide-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.5) 50%, rgba(15, 23, 42, 0.95) 100%);
+        z-index: 2;
+    }
+    
+    .py-120 { padding: 120px 0; }
+    
+    .rounded-32 { border-radius: 32px; }
+    
+    .stat-pill {
+        border-radius: 20px;
+        transition: all 0.3s ease;
+    }
+    .stat-pill:hover {
+        transform: translateY(-5px);
+        border-color: var(--elite-primary-light);
+    }
+    
+    .pillar-card {
+        border-radius: 32px;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .pillar-card:hover {
+        transform: translateY(-10px);
+        background: rgba(255,255,255,0.05);
+        border-color: var(--elite-primary-light);
+    }
+    
+    .bg-footer { background: #020617; }
+    
+    .scroll-indicator {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .mouse-icon {
+        width: 24px;
+        height: 40px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-radius: 12px;
+        position: relative;
+    }
+    .mouse-icon::after {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 8px;
+        background: #ffffff;
+        border-radius: 2px;
+        animation: mouseScroll 1.5s infinite;
+    }
+    
+    @keyframes mouseScroll {
+        0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        100% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Slideshow Logic
+        const slides = document.querySelectorAll('.slide-item');
+        let currentSlide = 0;
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        setInterval(nextSlide, 5000);
+        
+        // GSAP Revelations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Instant & Smooth Hero Entrance
+        gsap.from(".about-hero-content", {
+            y: 30,
+            opacity: 0,
+            duration: 1.5,
+            ease: "expo.out",
+            clearProps: "all"
+        });
+
+        const reveals = document.querySelectorAll('.g-reveal-up');
+        reveals.forEach(el => {
+            gsap.fromTo(el, {
+                y: 60,
+                opacity: 0,
+                filter: 'blur(10px)'
+            }, {
+                y: 0,
+                opacity: 1,
+                filter: 'blur(0px)',
+                duration: 1.2,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}
