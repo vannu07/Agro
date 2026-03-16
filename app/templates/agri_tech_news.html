@@ -1,0 +1,220 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<main class="news-nexus-wrapper">
+    <!-- News Hero -->
+    <section class="news-hero text-center text-white d-flex align-items-center justify-content-center">
+        <div class="hero-bg" style="background-image: url('{{ url_for('static', filename='images/future_tech.png') }}');"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="container position-relative z-index-10" style="padding-top: calc(var(--nav-height) + 60px);">
+            <div class="g-reveal-up">
+                <div class="intro-label mb-2 text-uppercase tracking-widest small font-weight-bold" style="color: var(--elite-accent);">Insights • Technology Radar</div>
+                <h1 class="fluid-6xl font-weight-bold mb-4" style="letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.6);">Stay ahead with <span class="text-gradient-primary">daily breakthroughs</span> in sustainable farming technology.</h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Grid -->
+    <section class="container py-120">
+        <div class="row mb-5 g-reveal-up">
+            <div class="col-lg-8">
+                <h2 class="fluid-4xl font-weight-bold text-dark">Latest Breakthroughs</h2>
+                <p class="text-muted">Stay updated with the technologies shaping the future of farming.</p>
+            </div>
+            <div class="col-lg-4 text-lg-right d-flex align-items-center justify-content-lg-end">
+                <div class="filter-pills d-flex gap-2">
+                    <span class="pill-elite active">All</span>
+                    <span class="pill-elite">Policy</span>
+                    <span class="pill-elite">Tech</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="news-grid-elite">
+            {% for item in news_items %}
+            <div class="news-item-premium g-reveal-up" style="transition-delay: {{ loop.index0 * 0.15 }}s;">
+                <div class="card-glass-elite tilt-card">
+                    <div class="news-img-container">
+                        <img src="{{ url_for('static', filename='images/' + item.image) }}" alt="{{ item.title }}">
+                        <div class="category-pill">{{ item.category }}</div>
+                    </div>
+                    <div class="p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="dot-active mr-2"></span>
+                            <span class="small font-weight-bold opacity-60">{{ item.date }}</span>
+                        </div>
+                        <h4 class="font-weight-bold mb-3" style="line-height: 1.4;">{{ item.title }}</h4>
+                        <p class="text-muted small mb-4">{{ item.summary }}</p>
+                        <a href="#" class="btn-link-elite">
+                            View Analysis <i class="fa fa-chevron-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- CT: Newsletter Integration -->
+    <section class="section-newsletter py-120 overflow-hidden position-relative">
+        <div class="container text-center g-reveal-up">
+            <div class="glass-panel p-5 d-inline-block max-w-800 mx-auto">
+                <h2 class="fluid-3xl font-weight-bold mb-4">Subscribe to the <span class="text-gradient-primary">Weekly Radar</span></h2>
+                <p class="lead text-muted mb-5">Join 15,000+ progressive farmers and agronomists receiving our AI-curated tech digests every Monday.</p>
+                <form class="d-flex flex-column flex-md-row gap-2 justify-content-center">
+                    <input type="email" class="form-control glass-input max-w-400" placeholder="Enter your email address" required>
+                    <button class="btn btn-elite px-5">Join Nexus</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<style>
+    .news-nexus-wrapper { background: #f8fafc; }
+    
+    .news-hero {
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        z-index: 1;
+        transform: scale(1.05);
+        animation: heroKenBurns 20s infinite alternate;
+    }
+    
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(2, 6, 23, 0.98) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(2, 6, 23, 0.98) 100%);
+        z-index: 2;
+    }
+    
+    .news-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 30px;
+    }
+    
+    .news-card-v2 {
+        height: 100%;
+    }
+    
+    .card-inner {
+        border-radius: 24px;
+        overflow: hidden;
+        height: 100%;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .news-img-wrap {
+        height: 240px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .news-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+    
+    .news-card-v2:hover .news-img-wrap img {
+        transform: scale(1.1);
+    }
+    
+    .category-tag {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(2, 6, 23, 0.8);
+        backdrop-filter: blur(10px);
+        color: white;
+        padding: 6px 16px;
+        border-radius: 30px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+    
+    .link-premium {
+        font-weight: 700;
+        color: #10b981;
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        transition: gap 0.3s ease;
+    }
+    
+    .link-premium:hover {
+        gap: 8px;
+        color: #059669;
+    }
+    
+    .pill-elite {
+        padding: 8px 20px;
+        border-radius: 30px;
+        background: rgba(0,0,0,0.03);
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .pill-elite.active {
+        background: #10b981;
+        color: white;
+    }
+    
+    @keyframes heroKenBurns {
+        from { transform: scale(1); }
+        to { transform: scale(1.1); }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Vanilla Tilt initialization
+        const cards = document.querySelectorAll('.tilt-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 25;
+                const rotateY = (centerX - x) / 25;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+            });
+        });
+
+        // GSAP Revelations
+        gsap.registerPlugin(ScrollTrigger);
+        const reveals = document.querySelectorAll('.g-reveal-up');
+        reveals.forEach(el => {
+            gsap.fromTo(el, { y: 60, opacity: 0 }, {
+                y: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
+                scrollTrigger: { trigger: el, start: 'top 85%' }
+            });
+        });
+    });
+</script>
+
+{% endblock %}
