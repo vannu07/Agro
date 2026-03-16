@@ -8,93 +8,52 @@
 	<!-- for-mobile-apps -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
-	<meta name="keywords" content="Agro Harvest Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+	<meta name="keywords" content="Krishi Mitr, Agriculture, AI, Sustainable Farming, India" />
 
 	<style>
+		:root {
+			--nav-height: 80px;
+		}
+		
 		html {
-			font-size: 1rem;
+			scroll-behavior: smooth;
 		}
 
-		@media (min-width: 576px) {
-			html {
-				font-size: 1.25rem;
-			}
+		body {
+			padding-top: var(--nav-height);
 		}
 
-		@media (min-width: 768px) {
-			html {
-				font-size: 1.5rem;
-			}
+		/* No padding on home page to allow header-hero merge */
+		body.home-page {
+			padding-top: 0;
 		}
 
-		@media (min-width: 992px) {
-			html {
-				font-size: 1.75rem;
-			}
+		.navbar-elite {
+			height: var(--nav-height);
+			background: transparent;
+			border-bottom: none;
+			box-shadow: none;
+			transition: all var(--trans-base);
 		}
 
-		@media (min-width: 1200px) {
-			html {
-				font-size: 2rem;
-			}
+		.navbar-elite.scrolled {
+			background: var(--glass-bg);
+			backdrop-filter: var(--glass-blur);
+			-webkit-backdrop-filter: var(--glass-blur);
+			border-bottom: 1px solid var(--glass-border);
+			box-shadow: var(--glass-shadow);
+			height: 70px;
+		}
 
-			html {
-				font-size: 1rem;
-			}
-
-			h1 {
-				font-size: 1.2rem;
-			}
-
-			h2 {
-				font-size: 1.1rem;
-			}
-
-			@media (min-width: 768px) {
-				html {
-					font-size: 1.1rem;
-				}
-
-				h1 {
-					font-size: 1.3rem;
-				}
-
-				h2 {
-					font-size: 1.2rem;
-				}
-			}
-
-			@media (min-width: 991px) {
-				html {
-					font-size: 1.2rem;
-				}
-
-				h1 {
-					font-size: 1.5rem;
-				}
-
-				h2 {
-					font-size: 1.4rem;
-				}
-			}
-
-			@media (min-width: 1200px) {
-				html {
-					font-size: 1.2rem;
-				}
-
-				h1 {
-					font-size: 1.7rem;
-				}
-
-				h2 {
-					font-size: 1.6rem;
-				}
-			}
-
+		/* Magnetic Button Container */
+		.magnetic {
+			display: inline-block;
+			transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 		}
 	</style>
+	<meta name="description" content="Krishi Mitr - AI-powered agricultural assistant for India's farmers providing crop recommendations, fertilizer suggestions, and disease prediction.">
+	<meta name="keywords" content="Agriculture, Crop Recommendation, Fertilizer, Plant Disease Detection, AI, Machine Learning">
+	<meta name="author" content="Varnit Kumar">
 	<script>
 		addEventListener("load", function () {
 			setTimeout(hideURLbar, 0);
@@ -115,243 +74,389 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-		crossorigin="anonymous"></script>
-	</body>
 	<!-- css files -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel='stylesheet' type='text/css' />
-	<!-- bootstrap css -->
-	<link href="{{ url_for('static', filename='css/style.css') }}" rel='stylesheet' type='text/css' />
-	<!-- custom css -->
-	<link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet"><!-- fontawesome css -->
+	<link href="{{ url_for('static', filename='css/modern.css') }}?v=1.1" rel='stylesheet' type='text/css' />
+	<link href="{{ url_for('static', filename='css/elite.css') }}?v=1.1" rel='stylesheet' type='text/css' />
+	<link href="{{ url_for('static', filename='css/landing.css') }}?v=1.1" rel='stylesheet' type='text/css' />
+	<link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet">
+	<!-- Chart.js -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<!-- //css files -->
-	<!-- <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png?') }}"> -->
-
 
 	<script type="text/JavaScript" src="{{ url_for('static', filename='scripts/cities.js') }}"></script>
 
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
-
-	<!-- google fonts -->
-	<link href="//fonts.googleapis.com/css?family=Thasadith:400,400i,700,700i&amp;subset=latin-ext,thai,vietnamese"
-		rel="stylesheet">
-	<!-- //google fonts -->
 	<!-- AOS Animation Library -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css">
+    
+    <!-- GSAP for Advanced Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
 
-	<style>
-		header {
-			background-color: rgba(30, 30, 30, 1);
-			margin-top: 0rem;
-			display: block;
-
-		}
-	</style>
-	<meta name="description" content="FarmIQ AI-powered agricultural assistant providing crop recommendations, fertilizer suggestions, and disease prediction.">
-	<meta name="keywords" content="Agriculture, Crop Recommendation, Fertilizer, Plant Disease Detection, AI, Machine Learning">
-	<meta name="author" content="Varnit Kumar">
 
 </head>
 
-<body>
-	<!-- BEGIN: Loading Spinner -->
-<div id="loading-spinner" style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    display: none;
-">
-  <div class="spinner-border text-success" style="width: 3rem; height: 3rem;" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-</div>
-<!-- END: Loading Spinner -->
+<body class="{% if request.path == url_for('home') or request.path == url_for('case_studies') or request.path == url_for('about') or request.path == url_for('market_trends') or request.path == url_for('agri_tech_news') %}home-page{% endif %}">
+    <!-- Global Elite Loader -->
+    <div id="elite-loader" class="active">
+        <div class="scanning-ring">
+            <img src="{{ url_for('static', filename='images/farmiq_logo_transparent_final_1773573015823.png') }}" class="loader-logo" alt="Krishi Mitr">
+        </div>
+        <div class="loader-text">AI <span>Processing</span>...</div>
+    </div>
+
+    <!-- Global Page Fade-In Wrapper -->
+    <div id="page-content" style="opacity: 0; transition: opacity 0.8s ease;">
 
 	<!-- Navigation -->
-	<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-  
-    <a class="navbar-brand pl-3" href="{{ url_for('home') }}">
-      <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="FarmIQ Logo" />
-    </a>
-	<div class="container">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('home') }}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('crop_recommend') }}">Crop</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('fertilizer_recommendation') }}">Fertilizer</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('disease_prediction') }}">Disease</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+	<!-- Only show Navigation if not on Splash/Auth Landing Page -->
+	{% if not hide_nav %}
+	<nav class="navbar navbar-expand-lg navbar-elite fixed-top {% if request.path == url_for('home') or request.path == url_for('about') or request.path == url_for('market_trends') or request.path == url_for('agri_tech_news') %}navbar-transparent{% endif %}">
+		<div class="container">
+			<a class="navbar-brand d-flex align-items-center" href="{{ url_for('home') }}">
+				<div class="logo-container">
+					<img src="{{ url_for('static', filename='images/farmiq_logo_transparent_final_1773573015823.png') }}?v=1.2" alt="Krishi Mitr" class="logo-img">
+				</div>
+				<span class="brand-text">
+					<span class="text-krishi">Krishi</span> 
+					<span class="text-gradient-primary">Mitr</span>
+					<span class="nav-live-dot" title="All systems online"></span>
+				</span>
+			</a>
+			
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+				aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" style="border: none;">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+			</button>
+			
+			<div class="collapse navbar-collapse justify-content-between" id="navbarResponsive">
+				<ul class="navbar-nav mx-auto align-items-center">
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('home') }}">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('about') }}">About Us</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="predictionsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Predictions
+						</a>
+						<div class="dropdown-menu glass-panel border-0 shadow-lg" aria-labelledby="predictionsDropdown">
+							<a class="dropdown-item" href="{{ url_for('crop_recommend') }}">Crop Recommendation</a>
+							<a class="dropdown-item" href="{{ url_for('fertilizer_recommendation') }}">Fertilizer Suggestion</a>
+							<a class="dropdown-item" href="{{ url_for('disease_prediction') }}">Disease Prediction</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="toolsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Advanced Tools
+						</a>
+						<div class="dropdown-menu glass-panel border-0 shadow-lg" aria-labelledby="toolsDropdown">
+							<a class="dropdown-item" href="{{ url_for('yield_prediction_form') }}">Precision Yield</a>
+							<a class="dropdown-item" href="{{ url_for('sustainability_advisor') }}">Sustainability Advisor</a>
+							<a class="dropdown-item" href="{{ url_for('irrigation_form') }}">Smart Irrigation</a>
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="insightsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Insights
+						</a>
+						<div class="dropdown-menu glass-panel border-0 shadow-lg" aria-labelledby="insightsDropdown">
+							<a class="dropdown-item" href="{{ url_for('case_studies') }}">Case Studies</a>
+							<a class="dropdown-item" href="{{ url_for('market_trends') }}">Market Trends</a>
+							<a class="dropdown-item" href="{{ url_for('agri_tech_news') }}">Agri-Tech News</a>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+					</li>
+				</ul>
 
+				<!-- Social Icons, Theme & Auth -->
+				<div class="nav-right-zone d-flex align-items-center">
+					<!-- Theme Toggle -->
+					<button id="theme-toggle" class="btn-theme-minimal mr-3">
+						<svg id="theme-toggle-dark-icon" class="lucide lucide-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+						<svg id="theme-toggle-light-icon" class="lucide lucide-sun d-none" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M22 12h2"/><path d="m4.93 19.07 1.41-1.41"/><path d="m17.66 6.34 1.41-1.41"/></svg>
+					</button>
 
+					<div class="nav-socials d-none d-xl-flex mr-4">
+						<a href="#" class="social-circle"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+						<a href="#" class="social-circle"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+						<a href="#" class="social-circle"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a>
+					</div>
 
+					{% if session.get('user') %}
+					<div class="nav-auth">
+						<a class="btn-logout-minimal" href="{{ url_for('logout') }}" style="background: var(--elite-primary); border: 1px solid var(--elite-primary-light); color: white !important;">Logout</a>
+					</div>
+					{% else %}
+					<div class="nav-auth">
+						<a class="btn-login-minimal" href="{{ url_for('login') }}" style="background: var(--elite-accent); color: var(--elite-primary) !important;">Login</a>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<script>
+		const themeToggle = document.getElementById('theme-toggle');
+		const darkIcon = document.getElementById('theme-toggle-dark-icon');
+		const lightIcon = document.getElementById('theme-toggle-light-icon');
+		
+		// Initial check
+		if (localStorage.getItem('theme') === 'light') {
+			document.documentElement.setAttribute('data-theme', 'light');
+			darkIcon.classList.add('d-none');
+			lightIcon.classList.remove('d-none');
+		}
+
+		themeToggle.addEventListener('click', () => {
+			const currentTheme = document.documentElement.getAttribute('data-theme');
+			if (currentTheme === 'light') {
+				document.documentElement.removeAttribute('data-theme');
+				localStorage.setItem('theme', 'dark');
+				darkIcon.classList.remove('d-none');
+				lightIcon.classList.add('d-none');
+			} else {
+				document.documentElement.setAttribute('data-theme', 'light');
+				localStorage.setItem('theme', 'light');
+				darkIcon.classList.add('d-none');
+				lightIcon.classList.remove('d-none');
+			}
+		});
+	</script>
+	{% endif %}
 
 	{% block body %} {% endblock %}
 
-	<!-- footer -->
-	<footer class="text-center py-5">
-		<div class="container py-md-3">
-			<!-- logo -->
-			<h2 class="logo2 text-center">
-				<a href="{{ url_for('home') }}">
-					FarmIQ
-				</a>
-			</h2>
-			<!-- //logo -->
-			<!-- address -->
-			<div class="contact-left-footer mt-4">
-
-
-
-
-
-				<!-- <a href="community.html">Community</a> -->
-				</p>
+	<footer class="footer-main" style="background: var(--footer-bg); border-top: 1px solid var(--footer-border);">
+		<div class="container pt-5 pb-4">
+			<div class="row mb-5">
+				<!-- Col 1: Brand -->
+				<div class="col-md-4 col-lg-3 mb-4 mb-md-0">
+					<h5 class="text-gradient-elite mb-2 font-weight-bold" style="font-size: 1.3rem;">Krishi Mitr</h5>
+					<p class="small mb-3" style="line-height: 1.8; color: var(--footer-text);">Next-generation AI agricultural platform — empowering India's farmers with modular precision agents.</p>
+					<div class="social-links d-flex">
+						<a href="https://github.com/" target="_blank" class="social-link mr-3" title="GitHub" style="color: var(--footer-text);">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+						</a>
+						<a href="https://linkedin.com/" target="_blank" class="social-link mr-3" title="LinkedIn" style="color: var(--footer-text);">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+						</a>
+						<a href="https://twitter.com/" target="_blank" class="social-link mr-3" title="Twitter/X" style="color: var(--footer-text);">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+						</a>
+						<a href="https://instagram.com/" target="_blank" class="social-link" title="Instagram" style="color: var(--footer-text);">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+						</a>
+					</div>
+				</div>
+				<!-- Col 2: Ecosystem -->
+				<div class="col-6 col-md-2 col-lg-2 mb-4 mb-md-0 ml-auto">
+					<h6 class="mb-3 font-weight-bold" style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--footer-heading);">Ecosystem</h6>
+					<ul class="list-unstyled">
+						<li class="mb-2"><a href="{{ url_for('home') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Home</a></li>
+						<li class="mb-2"><a href="{{ url_for('crop_recommend') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Crop Advisor</a></li>
+						<li class="mb-2"><a href="{{ url_for('fertilizer_recommendation') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Nutrient Lab</a></li>
+						<li class="mb-2"><a href="{{ url_for('disease_prediction') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Plant Pathologist</a></li>
+						<li class="mb-2"><a href="{{ url_for('dashboard') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Analytics Hub</a></li>
+					</ul>
+				</div>
+				<!-- Col 3: Advanced Tools -->
+				<div class="col-6 col-md-2 col-lg-2 mb-4 mb-md-0">
+					<h6 class="mb-3 font-weight-bold" style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--footer-heading);">Advanced Tools</h6>
+					<ul class="list-unstyled">
+						<li class="mb-2"><a href="{{ url_for('yield_prediction_form') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Precision Yield</a></li>
+						<li class="mb-2"><a href="{{ url_for('sustainability_advisor') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Sustain Master</a></li>
+						<li class="mb-2"><a href="{{ url_for('irrigation_form') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Hydration Agent</a></li>
+						<li class="mb-2"><a href="#" class="small" style="color: var(--footer-text); opacity:0.6;">🛰️ Satellite (Soon)</a></li>
+						<li class="mb-2"><a href="#" class="small" style="color: var(--footer-text); opacity:0.6;">🤖 Drones (Soon)</a></li>
+					</ul>
+				</div>
+				<!-- Col 4: Newsletter -->
+				<div class="col-md-3 col-lg-3">
+					<h6 class="mb-3 font-weight-bold" style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--footer-heading);">Stay Updated</h6>
+					<p class="small mb-3" style="color: var(--footer-text);">Get the latest agri-tech insights and AI model updates.</p>
+					<form id="newsletter-form" class="mt-3">
+						<div class="input-group">
+							<input type="email" class="form-control glass-input-light small m-0" placeholder="your@email.com" style="border-radius: 12px 0 0 12px; background: #ffffff; border: 1px solid var(--footer-border); color: var(--text-main);">
+							<div class="input-group-append">
+								<button class="btn btn-elite m-0" type="submit" style="padding: 0.5rem 1rem; border-radius: 0 12px 12px 0;">Join</button>
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
+			<!-- Footer bottom bar -->
+			<div class="d-flex flex-wrap justify-content-between align-items-center pt-4" style="border-top: 1px solid var(--footer-border);">
+				<p class="small mb-0" style="color: var(--footer-text);">© 2026 <strong style="color: var(--footer-heading);">Varnit Kumar</strong> · Krishi Mitr · All rights reserved.</p>
+				<p class="small mb-0" style="font-size: 0.75rem; color: var(--footer-text);">Made with 💚 for India's Farmers</p>
+			</div>
+		</div>
 	</footer>
-	<!-- //footer -->
 
-	<!-- move top icon -->
-	<a href="#home" class="move-top text-center"></a>
-	<!-- //move top icon -->
-	 <!-- AOS Animation Scripts -->
-	<script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
-	<script>
-  		AOS.init();
-	</script>
-	<footer class="footer bg-dark text-light pt-5 pb-4">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <h5>FarmIQ</h5>
-        <p>An Environmental Intelligence Startup</p>
-        <p>© 2025 Varnit Kumar</p>
-      </div>
-      <div class="col-md-4">
-        <h5>Quick Links</h5>
-        <ul class="list-unstyled">
-          <li><a href="{{ url_for('home') }}" class="text-light">Home</a></li>
-          <li><a href="{{ url_for('crop_recommend') }}" class="text-light">Crop Recommendation</a></li>
-          <li><a href="{{ url_for('fertilizer_recommendation') }}" class="text-light">Fertilizer Recommendation</a></li>
-          <li><a href="{{ url_for('disease_prediction') }}" class="text-light">Disease Prediction</a></li>
-          <li><a href="{{ url_for('dashboard') }}" class="text-light">Dashboard</a></li>
-        </ul>
-      </div>
-      <div class="col-md-4">
-        <h5>Subscribe</h5>
-        <form id="newsletter-form">
-          <div class="form-group">
-            <input type="email" class="form-control" placeholder="Enter your email" required>
-          </div>
-          <button type="submit" class="btn btn-success btn-block">Subscribe</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</footer>
-<!-- FarmAI Chatbot -->
-<div id="chat-toggle" onclick="toggleChat()">
-  🤖
+<!-- FarmAI Chatbot Widget -->
+{% if not hide_chat %}
+<div id="chat-toggle" class="magnetic" title="Chat with FarmAI">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-more"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h.01"/><path d="M12 9h.01"/><path d="M16 9h.01"/></svg>
+  <span class="chat-dot"></span>
 </div>
 
-<div id="chat-box">
-  <div id="chat-header">FarmAI - Ask Me Anything!</div>
-  <div id="chat-messages"></div>
-  <div id="chat-input">
-    <input type="text" id="userInput" placeholder="Ask a question..." />
-    <button type="button" onclick="sendMessage()">Send</button>
-    <button type="button" onclick="startVoice()">🎤</button>
+<div id="chat-box" class="glass-panel">
+  <div id="chat-header" class="d-flex align-items-center justify-content-between">
+	  <div class="d-flex align-items-center">
+		  <div class="bot-avatar-mini mr-2">
+			  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+		  </div>
+		  <span style="font-weight: 700; letter-spacing: -0.5px; color: var(--text-main);">FarmAI Assistant</span>
+	  </div>
+	  <button class="btn p-1 opacity-70 hover-opacity-100" onclick="toggleChat()" style="background:transparent; border:none; color: var(--text-main);">
+		  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+	  </button>
   </div>
+  <div id="chat-messages">
+	  <div class="msg msg-bot">
+		  <div class="msg-bubble">Hello! I'm your AI agent. How can I assist with your farm today?</div>
+	  </div>
+  </div>
+  <form id="chat-form" onsubmit="return false;">
+	<div id="chat-input-container">
+		<input type="text" id="userInput" placeholder="Ask about soil, crops..." autocomplete="off"/>
+		<div class="magnetic">
+			<button class="btn btn-send-glow rounded-circle d-flex align-items-center justify-content-center" type="button" onclick="sendMessage()">
+				<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-horizontal"><path d="m3 3 3 9-3 9 19-9Z"/><path d="M6 12h16"/></svg>
+			</button>
+		</div>
+	</div>
+  </form>
 </div>
+{% endif %}
 
+    </div> <!-- End Page Content Wrapper -->
 <script>
-  const moveTopBtn = document.querySelector('.move-top');
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-      moveTopBtn.style.display = 'block';
-    } else {
-      moveTopBtn.style.display = 'none';
-    }
-  });
-  moveTopBtn.addEventListener('click', () => {
-    window.scrollTo({top: 0, behavior: 'smooth'});
-  });
-</script>
-<script>
-  const navbar = document.querySelector('.navbar');
+	/* Magnetic Interaction Script */
+	const magnetics = document.querySelectorAll('.magnetic');
+	
+	magnetics.forEach(m => {
+		m.addEventListener('mousemove', function(e) {
+			const pos = m.getBoundingClientRect();
+			const x = e.clientX - pos.left - pos.width / 2;
+			const y = e.clientY - pos.top - pos.height / 2;
+			
+			m.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+		});
+		
+		m.addEventListener('mouseleave', function(e) {
+			m.style.transform = `translate(0px, 0px)`;
+		});
+	});
+
+  const navbar = document.querySelector('.navbar-elite');
 
   window.addEventListener('scroll', () => {
-    if(window.scrollY > 50) {
+    if(navbar && window.scrollY > 50) {
       navbar.classList.add('scrolled');
-    } else {
+    } else if(navbar) {
       navbar.classList.remove('scrolled');
     }
   });
-</script>
-<script>
-  // Show spinner on any form submission
-  const allForms = document.querySelectorAll('form');
+
+  // Handle Global Page Load & Loader Fade Out
+  function hideLoader() {
+      const loader = document.getElementById('elite-loader');
+      if (loader && !loader.classList.contains('stay-active-override')) {
+          loader.classList.remove('active');
+          loader.style.pointerEvents = 'none'; // Ensure it's not clickable
+      }
+      // Fade in the page content smoothly
+      const pageContent = document.getElementById('page-content');
+      if (pageContent) {
+          pageContent.style.opacity = '1';
+          pageContent.style.visibility = 'visible';
+      }
+  }
+
+  window.addEventListener('load', function() {
+      setTimeout(hideLoader, 500);
+  });
+
+  // Safety timeout: Hide loader after 3 seconds anyway
+  setTimeout(hideLoader, 3000);
+
+  // Show elite loader on any form submission (if they have class elite-form)
+  const allForms = document.querySelectorAll('form.elite-form');
   allForms.forEach(form => {
-    form.addEventListener('submit', function () {
-      document.getElementById('loading-spinner').style.display = 'flex';
+    form.addEventListener('submit', function (e) {
+      if(form.checkValidity()) {
+          const loader = document.getElementById('elite-loader');
+          loader.classList.add('active');
+          loader.classList.add('stay-active-override'); // Prevent accidental hides
+      }
     });
   });
-</script>
-<script>
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
-</script>
-<script>
+
 function toggleChat() {
   const box = document.getElementById('chat-box');
-  box.style.display = (box.style.display === 'flex') ? 'none' : 'flex';
+  const isShown = box.style.display === 'flex';
+  box.style.display = isShown ? 'none' : 'flex';
+  
+  if (!isShown) {
+	  document.getElementById('userInput').focus();
+  }
 }
+
+document.getElementById('chat-toggle').addEventListener('click', toggleChat);
 
 function appendMessage(sender, text) {
   const chat = document.getElementById('chat-messages');
-  const safe = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  chat.innerHTML += `<div><b>${sender}:</b> ${safe}</div>`;
+  const isBot = sender === "FarmAI";
+  const msgDiv = document.createElement('div');
+  msgDiv.className = `msg ${isBot ? 'msg-bot' : 'msg-user'}`;
+  
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.innerText = text;
+  
+  msgDiv.appendChild(bubble);
+  chat.appendChild(msgDiv);
   chat.scrollTop = chat.scrollHeight;
+}
+
+function showTyping() {
+  const chat = document.getElementById('chat-messages');
+  const typingDiv = document.createElement('div');
+  typingDiv.id = 'typing-indicator';
+  typingDiv.className = 'msg msg-bot';
+  typingDiv.innerHTML = `
+    <div class="msg-bubble">
+      <div class="typing-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  `;
+  chat.appendChild(typingDiv);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function hideTyping() {
+  const indicator = document.getElementById('typing-indicator');
+  if (indicator) indicator.remove();
 }
 
 async function sendMessage() {
   const input = document.getElementById('userInput');
   const msg = input.value.trim();
   if (!msg) return;
+  
   appendMessage("You", msg);
   input.value = '';
+  
+  showTyping();
+  
   try {
     const response = await fetch("{{ url_for('api_assistant') }}", {
       method: "POST",
@@ -361,15 +466,17 @@ async function sendMessage() {
       body: JSON.stringify({ message: msg })
     });
     const data = await response.json();
+    hideTyping();
     appendMessage("FarmAI", data.reply || "I could not generate a reply.");
-    speakText(data.reply);
   } catch (e) {
+    hideTyping();
     appendMessage("FarmAI", "There was a problem reaching the assistant.");
   }
 }
+</script>
 
+<script>
 let recognition = null;
-
 if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SpeechRecognition();
@@ -381,25 +488,38 @@ if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
     sendMessage();
   };
 }
-
 function startVoice() {
-  if (recognition) {
-    recognition.start();
-  } else {
-    alert("Voice recognition is not supported in this browser.");
-  }
+  if (recognition) { recognition.start(); }
+  else { alert("Voice recognition not supported."); }
 }
-
 function speakText(text) {
-  if (!window.speechSynthesis) {
-    return;
-  }
+  if (!window.speechSynthesis) return;
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "en-IN";
   window.speechSynthesis.speak(utterance);
 }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 1000,
+    once: true,
+  });
 
+  // Navbar Scroll Logic
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('.navbar-elite');
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  // Initialize on load
+  if (window.scrollY > 50) {
+    document.querySelector('.navbar-elite').classList.add('scrolled');
+  }
+</script>
 </body>
-
 </html>
