@@ -413,6 +413,13 @@ def about():
     title = 'Krishi Mitr - About Us'
     return render_template('about.html', title=title)
 
+@app.route('/showcase')
+@app.route('/frontend-showcase')
+def showcase():
+    """Display the frontend showcase page"""
+    title = 'Krishi Mitr - Frontend Showcase'
+    return render_template('showcase.html', title=title)
+
 CASE_STUDIES_DATA = {
     "rakesh-delhi": {
         "name": "Rakesh",
