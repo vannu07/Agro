@@ -6,7 +6,12 @@ on:
 
 jobs:
   summary:
+    if: ${{ github.event.sender.type != 'Bot' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    concurrency:
+      group: summary-${{ github.workflow }}-${{ github.event.issue.number }}
+      cancel-in-progress: true
     permissions:
       issues: write
       models: read
