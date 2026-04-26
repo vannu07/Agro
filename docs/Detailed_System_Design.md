@@ -179,7 +179,64 @@ graph TD
 
 ---
 
-## 6. Project Structure
+## 6. Entity Relationship Diagram (ERD)
+The logical data model illustrates how user profiles, field sensor telemetry, and AI-driven predictions are interconnected within the **Krishi Mitr** ecosystem.
+
+```mermaid
+erDiagram
+    USER ||--o{ FARM_PROFILE : "manages"
+    FARM_PROFILE ||--o{ SENSOR_READING : "produces"
+    USER ||--o{ PREDICTION_HISTORY : "initiates"
+    PREDICTION_HISTORY ||--|| RECOMMENDATION_REPORT : "generates"
+    
+    USER {
+        int id PK
+        string username
+        string region
+        string created_at
+    }
+    
+    FARM_PROFILE {
+        int id PK
+        int user_id FK
+        string soil_type
+        float area_hectares
+        string previous_crops
+    }
+    
+    SENSOR_READING {
+        int id PK
+        int profile_id FK
+        float N
+        float P
+        float K
+        float pH
+        float moisture
+        datetime timestamp
+    }
+    
+    PREDICTION_HISTORY {
+        int id PK
+        int user_id FK
+        string agent_type
+        json input_payload
+        json output_result
+        float confidence
+        datetime timestamp
+    }
+    
+    RECOMMENDATION_REPORT {
+        int id PK
+        int prediction_id FK
+        text explanation
+        text immediate_actions
+        string status
+    }
+```
+
+---
+
+## 7. Project Structure
 
 | Directory | Purpose |
 | :--- | :--- |
