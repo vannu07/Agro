@@ -87,17 +87,74 @@ graph LR
 
 ---
 
-## 5. Data Flow Diagram (DFD Level 1)
+## 5. Data Flow Diagrams (DFD)
+
+### 5.1 DFD Level 0: Context Diagram
+The Level 0 diagram shows the system as a single process and its interaction with external entities (Farmers, Admins, and External APIs).
 
 ```mermaid
 graph LR
-    F[Farmer] -- Soil Data --> CA[Crop Agency]
-    CA -- Prediction --> OR[Orchestrator]
-    F -- Leaf Image --> PA[Pathologist]
-    PA -- Diagnosis --> OR
-    OR -- Context --> LLM[OpenAI Reasoning]
-    LLM -- Final Advice --> F
+    User[Farmer/User] -- Soil Data, Images, Queries --> KM((0.0 Krishi Mitr System))
+    KM -- Agricultural Advice & Reports --> User
+    Admin[Administrator] -- API Keys & Config --> KM
+    KM -- System Metrics & Logs --> Admin
+    API[Market/Weather APIs] -- Live Data Streams --> KM
+    Expert[Agri-Expert] -- Research Documents --> KM
 ```
+
+### 5.2 DFD Level 1: Detailed Functional Decomposition
+The Level 1 diagram breaks down the "Krishi Mitr System" into its core sub-processes, identifying the flow of data between internal logic and data stores.
+
+```mermaid
+graph TD
+    %% Entities
+    F[Farmer]
+    EX[Agri-Expert]
+    
+    %% Processes
+    P1[1.0 User Profiling & Auth]
+    P2[2.0 Input Processing & Vectorization]
+    P3[3.0 Agentic Orchestration Layer]
+    P4[4.0 Model Inference Engine]
+    P5[5.0 Knowledge Retrieval - RAG]
+    P6[6.0 report Generation & LLM Reasoning]
+
+    %% Data Stores
+    D1[(User Database)]
+    D2[(Model Store - .pkl/.pth)]
+    D3[(ChromaDB Vector Store)]
+    D4[(Agricultural Knowledge Base)]
+
+    %% Connections
+    F -- Credentials --> P1
+    P1 <--> D1
+    
+    F -- Soil/Image/Text --> P2
+    P2 -- Cleaned Data --> P3
+    
+    EX -- Research Docs --> P2
+    P2 -- Embeddings --> D3
+    
+    P3 -- Task Assignment --> P4
+    P4 <--> D2
+    P4 -- Prediction Result --> P3
+    
+    P3 -- Semantic Query --> P5
+    P5 <--> D3
+    P5 <--> D4
+    P5 -- Contextual Data --> P3
+    
+    P3 -- Raw Data + Context --> P6
+    P6 -- Final Actionable Advice --> F
+```
+
+#### Process Descriptions for Your Teacher:
+- **Process 1.0**: Manages user sessions and personalized farm profiles.
+- **Process 2.0**: Handles multi-modal inputs. It normalizes sensor data and converts research papers into vector embeddings.
+- **Process 3.0**: The "Orchestrator" which uses the P.A.O.R loop to decide which agents (Crop, Disease, etc.) should handle the request.
+- **Process 4.0**: Execution of the machine learning models (Random Forest, ResNet9).
+- **Process 5.0**: Retrieves domain-specific knowledge from the local vector database (RAG) to ensure the advice is factually correct.
+- **Process 6.0**: Uses an LLM to synthesize all technical outputs into easy-to-read advice for the farmer.
 
 ---
 
