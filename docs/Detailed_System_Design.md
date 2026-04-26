@@ -18,15 +18,18 @@ graph TD
         ORCH <--> HA[Hydration Agent]
         ORCH <--> PA[Pathologist Agent]
         ORCH <--> YA[Yield Agent]
-        ORCH <--> SA[Sustainability Agent]
+        ORCH <--> SA[Sustain Agent]
         ORCH <--> CB[RAG Chatbot]
     end
     
-    subgraph "Engines & Data"
-        CA --> RF[Random Forest]
-        PA --> RES[ResNet9 CNN]
-        CB --> VEC[ChromaDB Vector Store]
-        VEC --> OpenAI[GPT-4o / RAG]
+    subgraph "Engines & Model Intelligence"
+        CA --> CA_M[Random Forest Classifier]
+        HA --> HA_M[Random Forest]
+        PA --> PA_M[ResNet9 CNN]
+        YA --> YA_M[RF Regressor]
+        SA --> SA_M[XGBoost]
+        CB --> CB_M[OpenAI GPT-4o]
+        CB_M --> VEC[ChromaDB Vector Store]
     end
 ```
 
@@ -52,21 +55,34 @@ The system addresses three primary actors:
 - **Admin**: Monitors system health and API performance.
 
 ```mermaid
-useCaseDiagram
-    actor Farmer
-    actor Admin
-    actor Expert
-    
-    Farmer --> (Predict Optimal Crop)
-    Farmer --> (Diagnose Leaf Disease)
-    Farmer --> (Consult AI Chatbot)
-    Farmer --> (Check Market Trends)
-    
-    Expert --> (Upload Research Docs)
-    Expert --> (Validate AI Advice)
-    
-    Admin --> (Manage API Keys)
-    Admin --> (Analyze Metrics)
+graph LR
+    subgraph Actors
+        F[Farmer]
+        E[Agri-Expert]
+        A[Admin]
+    end
+
+    subgraph "System Use Cases"
+        UC1((Predict Optimal Crop))
+        UC2((Diagnose Leaf Disease))
+        UC3((Consult AI Chatbot))
+        UC4((Check Market Trends))
+        UC5((Upload Research Docs))
+        UC6((Validate AI Advice))
+        UC7((Manage API Keys))
+        UC8((Analyze Metrics))
+    end
+
+    F --> UC1
+    F --> UC2
+    F --> UC3
+    F --> UC4
+
+    E --> UC5
+    E --> UC6
+
+    A --> UC7
+    A --> UC8
 ```
 
 ---
