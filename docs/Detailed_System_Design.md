@@ -15,6 +15,7 @@ graph TD
     
     subgraph "Intelligent Agents"
         ORCH <--> CA[Crop Agent]
+        ORCH <--> FA[Fertilizer Agent]
         ORCH <--> HA[Hydration Agent]
         ORCH <--> PA[Pathologist Agent]
         ORCH <--> YA[Yield Agent]
@@ -24,6 +25,7 @@ graph TD
     
     subgraph "Engines & Model Intelligence"
         CA --> CA_M[Random Forest Classifier]
+        FA --> FA_M[Expert System CSV Logic]
         HA --> HA_M[Random Forest]
         PA --> PA_M[ResNet9 CNN]
         YA --> YA_M[RF Regressor]
@@ -119,9 +121,10 @@ graph TD
     subgraph "Agentic Intelligence Layer"
         A1[3.1 Pathologist - Image Analysis]
         A2[3.2 Crop Advisor - Soil Metrics]
-        A3[3.3 Hydration - Moisture Prediction]
-        A4[3.4 Yield Forecasting - History Analysis]
-        A5[3.5 Sustain Master - Health Check]
+        A3[3.3 Fertilizer - NPK Gap Analysis]
+        A4[3.4 Hydration - Moisture Prediction]
+        A5[3.5 Yield Forecasting - History Analysis]
+        A6[3.6 Sustain Master - Health Check]
     end
     
     %% Synthesis & Output
@@ -144,6 +147,7 @@ graph TD
     P2 -- Dispatch --> A3
     P2 -- Dispatch --> A4
     P2 -- Dispatch --> A5
+    P2 -- Dispatch --> A6
     
     %% Intelligence Feedback
     A1 <--> D2
@@ -151,8 +155,9 @@ graph TD
     A3 <--> D2
     A4 <--> D2
     A5 <--> D2
+    A6 <--> D2
     
-    A1 & A2 & A3 & A4 & A5 -- Agent Insights --> P2
+    A1 & A2 & A3 & A4 & A5 & A6 -- Agent Insights --> P2
     
     %% RAG Enrichment
     Expert -- Guidelines/Research --> P4

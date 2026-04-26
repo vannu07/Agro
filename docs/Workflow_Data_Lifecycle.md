@@ -49,8 +49,10 @@ sequenceDiagram
     participant LLM as Reasoning Engine (OpenAI)
 
     User->>ORCH: Soil Data + Query
-    ORCH->>ML: Inference Request
+    ORCH->>ML: Inference Request (Crop/Disease)
     ML-->>ORCH: Raw Metric (e.g., Crop=Rice)
+    ORCH->>ML: Fertilizer Logic (NPK Gap)
+    ML-->>ORCH: Fertilizer Recommendation
     ORCH->>RAG: Fetch Cultivation Guide
     RAG-->>ORCH: Rice Best Practices
     ORCH->>LLM: Metrics + Guide + History

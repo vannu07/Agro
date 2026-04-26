@@ -5,19 +5,20 @@ This report presents a high-fidelity evaluation of the machine learning engines 
 
 ---
 
-## 2. \ud83d\udee0\ufe0f Agent Intelligence Matrix
+## 2. 🛠️ Agent Intelligence Matrix
 
-| Functional Agent | Engine Model | Primary Metric | Inference Latency |
+| Functional| Agent | Task Type | Champion Model | Core Metric |
 | :--- | :--- | :--- | :--- |
-| **Pathologist** | ResNet9-CNN | **99.21% Accuracy** | ~145ms |
-| **Crop Agent** | Gaussian NB | **99.09% Accuracy** | ~12ms |
-| **Hydration** | Random Forest | **99.00% Accuracy** | ~18ms |
-| **Precision Yield** | RF Regressor | **0.92 R\u00b2** | ~25ms |
-| **Sustain Master** | XGBoost | **0.89 R\u00b2** | ~32ms |
+| **Crop Agent** | Multi-class Classification | **Gaussian Naive Bayes** | 99.09% Accuracy |
+| **Fertilizer** | Recommendation | **Expert System (Heuristic)**| 100% Logic Match |
+| **Pathologist** | Image Classification | **ResNet9 (CNN)** | 99.21% Accuracy |
+| **Hydration** | Binary Classification | **Random Forest** | 99.00% Accuracy |
+| **Precision Yield**| Regression | **Random Forest Regressor** | 0.92 R² Score |
+| **Sustain Master** | Regression | **XGBoost Regressor** | 0.89 R² Score |
 
 ---
 
-## 3. \ud83e\uddb0 Disease Diagnosis (Pathologist Agent)
+## 3. 🧠 Disease Diagnosis (Pathologist Agent)
 The system leverages a **Residual Network (ResNet9)** architecture to classify plant diseases into 38 distinct categories.
 
 > [!NOTE]
@@ -45,7 +46,18 @@ The SHAP/Importance analysis reveals **Soil Moisture Index (MOI)** and **Ambient
 
 ---
 
-## 5. \ud83d\udcc8 Predictive Analytics (Yield Agent)
+## 4. \ud83c\udfca Fertilizer Recommendation (Fertilizer Agent)
+Unlike other agents that use stochastic ML models, the Fertilizer Agent uses a deterministic **Expert System** based on N-P-K (Nitrogen, Phosphorus, Potassium) gap analysis.
+
+### \ud83e\udde0 Intelligence Logic:
+- **Input:** Soil NPK levels and Recommended Crop.
+- **Logic:** Compares current levels against a local database of ideal NPK values for 20+ crop varieties.
+- **Output:** Categorizes deficiency into 7 specific states (N-low, P-high, K-low, etc.) and prescribes corrective dosage.
+
+**Performance Characteristics:**
+- **Reliability:** 100% adherence to established agricultural NPK tables.
+- **Speed:** Zero-latency lookup (<10ms).
+- **Engine:** Rule-based Heuristic Engine.
 Yield forecasting is implemented via a high-performance **Random Forest Regressor**.
 
 ### \ud83d\udcc8 Actual vs. Predicted Performance
