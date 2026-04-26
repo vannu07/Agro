@@ -1,0 +1,175 @@
+/* =========================================================================
+   AGENTIC POLISH — PREMIUM DESIGN EXTENSIONS
+   Focus: Blurry Cinematic Backgrounds & Ultra-High Visibility
+   ========================================================================= */
+
+:root {
+    --polish-primary: #10b981;
+    --polish-secondary: #059669;
+    --polish-accent: #fbbf24;
+    --glass-bg: rgba(2, 6, 23, 0.85) !important; /* Extremely deep dark for contrast */
+    --glass-border: rgba(255, 255, 255, 0.2) !important;
+    --glass-blur: blur(35px);
+}
+
+/* Eliminate Grids but Restore Blurry Background Images */
+.hero-cinematic-grid {
+    display: none !important;
+}
+
+.hero-cinematic-bg {
+    display: block !important;
+    opacity: 1 !important;
+    filter: blur(6px) brightness(0.7) !important; /* Reduced blur and increased brightness */
+    transform: scale(1.05);
+    transition: filter 0.5s ease;
+}
+
+/* Force high visibility regardless of theme */
+.navbar-agent-green {
+    background: var(--footer-bg) !important; 
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    height: 80px !important;
+}
+
+.navbar-agent-green .logo-container {
+    height: 50px !important;
+}
+
+.navbar-agent-green .brand-text {
+    font-size: 1.4rem !important;
+}
+
+/* LOGO VISIBILITY FIX */
+.navbar-agent-green .logo-img {
+    filter: brightness(0) invert(1) !important; /* Make logo pure white on dark green */
+    mix-blend-mode: normal !important;
+}
+
+.navbar-agent-green .nav-link, 
+.navbar-agent-green .navbar-brand {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Enhanced High-Contrast Glass Panel */
+.glass-panel-premium {
+    background: var(--glass-bg) !important;
+    backdrop-filter: var(--glass-blur) !important;
+    -webkit-backdrop-filter: var(--glass-blur) !important;
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7) !important;
+    border-radius: 40px !important;
+    padding: 3.5rem !important;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-premium:hover {
+    border-color: #34d399 !important;
+    box-shadow: 0 50px 120px rgba(16, 185, 129, 0.3) !important;
+    transform: translateY(-8px);
+}
+
+/* High-Visibility Gradients */
+.text-vibrant-gradient {
+    background: linear-gradient(135deg, #34d399 0%, #3b82f6 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    filter: drop-shadow(0 4px 15px rgba(0,0,0,1)) !important; /* Pure black shadow for pop */
+    font-weight: 900 !important;
+}
+
+/* Form Element Visibility — 100% SOLID OPAQUE */
+.glass-input {
+    background: #1e293b !important;
+    color: #ffffff !important;
+    border: 2px solid #94a3b8 !important;
+    border-radius: 16px !important;
+    padding: 18px 25px !important;
+    font-weight: 700 !important;
+    font-size: 1.15rem !important;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.glass-input::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1 !important;
+}
+
+.glass-input:focus {
+    background: #0f172a !important;
+    border-color: #34d399 !important;
+    box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.4), 0 4px 12px rgba(0,0,0,0.4) !important;
+}
+
+/* Select dropdown fully visible globally */
+option, select option, .glass-input option, .h-select option {
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    padding: 12px !important;
+}
+
+/* Form labels — bright white, always visible */
+.form-elite-group {
+    margin-bottom: 2rem !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Helper text below inputs */
+.form-elite-group small {
+    color: #e2e8f0 !important;
+    opacity: 1 !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.9) !important;
+}
+
+.glass-label {
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    text-shadow: 0 2px 8px rgba(0,0,0,1) !important;
+}
+
+.text-white {
+    color: #ffffff !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+.text-white-50, .text-muted {
+    color: #ffffff !important; /* Pure white for visibility on dark blur */
+    font-weight: 700 !important;
+    opacity: 1 !important;
+}
+
+/* Button Glow Effect */
+.btn-vibrant-glow {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    box-shadow: 0 20px 50px rgba(16, 185, 129, 0.4) !important;
+    padding: 1.2rem 2.5rem !important;
+    border-radius: 20px !important;
+}
+
+/* Force a gap between the fixed header and the agent forms safely across grids */
+.h-viewport {
+    padding-top: 140px !important;
+}
+
+/* Ensure the main footer is painted above the dynamic fixed backgrounds from the agent pages */
+.footer-main {
+    position: relative !important;
+    z-index: 50 !important;
+}

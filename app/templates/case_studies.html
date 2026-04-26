@@ -1,57 +1,364 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<!-- Cinematic Case Study Hero -->
-<section class="hero-cinematic" style="height: 60vh; min-height: 500px;">
-    <div class="hero-cinematic-bg" style="background-image: url('{{ url_for('static', filename='images/farm_background_1.jpg') }}'); filter: brightness(0.85);"></div>
-    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 60%, rgba(255,255,255,1) 100%);"></div>
-    
-    <div class="container h-100 d-flex align-items-center justify-content-center">
-        <div class="hero-cinematic-content text-center" style="padding-top: 4rem;">
-            <div class="intro-label mb-2 text-uppercase tracking-widest small font-weight-bold" style="color: var(--elite-accent);">Insights • Success Stories</div>
-            <h1 class="font-weight-bold text-white mb-4" style="font-size: clamp(3rem, 10vw, 6rem); text-shadow: 0 10px 30px rgba(0,0,0,0.6); letter-spacing: -2px; line-height: 1.1;">
-                Discover how <span style="background: linear-gradient(135deg, #a7f3d0 0%, #34d399 100%); -webkit-background-clip: text; -webkit-fill-color: transparent; background-clip: text;">Krishi Mitr</span> transforms lives across India.
-            </h1>
+<main class="case-studies-page">
+    <section class="case-hero">
+        <div class="case-hero-bg" style="background-image: url('{{ url_for('static', filename='images/farm_background_1.jpg') }}');"></div>
+        <div class="case-hero-overlay"></div>
+        <div class="container case-hero-content">
+            <span class="case-eyebrow">Safal Kahaniyan</span>
+            <h1>Real Kisan. Real Result. Simple Samajh.</h1>
+            <p>Dekhiye kaise Krishi Mitr ne farmers ko yield badhane, risk kam karne, aur sahi decision lene mein practical AI guidance di.</p>
+            <div class="case-hero-stats">
+                <div><strong>{{ cases|length }}</strong><span>Case studies</span></div>
+                <div><strong>4+</strong><span>Farm benefits</span></div>
+                <div><strong>Easy</strong><span>to understand</span></div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Case Studies Grid -->
-<section class="case-studies-page py-5">
-    <div class="container">
-        <div class="case-grid">
-            {% for slug, case in cases.items() %}
-            <div class="case-card" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
-                <div class="case-img-wrap">
-                    <img src="{{ url_for('static', filename='images/' + case.image) }}" alt="{{ case.title }}">
-                    <div class="case-badge">{{ case.location }}</div>
+    <section class="container case-benefit-strip">
+        <div class="case-benefit-card">
+                    <h2>Farmers Yahan Kya Seekhenge</h2>
+            <div class="case-benefit-grid">
+                <div>
+                    <h3>Sahi timing</h3>
+                    <p>Kab pani dena hai, kab bechna hai, aur kab crop plan badalna hai.</p>
                 </div>
-                <div class="case-content">
-                    <div class="case-meta">
-                        <span><i class="fa fa-user mr-1"></i> {{ case.name }}</span>
-                        <span><i class="fa fa-leaf mr-1"></i> {{ case.crop }}</span>
-                    </div>
-                    <h4>{{ case.title }}</h4>
-                    <p>{{ case.summary }}</p>
+                <div>
+                    <h3>Kam kharcha</h3>
+                    <p>AI advice se pani, fertilizer, aur pest control mein waste kaise kam hota hai.</p>
                 </div>
-                <div class="case-footer">
-                    <a href="{{ url_for('case_study_detail', slug=slug) }}" class="btn-case">Read Full Story <i class="fa fa-arrow-right ml-1"></i></a>
+                <div>
+                    <h3>Majboot fasal</h3>
+                    <p>Data-based decision se crop health aur yield stability kaise better hoti hai.</p>
+                </div>
+                <div>
+                    <h3>Easy start</h3>
+                    <p>Farmer bina complex setup ke chhote practical steps se kaise start kar sakte hain.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section class="container case-list-section">
+        <div class="case-section-head">
+            <h2>Featured Kisan Journeys</h2>
+            <p>Har story mein problem, solution, aur result simple farmer-friendly language mein diya gaya hai.</p>
+        </div>
+
+        <div class="case-grid-modern">
+            {% for slug, case in cases.items() %}
+            <article class="case-card-modern" style="animation-delay: {{ loop.index0 * 0.08 }}s;">
+                <div class="case-img-wrap-modern">
+                    <img src="{{ url_for('static', filename='images/' + case.image) }}" alt="{{ case.title }}">
+                    <span class="case-badge-modern">{{ case.location }}</span>
+                </div>
+                <div class="case-content-modern">
+                    <div class="case-meta-modern">
+                        <span>{{ case.name }}</span>
+                        <span>Krishi Mitr</span>
+                    </div>
+                    <h3>{{ case.title }}</h3>
+                    <p>{{ case.summary }}</p>
+                    <div class="case-signal">
+                        <strong>Fayda:</strong> {{ (case.stats[0] if case.stats else 'Practical sudhar') }}
+                    </div>
+                </div>
+                <div class="case-footer-modern">
+                    <a href="{{ url_for('case_study_detail', slug=slug) }}">Read Full Story</a>
+                </div>
+            </article>
             {% endfor %}
         </div>
-    </div>
-</section>
+    </section>
+</main>
 
 <style>
-    /* Styling specifically for current page to handle hero overlap */
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Sora:wght@600;700;800&display=swap');
+
     .case-studies-page {
-        background: #ffffff;
+        --case-dark: #0f172a;
+        --case-ink: #1f2937;
+        --case-bg: #f7faf7;
+        --case-card: #ffffff;
+        background:
+            radial-gradient(circle at top right, rgba(34, 197, 94, 0.12), transparent 32%),
+            radial-gradient(circle at top left, rgba(15, 118, 110, 0.12), transparent 28%),
+            var(--case-bg);
+        color: var(--case-ink);
+        font-family: 'Manrope', sans-serif;
+    }
+
+    .case-hero {
+        min-height: 74vh;
         position: relative;
-        z-index: 10;
-        margin-top: -100px;
-        border-radius: 60px 60px 0 0;
-        box-shadow: 0 -20px 40px rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .case-hero-bg,
+    .case-hero-overlay {
+        position: absolute;
+        inset: 0;
+    }
+
+    .case-hero-bg {
+        background-size: cover;
+        background-position: center;
+        transform: scale(1.05);
+        filter: saturate(0.95);
+    }
+
+    .case-hero-overlay {
+        background: linear-gradient(115deg, rgba(2, 8, 23, 0.94) 0%, rgba(15, 23, 42, 0.68) 55%, rgba(2, 8, 23, 0.9) 100%);
+    }
+
+    .case-hero-content {
+        position: relative;
+        z-index: 1;
+        color: #f8fafc;
+        padding-top: calc(var(--nav-height) + 48px);
+        padding-bottom: 56px;
+        max-width: 920px;
+    }
+
+    .case-eyebrow {
+        display: inline-block;
+        font-weight: 800;
+        letter-spacing: 0.24em;
+        font-size: 0.78rem;
+        color: #86efac;
+        margin-bottom: 14px;
+    }
+
+    .case-hero h1 {
+        font-family: 'Sora', sans-serif;
+        font-size: clamp(2.2rem, 5vw, 4.8rem);
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        margin-bottom: 16px;
+        color: #ffffff;
+    }
+
+    .case-hero p {
+        max-width: 760px;
+        font-size: clamp(1rem, 1.8vw, 1.25rem);
+        line-height: 1.6;
+        color: rgba(248, 250, 252, 0.88);
+    }
+
+    .case-hero-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 26px;
+    }
+
+    .case-hero-stats div {
+        min-width: 150px;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 18px;
+        padding: 14px 16px;
+        backdrop-filter: blur(10px);
+    }
+
+    .case-hero-stats strong {
+        display: block;
+        font-size: 1.15rem;
+        color: #ffffff;
+        margin-bottom: 4px;
+    }
+
+    .case-hero-stats span {
+        color: rgba(248, 250, 252, 0.7);
+        font-size: 0.85rem;
+    }
+
+    .case-benefit-strip {
+        margin-top: -64px;
+        position: relative;
+        z-index: 3;
+        padding-bottom: 30px;
+    }
+
+    .case-benefit-card {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(15, 118, 110, 0.14);
+        border-radius: 28px;
+        padding: 28px;
+        box-shadow: 0 20px 40px rgba(2, 8, 23, 0.12);
+    }
+
+    .case-benefit-card h2,
+    .case-section-head h2 {
+        font-family: 'Sora', sans-serif;
+        font-weight: 700;
+        color: var(--case-dark);
+        margin-bottom: 12px;
+    }
+
+    .case-benefit-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .case-benefit-grid div {
+        background: #f8fafc;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 18px;
+        padding: 14px;
+    }
+
+    .case-benefit-grid h3 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+        font-weight: 800;
+    }
+
+    .case-benefit-grid p {
+        margin: 0;
+        line-height: 1.5;
+        font-size: 0.92rem;
+    }
+
+    .case-list-section {
+        padding-top: 16px;
+        padding-bottom: 60px;
+    }
+
+    .case-section-head {
+        margin-bottom: 20px;
+    }
+
+    .case-section-head p {
+        color: #64748b;
+        margin-bottom: 0;
+    }
+
+    .case-grid-modern {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+        gap: 18px;
+    }
+
+    .case-card-modern {
+        background: var(--case-card);
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: 0 10px 28px rgba(2, 8, 23, 0.08);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        animation: caseRise 0.7s ease both;
+    }
+
+    .case-card-modern:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 34px rgba(2, 8, 23, 0.12);
+    }
+
+    .case-img-wrap-modern {
+        position: relative;
+        height: 230px;
+    }
+
+    .case-img-wrap-modern img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .case-badge-modern {
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(2, 8, 23, 0.82);
+        color: #f8fafc;
+        font-size: 0.76rem;
+        font-weight: 700;
+    }
+
+    .case-content-modern {
+        padding: 18px;
+    }
+
+    .case-meta-modern {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: #0f766e;
+        font-size: 0.84rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .case-content-modern h3 {
+        font-family: 'Sora', sans-serif;
+        font-size: 1.12rem;
+        line-height: 1.4;
+        margin-bottom: 10px;
+        color: var(--case-dark);
+    }
+
+    .case-content-modern p {
+        color: #475569;
+        line-height: 1.55;
+        margin-bottom: 12px;
+    }
+
+    .case-signal {
+        background: #ecfdf5;
+        border: 1px solid #a7f3d0;
+        color: #14532d;
+        border-radius: 14px;
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    .case-footer-modern {
+        padding: 0 18px 18px;
+    }
+
+    .case-footer-modern a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        border-radius: 12px;
+        background: #0f766e;
+        color: #ffffff;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    @keyframes caseRise {
+        from { opacity: 0; transform: translateY(14px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 991.98px) {
+        .case-benefit-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .case-benefit-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .case-benefit-card {
+            padding: 20px;
+        }
+
+        .case-hero {
+            min-height: 68vh;
+        }
     }
 </style>
 {% endblock %}

@@ -1,5 +1,5 @@
 /* =========================================================================
-   FARM-IQ : ELITE ENTERPRISE UI STYLES
+   Krishi Mitr : ELITE ENTERPRISE UI STYLES
    ========================================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
@@ -7,6 +7,7 @@
 :root {
     /* Base Color Tokens - Shared */
     --elite-primary: #064e3b; 
+    --agri-dark: #014d3e;
     --elite-primary-light: #059669;
     --elite-accent: #eab308;
     --elite-accent-glow: rgba(234, 179, 8, 0.4);
@@ -60,10 +61,10 @@
     --elite-danger-bg: rgba(239, 68, 68, 0.1);
 
     /* Footer - Premium Bright */
-    --footer-bg: #f8fafc;
-    --footer-text: #475569;
-    --footer-heading: #0f172a;
-    --footer-border: rgba(15, 23, 42, 0.08);
+    --footer-bg: var(--agri-dark);
+    --footer-text: rgba(255, 255, 255, 0.85);
+    --footer-heading: #ffffff;
+    --footer-border: rgba(255, 255, 255, 0.1);
 
     /* Transitions - Master Fluidity */
     --trans-base: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -168,6 +169,34 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 1;
 }
 
+.navbar-elite.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    padding: 1rem 0;
+}
+
+/* Agriculture Dark Navbar (For Agent Pages) */
+.navbar-agri-dark {
+    background-color: var(--agri-dark) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-agri-dark .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.navbar-agri-dark .nav-link:hover {
+    color: #ffffff !important;
+}
+
+.navbar-agri-dark .brand-text span {
+    color: #ffffff !important;
+}
+
+.navbar-agri-dark .logo-container {
+    background: rgba(255, 255, 255, 0.1);
+}
 .glass-panel-light {
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(20px);
@@ -1153,3 +1182,562 @@ select.glass-input:valid ~ .glass-label {
     }
     .hero-card, .activity-log-card, .stat-pill-box { grid-column: span 1; }
 }
+
+/* =========================================================================
+   AGENT PAGES — RESPONSIVE HERO CINEMATIC
+   ========================================================================= */
+
+/* Fix: agent forms were cut off using vh-100 — change to min-vh-100 with scroll space */
+.hero-cinematic {
+    min-height: 100vh;
+    padding-bottom: 5rem;
+}
+
+.hero-cinematic-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+.hero-cinematic-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1;
+}
+
+.hero-cinematic-grid {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 2;
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+}
+
+.z-index-100 { z-index: 100; position: relative; }
+
+/* Fix: glass-label on dark agent backgrounds */
+.agent-panel .glass-label {
+    color: rgba(255, 255, 255, 0.6);
+}
+.agent-panel .glass-input:focus ~ .glass-label,
+.agent-panel .glass-input:not(:placeholder-shown) ~ .glass-label,
+.agent-panel select.glass-input:focus ~ .glass-label,
+.agent-panel select.glass-input:valid ~ .glass-label {
+    background: rgba(30, 30, 30, 0.8);
+    color: #34d399;
+    border-radius: 4px;
+    padding: 0 0.4rem;
+}
+
+/* Fix: select chevron for dark glass panels */
+.agent-panel select.glass-input {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.6)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-color: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.12);
+    color: white;
+}
+
+/* Missing gradient classes */
+.text-gradient-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #fca5a5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-gradient-info {
+    background: linear-gradient(135deg, #3b82f6 0%, #93c5fd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-gradient-water {
+    background: linear-gradient(135deg, #0ea5e9 0%, #7dd3fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Missing btn-outline-elite */
+.btn-outline-elite {
+    background: transparent;
+    color: var(--elite-primary);
+    border: 2px solid var(--elite-primary);
+    padding: 0.75rem 2rem;
+    border-radius: 12px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-base);
+    cursor: pointer;
+    transition: all var(--trans-fast);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.btn-outline-elite:hover {
+    background: var(--elite-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(6, 78, 59, 0.3);
+    text-decoration: none;
+}
+
+/* Agent form badge (pulse) */
+.badge-elite-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.pulse-green {
+    width: 10px;
+    height: 10px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulseGlow 2s infinite;
+}
+
+.pill-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Upload Zone Styles */
+.upload-zone-elite {
+    border: 2px dashed rgba(255,255,255,0.2);
+    border-radius: 24px;
+    padding: 3rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--trans-fast);
+    background: rgba(255,255,255,0.03);
+}
+
+.upload-zone-elite:hover {
+    border-color: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.07);
+}
+
+.upload-icon-wrap {
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =========================================================================
+   AGENT PAGES — MOBILE RESPONSIVENESS
+   ========================================================================= */
+
+@media (max-width: 991px) {
+    .hero-cinematic .container {
+        padding-top: 80px !important;
+    }
+    
+    .hero-cinematic .glass-panel {
+        padding: 2rem !important;
+    }
+
+    .hero-cinematic h1.fluid-4xl {
+        font-size: 2.5rem !important;
+        letter-spacing: -1px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-cinematic .container {
+        padding-top: 70px !important;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .hero-cinematic .glass-panel {
+        padding: 1.5rem !important;
+        border-radius: 20px !important;
+    }
+    
+    .hero-cinematic h1.fluid-4xl {
+        font-size: 2rem !important;
+        letter-spacing: -0.5px !important;
+    }
+    
+    .col-md-4, .col-md-6 {
+        margin-bottom: 0;
+    }
+}
+
+/* =========================================================================
+   DASHBOARD — MOBILE HAMBURGER SIDEBAR
+   ========================================================================= */
+
+#sidebar-toggle-btn {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 9999;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--harvest-primary, #1a3a2a);
+    border: none;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+#sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+    backdrop-filter: blur(3px);
+}
+
+@media (max-width: 768px) {
+    #sidebar-toggle-btn {
+        display: flex;
+    }
+    
+    #sidebar-overlay.active {
+        display: block;
+    }
+    
+    .main-viewport {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+    
+    .sidebar-elite {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 999 !important;
+    }
+    
+    .sidebar-elite.open {
+        transform: translateX(0);
+    }
+    
+    .bento-grid-elite {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .bento-large, .bento-wide, .bento-tall {
+        grid-column: span 1 !important;
+        grid-row: span 1 !important;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem !important;
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* =========================================================================
+   FOOTER — RESPONSIVE
+   ========================================================================= */
+
+.footer-main-new {
+    background: var(--elite-primary);
+    color: white;
+    padding: 4rem 0 0;
+}
+
+.footer-top-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 3rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.contact-icon-box {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.contact-info-text h6 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--elite-accent);
+    margin-bottom: 0.25rem;
+}
+
+.contact-info-text p {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.btn-contact-pill {
+    padding: 0.75rem 2rem;
+    background: var(--elite-accent);
+    color: var(--elite-primary);
+    font-weight: 800;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-contact-pill:hover {
+    background: #fef08a;
+    transform: translateY(-2px);
+    text-decoration: none;
+    color: var(--elite-primary);
+}
+
+.footer-grid-new {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+}
+
+.footer-brand-col h4 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.footer-brand-col p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.newsletter-box-new {
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50px;
+    padding: 6px 6px 6px 1.2rem;
+}
+
+.newsletter-box-new input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.newsletter-box-new input::placeholder {
+    color: rgba(255,255,255,0.4);
+}
+
+.btn-subscribe-new {
+    background: var(--elite-accent);
+    color: var(--elite-primary);
+    font-weight: 700;
+    border: none;
+    border-radius: 50px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-subscribe-new:hover {
+    background: #fef08a;
+}
+
+.footer-heading-new {
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--elite-accent);
+    margin-bottom: 1.25rem;
+}
+
+.footer-links-new {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links-new li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links-new a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.footer-links-new a:hover {
+    color: white;
+    padding-left: 5px;
+    text-decoration: none;
+}
+
+.footer-main .nav-link, 
+.footer-main a {
+    color: var(--footer-text) !important;
+}
+
+.footer-main a:hover {
+    color: #ffffff !important;
+}
+
+.social-icons-footer-new {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.social-icon-box-new {
+    width: 42px;
+    height: 42px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.7);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-icon-box-new:hover,
+.social-icon-box-new.active-yellow {
+    background: var(--elite-accent);
+    border-color: var(--elite-accent);
+    color: var(--elite-primary);
+    transform: translateY(-3px);
+    text-decoration: none;
+}
+
+.footer-bottom-new {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.footer-bottom-new p {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+@media (max-width: 991px) {
+    .footer-grid-new {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-grid-new {
+        grid-template-columns: 1fr;
+    }
+    .footer-top-contact {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .footer-bottom-new {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* =========================================================================
+   NAV LIVE DOT
+   ========================================================================= */
+
+.nav-live-dot {
+    width: 8px;
+    height: 8px;
+    background: #34d399;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 6px;
+    animation: pulseGlow 2s infinite;
+    vertical-align: middle;
+}
+
+/* =========================================================================
+   RESULT PAGES — POLISH
+   ========================================================================= */
+
+.input-summary-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.8rem;
+    background: rgba(6, 78, 59, 0.08);
+    border: 1px solid rgba(6, 78, 59, 0.12);
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--elite-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+

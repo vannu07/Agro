@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return '<h1>Farm-IQ Test Server Running!</h1><p>The Flask server is working correctly.</p>'
+    return '<h1>Krishi Mitr Test Server Running!</h1><p>The Flask server is working correctly.</p>'
 
 if __name__ == '__main__':
     print("Starting Flask test server...")

@@ -1,4 +1,4 @@
-﻿# Farm-IQ-AI-Powered-Smart-Farming-Assistant🌿
+# Farm-IQ-AI-Powered-Smart-Farming-Assistant🌿
 #### A simple ML and DL based website which recommends the best crop to grow, fertilizers to use and the diseases caught by your crops.
 
 ## DISCLAIMER ⚠️
@@ -73,25 +73,31 @@ Note that, for now it only supports following crops
 </details>
 
 ## How to run locally 🛠️
-- Before the following steps make sure you have [git](https://git-scm.com/download), [Anaconda](https://www.anaconda.com/) or [miniconda](https://docs.conda.io/en/latest/miniconda.html) installed on your system
-- Clone the complete project with `git clone https://github.com/vannu07/Farm-IQ-AI-Powered-Smart-Farming-Assistant.git` or you can just download the code and unzip it
-- **Note:** The master branch doesn't have the updated code used for deployment, to download the updated code used for deployment you can use the following command
+- Make sure Python 3.10+ and git are installed.
+- Clone the repository and open a terminal in the project root.
+- Create and activate a virtual environment:
   ```
-  ❯ git clone -b deploy https://github.com/vannu07/Farm-IQ-AI-Powered-Smart-Farming-Assistant.git 
+  python -m venv .venv
+  # Windows PowerShell
+  .\.venv\Scripts\Activate.ps1
+  # macOS/Linux
+  source .venv/bin/activate
   ```
-- `deploy` branch has only the code required for deploying the app (rest of the code that was used for training the models, data preparation can be accessed on `master` branch)
-- It is highly recommended to clone the deploy branch for running the project locally (the further steps apply only if you have the deploy branch cloned)
-- Once the project is cloned, open anaconda prompt in the directory where the project was cloned and paste the following block
+- Install dependencies:
   ```
-  conda create -n Farm-IQ   python=3.6.12
-  conda activate Farm-IQ 
   pip install -r requirements.txt
+  pip install -r app/requirements.txt
   ```
-- And finally run the project with
+- Create a `.env` file (or update existing one) and set at least:
   ```
-  python app.py
+  WEATHER_API_KEY=your_weatherapi_key
+  GEMINI_API_KEY=your_gemini_key
   ```
-- Open the localhost url provided after running `app.py` and now you can use the project locally in your web browser.
+- Run the Flask app:
+  ```
+  python app/app.py
+  ```
+- Open the local URL shown in the terminal (typically `http://127.0.0.1:5000`).
 
 ## Contribute 👨‍💻
 Please read [CONTRIBUTING.md](https://github.com/vannu07/Farm-IQ-AI-Powered-Smart-Farming-Assistant/blob/main/Contributing.md) for details on our code of conduct, and the process for submitting pull requests to us.

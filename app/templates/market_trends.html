@@ -1,220 +1,343 @@
 {% extends 'layout.html' %}
+
 {% block body %}
-
-<main class="market-pulse-wrapper">
-    <!-- Market Hero -->
-    <section class="market-hero text-center text-white d-flex align-items-center justify-content-center">
-        <div class="hero-bg" style="background-image: url('{{ url_for('static', filename='images/farm_background_1.jpg') }}');"></div>
-        <div class="hero-overlay"></div>
-        
-        <div class="container position-relative z-index-10" style="padding-top: calc(var(--nav-height) + 60px);">
-            <div class="g-reveal-up">
-                <div class="intro-label mb-2 text-uppercase tracking-widest small font-weight-bold" style="color: var(--elite-accent);">Insights • Market Dynamics</div>
-                <h1 class="fluid-6xl font-weight-bold mb-4" style="letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.6);">Real-time <span class="text-gradient-primary">Market Intelligence</span> to maximize your harvest value.</h1>
-            </div>
+<!-- Live Market Ticker (Isolated UI Enhancement) -->
+<div class="market-ticker-wrap">
+    <div class="market-ticker-track">
+        {% for item in market_records|default(market_data|default([
+            {"crop": "Wheat", "price": "₹2,100", "change": "+1.2%"},
+            {"crop": "Paddy", "price": "₹1,940", "change": "-0.5%"},
+            {"crop": "Maize", "price": "₹1,850", "change": "+2.1%"},
+            {"crop": "Cotton", "price": "₹6,300", "change": "+0.8%"},
+            {"crop": "Mustard", "price": "₹5,400", "change": "-1.1%"}
+        ])) %}
+        <div class="ticker-item">
+            <span class="ticker-crop">{{ item.crop }}</span>
+            <span class="ticker-price">{{ item.price }}</span>
+            <span class="ticker-change {% if '-' in item.change %}trend-down{% else %}trend-up{% endif %}">
+                {{ item.change }}
+                {% if '-' in item.change %}↓{% else %}↑{% endif %}
+            </span>
         </div>
-    </section>
+        {% endfor %}
+        <!-- Duplicate loop for seamless scroll -->
+        {% for item in market_records|default(market_data|default([
+            {"crop": "Wheat", "price": "₹2,100", "change": "+1.2%"},
+            {"crop": "Paddy", "price": "₹1,940", "change": "-0.5%"},
+            {"crop": "Maize", "price": "₹1,850", "change": "+2.1%"},
+            {"crop": "Cotton", "price": "₹6,300", "change": "+0.8%"},
+            {"crop": "Mustard", "price": "₹5,400", "change": "-1.1%"}
+        ])) %}
+        <div class="ticker-item">
+            <span class="ticker-crop">{{ item.crop }}</span>
+            <span class="ticker-price">{{ item.price }}</span>
+            <span class="ticker-change {% if '-' in item.change %}trend-down{% else %}trend-up{% endif %}">
+                {{ item.change }}
+                {% if '-' in item.change %}↓{% else %}↑{% endif %}
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
-    <!-- Market Overview Grid -->
-    <section class="container py-120">
-        <div class="row mb-5 g-reveal-up">
+<style>
+    /* Premium Market Ticker (Standalone for this page) */
+    .market-ticker-wrap {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        background: #0a0a0a;
+        color: #ffffff;
+        z-index: 9999999;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        font-family: 'Inter', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    .market-ticker-track {
+        display: flex;
+        white-space: nowrap;
+        animation: ticker-scroll 40s linear infinite;
+    }
+    .ticker-item {
+        display: flex;
+        align-items: center;
+        padding: 0 40px;
+        gap: 12px;
+    }
+    .ticker-crop { color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.05em; }
+    .ticker-price { color: #ffffff; }
+    .ticker-change { padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
+    .trend-up { color: #10b981; background: rgba(16,185,129,0.1); }
+    .trend-down { color: #ef4444; background: rgba(239,68,68,0.1); }
+    @keyframes ticker-scroll {
+        0% { transform: translate3d(0, 0, 0); }
+        100% { transform: translate3d(-50%, 0, 0); }
+    }
+    /* Shift Nav down to avoid overlap */
+    #mainNav { top: 40px !important; }
+    section.section-padding { padding-top: 140px !important; }
+
+    .market-page-shell {
+        position: relative;
+        min-height: 100vh;
+    }
+
+    .market-page-shell::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.14), transparent 32%),
+                    radial-gradient(circle at top right, rgba(59, 130, 246, 0.16), transparent 30%),
+                    linear-gradient(180deg, rgba(2, 6, 23, 0.16), rgba(2, 6, 23, 0.74));
+        pointer-events: none;
+    }
+
+    .market-hero-copy {
+        color: #f8fafc;
+        text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+        position: relative;
+        z-index: 1;
+    }
+
+    .market-hero-copy .text-muted {
+        color: rgba(248, 250, 252, 0.78) !important;
+    }
+
+    .market-card,
+    .glass-panel {
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+    }
+
+    .market-dashboard-shell {
+        position: relative;
+        z-index: 1;
+    }
+
+    .market-stat-card {
+        background: rgba(15, 23, 42, 0.72);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 24px;
+        padding: 24px;
+        height: 100%;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+    }
+
+    .market-stat-label {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: rgba(248, 250, 252, 0.62);
+        font-weight: 800;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .market-stat-value {
+        font-size: 2rem;
+        font-weight: 900;
+        line-height: 1;
+        color: #f8fafc;
+        margin-bottom: 6px;
+    }
+
+    .market-stat-sub {
+        color: rgba(248, 250, 252, 0.7);
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .market-quick-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.6);
+        color: rgba(248, 250, 252, 0.9);
+        border: 1px solid rgba(255,255,255,0.08);
+        font-size: 0.85rem;
+        font-weight: 700;
+        margin-right: 8px;
+        margin-bottom: 8px;
+    }
+
+    .market-record-card {
+        background: rgba(15, 23, 42, 0.72);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 28px;
+        padding: 24px;
+        height: 100%;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+    }
+
+    .market-record-price {
+        font-size: 2rem;
+        font-weight: 900;
+        line-height: 1;
+        color: #f8fafc;
+    }
+
+    .market-record-meta {
+        color: rgba(248, 250, 252, 0.78);
+        font-size: 0.92rem;
+    }
+
+    .market-record-footnote {
+        color: rgba(248, 250, 252, 0.62);
+        font-size: 0.82rem;
+    }
+
+    .market-empty-card {
+        background: rgba(15, 23, 42, 0.72);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 28px;
+        padding: 40px;
+        color: #f8fafc;
+    }
+</style>
+
+<section class="section-padding market-page-shell" style="background: linear-gradient(180deg, rgba(2, 6, 23, 0.35), rgba(2, 6, 23, 0.78)), url('/static/images/harvesta_aerial_field_background.png') center center / cover no-repeat; background-attachment: fixed;">
+    {% set market_summary = summary|default({}) %}
+    <div class="container mt-5 market-dashboard-shell">
+        <div class="row mb-4 fade-in-up market-hero-copy align-items-end">
             <div class="col-lg-8">
-                <h2 class="fluid-4xl font-weight-bold text-dark">Mandi Price Index</h2>
-                <p class="text-muted">Live updates on commodity prices across major Indian markets.</p>
+                <div class="section-eyebrow">Market Intelligence</div>
+                <h1 class="fluid-4xl font-weight-bold mb-3">Market <span class="text-gradient-primary">Trends</span> Dashboard</h1>
+                <p class="lead mb-4">A simple view of live commodity prices from the dataset. Use the filters to see a specific state or crop.</p>
+                <div>
+                    <span class="market-quick-chip">{{ market_summary.get('total_records', 0) }} records</span>
+                    <span class="market-quick-chip">{{ market_summary.get('commodities_count', 0) }} crops</span>
+                    <span class="market-quick-chip">{{ market_summary.get('states_count', 0) }} states</span>
+                    <span class="market-quick-chip">{{ market_summary.get('markets_count', 0) }} markets</span>
+                </div>
             </div>
-            <div class="col-lg-4 text-lg-right d-flex align-items-center justify-content-lg-end">
-                <span class="pulse-live mr-2"></span>
-                <span class="small font-weight-bold text-uppercase opacity-70">Live Updates</span>
+            <div class="col-lg-4 text-lg-right mt-4 mt-lg-0">
+                <div class="market-stat-card d-inline-block text-left">
+                    <span class="market-stat-label">Present Rate</span>
+                    <div class="market-stat-value" style="font-size: 1.7rem;">{{ market_summary.get('present_rate', 'N/A') }}</div>
+                    <p class="market-stat-sub mb-0">Latest market snapshot: {{ market_summary.get('present_rate_date', 'N/A') }}</p>
+                </div>
             </div>
         </div>
 
+        <!-- Filter Bar -->
+        <div class="glass-panel p-4 mb-5 shadow-sm market-dashboard-shell">
+            <form action="{{ url_for('market_trends') }}" method="GET" class="row align-items-end">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <label class="small font-weight-bold text-muted mb-2">State</label>
+                    <select name="state" class="form-control glass-input">
+                        <option value="">All States</option>
+                        {% for state in states %}
+                        <option value="{{ state }}" {% if state == selected_state %}selected{% endif %}>{{ state }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <label class="small font-weight-bold text-muted mb-2">Crop / Commodity</label>
+                    <select name="crop" class="form-control glass-input">
+                        <option value="">All Commodities</option>
+                        {% for crop in (all_crops or []) %}
+                        <option value="{{ crop }}" {% if crop == selected_crop %}selected{% endif %}>{{ crop }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary btn-block py-2" style="border-radius: 12px;">
+                        Show Trends
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        {% if not market_records and not market_data %}
+        <div class="text-center py-5 market-empty-card">
+            <h4 class="mb-3" style="font-weight: 900;">No matching market records found</h4>
+            <p class="mb-4" style="color: rgba(248, 250, 252, 0.72);">Try another state or crop. The dataset is available, but this filter combination does not return rows.</p>
+            <a href="{{ url_for('market_trends') }}" class="btn btn-outline-light">Clear Filters</a>
+        </div>
+        {% else %}
+        <div class="d-flex flex-wrap align-items-center mb-3 market-hero-copy">
+            <div class="mr-3 mb-2">
+                <strong>{{ market_records|length }}</strong> matching records shown
+            </div>
+            {% if selected_state %}
+            <div class="mr-3 mb-2 market-quick-chip">State: {{ selected_state }}</div>
+            {% endif %}
+            {% if selected_crop %}
+            <div class="mr-3 mb-2 market-quick-chip">Crop: {{ selected_crop }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Market Grid -->
         <div class="row">
-            {% for item in market_data %}
-            <div class="col-lg-4 col-md-6 mb-4 g-reveal-up" style="transition-delay: {{ loop.index0 * 0.1 }}s;">
-                <div class="market-card glass-panel p-4 h-100 tilt-card">
-                    <div class="d-flex justify-content-between align-items-start mb-4">
-                        <div class="market-icon bg-primary-subtle text-primary">
-                            <i class="fa fa-shopping-basket"></i>
+            {% for item in market_records %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="market-record-card h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <span class="badge badge-info px-3 py-2 mb-2">{{ item.crop }}</span>
+                            <h5 class="font-weight-bold mb-0" style="color: #f8fafc;">{{ item.market }}</h5>
                         </div>
-                        <div class="trend-badge {% if item.trend == 'up' %}trend-up{% else %}trend-down{% endif %}">
-                            <i class="fa fa-caret-{% if item.trend == 'up' %}up{% else %}down{% endif %} mr-1"></i>
-                            {{ item.change }}
+                        <div class="text-right">
+                            <div class="market-record-price">{{ item.price }}</div>
+                            <div class="market-record-footnote">Modal price</div>
                         </div>
                     </div>
                     
-                    <h4 class="font-weight-bold text-dark mb-1">{{ item.crop }}</h4>
-                    <div class="price-value fluid-2xl font-weight-bold text-gradient-primary mb-3">{{ item.price }} <span class="small text-muted" style="font-size: 0.4em;">/ Quintal</span></div>
-                    
-                    <div class="d-flex justify-content-between align-items-center small text-muted">
-                        <span><i class="fa fa-bar-chart mr-1"></i> Volume: {{ item.volume | capitalize }}</span>
-                        <span><i class="fa fa-clock-o mr-1"></i> 2h ago</span>
+                    <div class="market-record-meta mb-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>State</span>
+                            <span class="font-weight-bold">{{ item.state }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>District</span>
+                            <span class="font-weight-bold">{{ item.district }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Variety</span>
+                            <span class="font-weight-bold">{{ item.variety or '—' }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Arrival</span>
+                            <span class="font-weight-bold">{{ item.arrival_date or '—' }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Range</span>
+                            <span class="font-weight-bold">{{ item.min_price }} - {{ item.max_price }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Spread</span>
+                            <span class="font-weight-bold">{{ item.spread }}</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span class="badge badge-pill badge-dark px-3 py-2">{{ item.trend | upper }}</span>
+                        <span class="market-record-footnote">Market reference</span>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
-    </section>
-
-    <!-- Insight Charts -->
-    <section class="bg-footer py-120 text-white overflow-hidden">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-5 mb-5 mb-lg-0 g-reveal-up">
-                    <h2 class="fluid-4xl font-weight-bold mb-4">Predictive <br><span class="text-gradient-primary">Price Analytics</span></h2>
-                    <p class="lead opacity-70 mb-5">Our AI agents analyze seasonal cycles and global demand-supply gaps to predict upcoming price surges.</p>
-                    <ul class="list-unstyled spacing-y-3">
-                        <li class="d-flex align-items-center"><i class="fa fa-check-circle text-primary mr-3"></i> 95% Historic Accuracy</li>
-                        <li class="d-flex align-items-center"><i class="fa fa-check-circle text-primary mr-3"></i> Pan-India Mandi Integration</li>
-                        <li class="d-flex align-items-center"><i class="fa fa-check-circle text-primary mr-3"></i> Early Surge Notifications</li>
-                    </ul>
-                </div>
-                <div class="col-lg-7 g-reveal-up" style="transition-delay: 0.2s;">
-                    <div class="glass-panel p-4 overflow-hidden">
-                        <canvas id="marketChart" height="300"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
+        {% endif %}
+    </div>
+</section>
 
 <style>
-    .market-pulse-wrapper { background: #ffffff; }
-    
-    .market-hero {
-        min-height: 100vh;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .hero-bg {
-        position: absolute;
-        inset: 0;
-        background-size: cover;
-        background-position: center;
-        z-index: 1;
-        transform: scale(1.05);
-        animation: heroKenBurns 20s infinite alternate;
-    }
-    
-    .hero-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, rgba(2, 6, 23, 0.98) 0%, rgba(2, 6, 23, 0.6) 50%, rgba(2, 6, 23, 0.98) 100%);
-        z-index: 2;
-    }
-    
-    .market-card {
-        border-radius: 24px;
-        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-        cursor: pointer;
-    }
-    
-    .market-card:hover {
-        border-color: var(--elite-primary-light);
-        box-shadow: 0 20px 50px rgba(6, 78, 59, 0.1);
-    }
-    
-    .market-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-    }
-    
-    .trend-badge {
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.75rem;
-        font-weight: 700;
-    }
-    
-    .trend-up { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-    .trend-down { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
-    
-    .pulse-live {
-        width: 10px;
-        height: 10px;
-        background: #ef4444;
-        border-radius: 50%;
-        display: inline-block;
-        animation: pulseRed 2s infinite;
-    }
-
-    @keyframes pulseRed {
-        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-        70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-    }
-    
-    @keyframes heroKenBurns {
-        from { transform: scale(1); }
-        to { transform: scale(1.1); }
+    .market-record-card { transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+    .market-record-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(59, 130, 246, 0.35);
+        box-shadow: 0 24px 60px rgba(0,0,0,0.28);
     }
 </style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Vanilla Tilt initialization for 3D effect
-        const cards = document.querySelectorAll('.tilt-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
-            });
-        });
-
-        // Chart.js implementation
-        const ctx = document.getElementById('marketChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'Price Trending (Wheat)',
-                    data: [2100, 2150, 2275, 2300, 2250, 2400],
-                    borderColor: '#10b981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { labels: { color: 'white' } }
-                },
-                scales: {
-                    x: { ticks: { color: 'rgba(255,255,255,0.7)' }, grid: { color: 'rgba(255,255,255,0.1)' } },
-                    y: { ticks: { color: 'rgba(255,255,255,0.7)' }, grid: { color: 'rgba(255,255,255,0.1)' } }
-                }
-            }
-        });
-
-        // GSAP Revelations
-        gsap.registerPlugin(ScrollTrigger);
-        const reveals = document.querySelectorAll('.g-reveal-up');
-        reveals.forEach(el => {
-            gsap.fromTo(el, { y: 60, opacity: 0 }, {
-                y: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
-                scrollTrigger: { trigger: el, start: 'top 85%' }
-            });
-        });
-    });
-</script>
-
 {% endblock %}

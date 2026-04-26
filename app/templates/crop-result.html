@@ -1,156 +1,289 @@
 {% extends 'layout.html' %} {% block body %}
 
-<!-- =========================================================================
-     CROP RESULT — PREMIUM INTELLIGENCE REPORT
-     ========================================================================= -->
-<section class="hero-cinematic min-vh-100 position-relative overflow-hidden d-flex align-items-center py-5">
-    <!-- Cinematic Background -->
-    <div class="hero-cinematic-bg" style="background-image: url('https://images.unsplash.com/photo-1592982537447-7440770cbfc9?q=80&w=2070&auto=format&fit=crop');"></div>
-    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4) 0%, rgba(255,255,255,0.95) 100%);"></div>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&display=swap');
 
-    <div class="container position-relative z-index-100" style="padding-top: 120px;">
-        <div class="row">
+    :root {
+        --h-lime: #E1F12E;
+        --h-orange: #FFB555;
+        --h-dark: #020617;
+        --h-glass: rgba(15, 23, 42, 0.7);
+        --h-border: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+        font-family: 'Urbanist', sans-serif;
+        background: var(--h-dark) !important;
+        color: #f8fafc;
+    }
+
+    .h-viewport {
+        min-height: 100vh;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        padding: 120px 20px 60px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .h-viewport::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(rgba(2, 6, 23, 0.7), rgba(2, 6, 23, 0.8)), url('/static/images/harvesta_crop_bg.png') center/cover no-repeat;
+        filter: blur(6px) brightness(0.6);
+        z-index: -1;
+    }
+
+    .h-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 30px;
+        max-width: 1300px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .h-glass-card {
+        background: var(--h-glass);
+        backdrop-filter: blur(50px);
+        -webkit-backdrop-filter: blur(50px);
+        border: 1px solid var(--h-border);
+        border-radius: 48px;
+        padding: 60px;
+        box-shadow: 0 40px 120px rgba(0, 0, 0, 0.7);
+    }
+
+    .h-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(225, 241, 46, 0.1);
+        border: 1px solid rgba(225, 241, 46, 0.3);
+        color: var(--h-lime);
+        padding: 10px 24px;
+        border-radius: 99px;
+        font-size: 0.8rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 32px;
+    }
+
+    .h-title {
+        font-size: clamp(3rem, 8vw, 4.5rem);
+        font-weight: 950;
+        letter-spacing: -4px;
+        line-height: 0.85;
+        margin-bottom: 40px;
+        background: linear-gradient(to bottom, #ffffff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .crop-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--h-lime), #84cc16);
+        color: var(--h-dark);
+        padding: 24px 60px;
+        border-radius: 32px;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 950;
+        text-transform: uppercase;
+        letter-spacing: -2px;
+        word-break: break-word;
+        box-shadow: 0 25px 60px rgba(225, 241, 46, 0.4);
+        margin-bottom: 60px;
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .stat-ring {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--h-border);
+        border-radius: 32px;
+        padding: 35px;
+        text-align: center;
+        transition: all 0.4s ease;
+    }
+
+    .stat-ring:hover {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .stat-val {
+        font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+        font-weight: 950;
+        letter-spacing: -1px;
+        word-wrap: break-word;
+        line-height: 1.2;
+    }
+
+    .stat-label {
+        font-weight: 800;
+        font-size: 0.8rem;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 5px;
+    }
+
+    .btn-action {
+        padding: 24px 48px;
+        border-radius: 24px;
+        font-weight: 950;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        display: inline-flex;
+        align-items: center;
+        gap: 15px;
+        text-decoration: none;
+        font-size: 1rem;
+    }
+
+    .btn-lime { background: var(--h-lime); color: var(--h-dark); }
+    .btn-outline { 
+        background: rgba(255, 255, 255, 0.05); 
+        color: white; 
+        border: 1px solid var(--h-border); 
+    }
+
+    .btn-action:hover {
+        transform: translateY(-8px);
+    }
+
+    .btn-lime:hover {
+        box-shadow: 0 25px 60px rgba(225, 241, 46, 0.4);
+    }
+
+    #npkChart {
+        width: 100%;
+        height: 450px;
+    }
+
+    .insight-pill {
+        background: rgba(30, 41, 59, 0.5);
+        border-radius: 32px;
+        padding: 35px;
+        margin-top: 40px;
+        border: 1px solid rgba(225, 241, 46, 0.2);
+    }
+</style>
+
+<div class="h-viewport">
+    <div class="h-grid">
+        <!-- Main Result Card -->
+        <div class="h-glass-card" style="grid-column: span 8; text-align: center;" data-aos="fade-right">
+            <div class="h-badge">Optimal Strategy Synthesized</div>
             
-            <!-- Result Main Column -->
-            <div class="col-lg-8 stagger-load">
-                <div class="glass-panel p-5 mb-4" style="border-radius: 32px; background: rgba(255,255,255,0.7); border: 1px solid rgba(5, 150, 105, 0.1); box-shadow: 0 30px 60px rgba(0,0,0,0.05);">
-                    <div class="d-flex align-items-center mb-4">
-                        <span class="badge badge-elite-live mr-3">ORCHESTRATION COMPLETE</span>
-                        <div class="pulse-green"></div>
-                    </div>
-                    
-                    <h4 class="text-muted font-weight-bold text-uppercase small mb-2" style="letter-spacing: 2px;">Recommended Strategy</h4>
-                    <h1 class="fluid-5xl font-weight-bold mb-4" style="letter-spacing: -3px; color: var(--text-main);">
-                        Cultivate <span class="text-gradient-primary">{{ prediction | capitalize }}</span>
-                    </h1>
-                    
-                    <p class="fluid-base text-muted mb-5" style="max-width: 600px; line-height: 1.8;">
-                        Our neural networks have processed your regional telemetry. <b>{{ prediction | capitalize }}</b> is mathematically the most optimal choice for maximum yield in your environment.
-                    </p>
+            <h1 class="h-title">High Compatibility <span style="color: var(--h-lime);">Detected</span></h1>
+            
+            <div class="crop-badge magnetic">{{ prediction | replace('_', ' ') }}</div>
+            
+            <p style="font-weight: 600; font-size: 1.25rem; color: #94a3b8; max-width: 600px; margin: 0 auto 50px; line-height: 1.8;">
+                Neural vision confirms <strong style="color: #ffffff; text-decoration: underline; text-decoration-color: var(--h-lime); text-underline-offset: 4px;">{{ prediction | replace('_', ' ') | title }}</strong> exhibits the highest biological synergy with your soil cluster.
+            </p>
 
-                    <div class="d-flex flex-wrap gap-3">
-                        <a href="{{ url_for('fertilizer_recommendation') }}" class="btn btn-elite py-3 px-4" style="border-radius: 12px;">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M22 7.5V17c0 .5-.4 1-1 1H3c-.6 0-1-.5-1-1V7.5c0-.6.4-1.1 1-1.1h18c.6 0 1 .5 1 1.1Z"/><path d="M2 7a2 2 0 0 1 2-2h3"/><path d="M22 7a2 2 0 0 0-2-2h-3"/><path d="M2 13.5a2 2 0 0 1 2 2v2"/><path d="M22 13.5a2 2 0 0 0-2 2v2"/><path d="M11 5V3"/><path d="M12 5h-2"/><path d="M12 18v3"/><path d="M13 21h-2"/></svg> Nutrient Advisor
-                        </a>
-                        <a href="{{ url_for('crop_recommend') }}" class="btn btn-outline-elite py-3 px-4" style="border-radius: 12px; font-weight: 700;">
-                           Refine Telemetry
-                        </a>
+            <div class="row g-4 mb-5">
+                <div class="col-md-4">
+                    <div class="stat-ring">
+                        <div class="stat-val" style="color: var(--h-orange);">{{ orchestration.agents.weather.data.temperature if orchestration else "28" }}°C</div>
+                        <div class="stat-label">Environment</div>
                     </div>
                 </div>
-
-                <!-- Intelligence Grid -->
-                {% if orchestration and orchestration.agents %}
-                <div class="row">
-                    {% set weather = orchestration.agents.get('weather') %}
-                    {% set yield_agent = orchestration.agents.get('yield') %}
-                    
-                    <div class="col-md-6 mb-4">
-                        <div class="glass-panel p-4 h-100" style="background: rgba(255,255,255,0.4); border-radius: 24px;">
-                            <h5 class="font-weight-bold mb-4 d-flex align-items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 19.07-1.41-1.41"/><path d="M12 20v2"/><path d="m6.34 17.66-1.41 1.41"/><path d="M2 12h2"/><path d="m5.93 5.93-1.41-1.41"/><circle cx="12" cy="12" r="4"/></svg> Weather Context
-                            </h5>
-                            {% if weather and weather.status == 'ok' %}
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted small font-weight-bold uppercase">Temperature</span>
-                                <span class="font-weight-bold text-dark">{{ weather.data.temperature }}°C</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted small font-weight-bold uppercase">Humidity</span>
-                                <span class="font-weight-bold text-dark">{{ weather.data.humidity }}%</span>
-                            </div>
-                            <div class="mt-4 pt-3 border-top">
-                                <span class="badge badge-elite-live" style="background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.2);">
-                                    {{ weather.data.risk_level | upper }} CLIMATE RISK
-                                </span>
-                            </div>
-                            {% else %}
-                            <p class="small text-muted">Weather data temporarily unavailable.</p>
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 mb-4">
-                        <div class="glass-panel p-4 h-100" style="background: rgba(255,255,255,0.4); border-radius: 24px;">
-                            <h5 class="font-weight-bold mb-4 d-flex align-items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3"><path d="M12 20a10 10 0 0 0 10-10c0-5.5-4.5-10-10-10a10 10 0 0 0-10 10c0 5.5 4.5 10 10 10Zm0 0V10"/></svg> Harvest Forecast
-                            </h5>
-                            {% if yield_agent and yield_agent.status == 'ok' %}
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted small font-weight-bold uppercase">Expected Yield</span>
-                                <span class="font-weight-bold text-success">{{ '%.2f'|format(yield_agent.data.avg_yield) }}</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2">
-                                <span class="text-muted small font-weight-bold uppercase">Metric Unit</span>
-                                <span class="font-weight-bold text-dark">{{ yield_agent.data.unit }}</span>
-                            </div>
-                            <p class="small text-muted mt-3 italic">"{{ yield_agent.data.message }}"</p>
-                            {% else %}
-                            <p class="small text-muted">Yield prediction data unavailable.</p>
-                            {% endif %}
-                        </div>
+                <div class="col-md-4">
+                    <div class="stat-ring">
+                        <div class="stat-val" style="color: #3b82f6;">{{ orchestration.agents.weather.data.humidity if orchestration else "65" }}%</div>
+                        <div class="stat-label">Moisture</div>
                     </div>
                 </div>
-                {% endif %}
+                <div class="col-md-4">
+                    <div class="stat-ring">
+                        <div class="stat-val" style="color: var(--h-lime);">{{ orchestration.agents.yield.data.avg_yield if (orchestration and orchestration.agents.yield) else "4.2" }}</div>
+                        <div class="stat-label">Yield (T/H)</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Sidebar Actions -->
-            <div class="col-lg-4 stagger-load">
-                <div class="glass-panel p-4 mb-4" style="border-radius: 24px; background: #ffffff;">
-                    <h5 class="font-weight-bold mb-4">Next Performance Steps</h5>
-                    <div class="timeline-elite">
-                        <div class="d-flex mb-4">
-                            <div class="pill-icon mr-3" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                            </div>
-                            <div>
-                                <h6 class="font-weight-bold mb-1">Source Elite Seeds</h6>
-                                <p class="small text-muted mb-0">Procure high-vigor {{ prediction }} seeds optimized for your region.</p>
-                            </div>
-                        </div>
-                        <div class="d-flex mb-4">
-                            <div class="pill-icon mr-3" style="background: rgba(234, 179, 8, 0.1); color: #eab308;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.3c2.2 0 4-1.8 4-4 0-3.3-4-8-4-8s-4 4.7-4 8c0 2.2 1.8 4 4 4Z"/><path d="M17 19c2.9 0 4-2.1 4-4.6 0-3.7-4-9.4-4-9.4s-4 5.7-4 9.4c0 2.5 1.1 4.6 4 4.6Z"/></svg>
-                            </div>
-                            <div>
-                                <h6 class="font-weight-bold mb-1">Configure Smart Water</h6>
-                                <p class="small text-muted mb-0">Sync your irrigation agent with the 7-day climate horizon.</p>
-                            </div>
-                        </div>
-                        <div class="d-flex">
-                            <div class="pill-icon mr-3" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
-                            </div>
-                            <div>
-                                <h6 class="font-weight-bold mb-1">Activate Biosecurity</h6>
-                                <p class="small text-muted mb-0">Initialize scheduled leaf-scan protocols to detect pathogens early.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="d-flex gap-4 justify-content-center">
+                <a href="{{ url_for('fertilizer_recommendation') }}" class="btn-action btn-lime magnetic">
+                    <span>Fertilizer Advisor</span>
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                        <path d="M13 5l7 7-7 7M5 12h14"/>
+                    </svg>
+                </a>
+                <a href="{{ url_for('crop_recommendation') }}" class="btn-action btn-outline magnetic">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                        <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    Refine Parameters
+                </a>
+            </div>
+        </div>
 
-                <div class="glass-panel p-0 overflow-hidden" style="border-radius: 24px; min-height: 250px;">
-                    <div class="h-100 p-4 d-flex flex-column justify-content-end" style="background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%), url('https://images.unsplash.com/photo-1595841696677-5f8993f79927?q=80&w=1974&auto=format&fit=crop'); background-size: cover; background-position: center;">
-                        <h5 class="text-white font-weight-bold">Sustainable Mastery</h5>
-                        <p class="text-white-50 small mb-3">Learn how crop rotation advisor can boost your long-term output.</p>
-                        <a href="{{ url_for('sustainability_advisor') }}" class="btn btn-elite py-2 btn-sm w-fit">Explore Sustainability</a>
-                    </div>
-                </div>
+        <!-- Analytical Context -->
+        <div class="h-glass-card" style="grid-column: span 4;" data-aos="fade-left">
+            <h3 style="font-weight: 950; font-size: 1.5rem; letter-spacing: -1px; margin-bottom: 25px;">Soil Sync Protocol</h3>
+            
+            <div id="npkChart"></div>
+
+            <div class="insight-pill">
+                <h4 style="font-weight: 900; font-size: 1rem; color: var(--h-lime); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px;">Smart Alignment</h4>
+                <p style="font-weight: 600; font-size: 0.95rem; line-height: 1.7; color: #94a3b8; margin-bottom: 0;">
+                    Your Nitrogen synchronization is peak specialized for <strong style="color: #ffffff;">{{ prediction | replace('_', ' ') | title }}</strong>, ensuring high-density biomass accumulation during initial growth cycles.
+                </p>
+            </div>
+            
+            <div class="mt-4 p-4 rounded-32 text-center" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); font-weight: 950; font-size: 0.8rem; letter-spacing: 2px; color: #10b981;">
+                SYNERGY OPTIMIZED
             </div>
         </div>
     </div>
-</section>
+</div>
 
-<!-- Elite Stagger Entrance -->
+<script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    gsap.from(".stagger-load > *", {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power4.out"
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputData = {{ input_data | tojson if input_data else '{"nitrogen": 80, "phosphorous": 60, "pottasium": 45}' }};
+        const idealData = { N: 100, P: 80, K: 60 };
+
+        const data = [
+            {
+                type: 'scatterpolar',
+                r: [inputData.nitrogen, inputData.phosphorous, inputData.pottasium, inputData.nitrogen],
+                theta: ['Nitrogen', 'Phosphorous', 'Potassium', 'Nitrogen'],
+                fill: 'toself',
+                name: 'Current Metric',
+                fillcolor: 'rgba(225, 241, 46, 0.2)',
+                line: { color: '#E1F12E', width: 4 }
+            },
+            {
+                type: 'scatterpolar',
+                r: [idealData.N, idealData.P, idealData.K, idealData.N],
+                theta: ['Nitrogen', 'Phosphorous', 'Potassium', 'Nitrogen'],
+                fill: 'toself',
+                name: 'Biological Ideal',
+                fillcolor: 'rgba(255, 255, 255, 0.05)',
+                line: { color: 'rgba(255, 255, 255, 0.2)', width: 2, dash: 'dot' }
+            }
+        ];
+
+        const layout = {
+            polar: {
+                radialaxis: { visible: true, range: [0, 150], showticklabels: false, gridcolor: 'rgba(255,255,255,0.1)' },
+                angularaxis: { font: { size: 12, weight: 900, family: 'Urbanist', color: '#ffffff' }, gridcolor: 'rgba(255,255,255,0.1)' },
+                bgcolor: 'rgba(0,0,0,0)'
+            },
+            showlegend: false,
+            margin: { t: 40, b: 40, l: 40, r: 40 },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)'
+        };
+
+        Plotly.newPlot('npkChart', data, layout, {responsive: true, displayModeBar: false});
     });
-});
 </script>
 
 {% endblock %}

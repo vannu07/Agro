@@ -8,11 +8,16 @@
 	<!-- for-mobile-apps -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
-	<meta name="keywords" content="Krishi Mitr, Agriculture, AI, Sustainable Farming, India" />
+	<meta name="keywords" content="Krishi Mitr, Agriculture, India, Farming, Tech" />
 
 	<style>
 		:root {
 			--nav-height: 80px;
+            --h-lime: #E1F12E;
+            --h-orange: #FFB555;
+            --h-cream: #EDF0C2;
+            --h-beige: #E3E4D6;
+            --h-dark: #121415;
 		}
 		
 		html {
@@ -34,6 +39,7 @@
 			border-bottom: none;
 			box-shadow: none;
 			transition: all var(--trans-base);
+			z-index: 999999 !important;
 		}
 
 		.navbar-elite.scrolled {
@@ -45,11 +51,42 @@
 			height: 70px;
 		}
 
+        .navbar-elite .nav-link, 
+        .navbar-elite .brand-text {
+            color: #ffffff !important;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .navbar-elite.scrolled .nav-link,
+        .navbar-elite.scrolled .brand-text {
+            color: #ffffff !important;
+        }
+
 		/* Magnetic Button Container */
 		.magnetic {
 			display: inline-block;
 			transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 		}
+
+		/* Ensure brand text is white on the dark header */
+		.navbar-agent-green .brand-text, 
+		.navbar-agent-green .nav-link {
+			color: #ffffff !important;
+		}
+
+        /* Remove any header lines as requested */
+        .navbar-agent-green, .navbar-agent-green.scrolled {
+            border-bottom: none !important;
+            box-shadow: none !important;
+        }
+
+        .navbar-agent-green .nav-link:hover {
+            color: var(--h-lime) !important;
+        }
+
+        .dropdown-menu {
+            z-index: 999999 !important;
+        }
 	</style>
 	<meta name="description" content="Krishi Mitr - AI-powered agricultural assistant for India's farmers providing crop recommendations, fertilizer suggestions, and disease prediction.">
 	<meta name="keywords" content="Agriculture, Crop Recommendation, Fertilizer, Plant Disease Detection, AI, Machine Learning">
@@ -77,10 +114,12 @@
 	<!-- css files -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link href="{{ url_for('static', filename='css/modern.css') }}?v=1.1" rel='stylesheet' type='text/css' />
-	<link href="{{ url_for('static', filename='css/elite.css') }}?v=1.1" rel='stylesheet' type='text/css' />
-	<link href="{{ url_for('static', filename='css/landing.css') }}?v=1.1" rel='stylesheet' type='text/css' />
-	<link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='css/modern.css') }}?v=3.0" rel='stylesheet' type='text/css' />
+	<link href="{{ url_for('static', filename='css/elite.css') }}?v=3.0" rel='stylesheet' type='text/css' />
+	<link href="{{ url_for('static', filename='css/landing.css') }}?v=3.0" rel='stylesheet' type='text/css' />
+	<link href="{{ url_for('static', filename='css/polish.css') }}?v=3.0" rel='stylesheet' type='text/css' />
+	<link href="{{ url_for('static', filename='css/krishi-mitr-modern.css') }}?v=3.0" rel='stylesheet' type='text/css' />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<!-- Chart.js -->
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<!-- //css files -->
@@ -96,13 +135,28 @@
 
 
 
+    <!-- Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <!-- Lottie Animation Player -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 
-<body class="{% if request.path == url_for('home') or request.path == url_for('case_studies') or request.path == url_for('about') or request.path == url_for('market_trends') or request.path == url_for('agri_tech_news') %}home-page{% endif %}">
+{% set hero_endpoints = [
+    'home', 'services', 'about', 'case_studies', 'market_trends', 'agri_tech_news', 'case_study_detail',
+    'crop_recommendation', 'crop_prediction',
+    'fertilizer_recommendation', 'fert_recommend',
+    'disease_prediction',
+    'yield_prediction_form', 'yield_prediction_result',
+    'sustainability_advisor', 'sustainability_result',
+    'irrigation_form', 'irrigation_result',
+    'dashboard'
+] %}
+<body class="{% if request.endpoint in hero_endpoints %}home-page{% endif %}">
     <!-- Global Elite Loader -->
     <div id="elite-loader" class="active">
         <div class="scanning-ring">
-            <img src="{{ url_for('static', filename='images/farmiq_logo_transparent_final_1773573015823.png') }}" class="loader-logo" alt="Krishi Mitr">
+            <lottie-player src="{{ url_for('static', filename='images/Tractor.json') }}" background="transparent" speed="1.5" style="width: 120px; height: 120px;" loop autoplay></lottie-player>
         </div>
         <div class="loader-text">AI <span>Processing</span>...</div>
     </div>
@@ -112,13 +166,23 @@
 
 	<!-- Navigation -->
 	<!-- Only show Navigation if not on Splash/Auth Landing Page -->
+	{% set agent_nav_endpoints = [
+		'crop_recommendation', 'crop_prediction', 'crop_predict',
+		'fertilizer_recommendation', 'fert_recommend', 'fertilizer_predict',
+		'disease_prediction', 'disease_predict',
+		'yield_prediction_form', 'yield_prediction_result', 'yield_predict',
+		'sustainability_advisor', 'sustainability_result', 'sustainability_predict',
+		'irrigation_form', 'irrigation_result', 'irrigation_predict',
+		'dashboard'
+	] %}
+	<!-- Navigation -->
 	{% if not hide_nav %}
-	<nav class="navbar navbar-expand-lg navbar-elite fixed-top {% if request.path == url_for('home') or request.path == url_for('about') or request.path == url_for('market_trends') or request.path == url_for('agri_tech_news') %}navbar-transparent{% endif %}">
-		<div class="container">
+	<nav class="navbar navbar-expand-lg fixed-top navbar-elite {% if request.endpoint in agent_nav_endpoints %}navbar-agent-green{% endif %}" id="mainNav">
+		<div class="container-fluid px-lg-5">
 			<a class="navbar-brand d-flex align-items-center" href="{{ url_for('home') }}">
-				<div class="logo-container">
-					<img src="{{ url_for('static', filename='images/farmiq_logo_transparent_final_1773573015823.png') }}?v=1.2" alt="Krishi Mitr" class="logo-img">
-				</div>
+                <div class="logo-container" style="width: 62px; height: 62px; margin-right: 8px;">
+                    <lottie-player src="{{ url_for('static', filename='images/Tractor.json') }}" background="transparent" speed="1.2" style="width: 100%; height: 100%;" loop autoplay></lottie-player>
+                </div>
 				<span class="brand-text">
 					<span class="text-krishi">Krishi</span> 
 					<span class="text-gradient-primary">Mitr</span>
@@ -139,12 +203,15 @@
 					<li class="nav-item">
 						<a class="nav-link" href="{{ url_for('about') }}">About Us</a>
 					</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/services">Services</a>
+                    </li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="predictionsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Predictions
 						</a>
 						<div class="dropdown-menu glass-panel border-0 shadow-lg" aria-labelledby="predictionsDropdown">
-							<a class="dropdown-item" href="{{ url_for('crop_recommend') }}">Crop Recommendation</a>
+							<a class="dropdown-item" href="{{ url_for('crop_recommendation') }}">Crop Recommendation</a>
 							<a class="dropdown-item" href="{{ url_for('fertilizer_recommendation') }}">Fertilizer Suggestion</a>
 							<a class="dropdown-item" href="{{ url_for('disease_prediction') }}">Disease Prediction</a>
 						</div>
@@ -188,6 +255,8 @@
 						<a href="#" class="social-circle"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a>
 					</div>
 
+					<!-- Auth buttons hidden for Review Mode -->
+					<!--
 					{% if session.get('user') %}
 					<div class="nav-auth">
 						<a class="btn-logout-minimal" href="{{ url_for('logout') }}" style="background: var(--elite-primary); border: 1px solid var(--elite-primary-light); color: white !important;">Logout</a>
@@ -197,10 +266,12 @@
 						<a class="btn-login-minimal" href="{{ url_for('login') }}" style="background: var(--elite-accent); color: var(--elite-primary) !important;">Login</a>
 					</div>
 					{% endif %}
+					-->
 				</div>
 			</div>
 		</div>
 	</nav>
+	{% endif %}
 
 	<script>
 		const themeToggle = document.getElementById('theme-toggle');
@@ -229,17 +300,16 @@
 			}
 		});
 	</script>
-	{% endif %}
 
 	{% block body %} {% endblock %}
 
-	<footer class="footer-main" style="background: var(--footer-bg); border-top: 1px solid var(--footer-border);">
+	<footer class="footer-main">
 		<div class="container pt-5 pb-4">
 			<div class="row mb-5">
 				<!-- Col 1: Brand -->
 				<div class="col-md-4 col-lg-3 mb-4 mb-md-0">
-					<h5 class="text-gradient-elite mb-2 font-weight-bold" style="font-size: 1.3rem;">Krishi Mitr</h5>
-					<p class="small mb-3" style="line-height: 1.8; color: var(--footer-text);">Next-generation AI agricultural platform — empowering India's farmers with modular precision agents.</p>
+					<h5 class="mb-2 font-weight-bold" style="font-size: 1.3rem; color: #ffffff;">Krishi Mitr</h5>
+					<p class="small mb-3" style="line-height: 1.8;">Next-generation AI agricultural platform — empowering India's farmers with modular precision agents.</p>
 					<div class="social-links d-flex">
 						<a href="https://github.com/" target="_blank" class="social-link mr-3" title="GitHub" style="color: var(--footer-text);">
 							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
@@ -260,7 +330,7 @@
 					<h6 class="mb-3 font-weight-bold" style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--footer-heading);">Ecosystem</h6>
 					<ul class="list-unstyled">
 						<li class="mb-2"><a href="{{ url_for('home') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Home</a></li>
-						<li class="mb-2"><a href="{{ url_for('crop_recommend') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Crop Advisor</a></li>
+						<li class="mb-2"><a href="{{ url_for('crop_recommendation') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Crop Advisor</a></li>
 						<li class="mb-2"><a href="{{ url_for('fertilizer_recommendation') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Nutrient Lab</a></li>
 						<li class="mb-2"><a href="{{ url_for('disease_prediction') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Plant Pathologist</a></li>
 						<li class="mb-2"><a href="{{ url_for('dashboard') }}" class="small" style="color: var(--footer-text); transition: color 0.3s ease;">Analytics Hub</a></li>
@@ -293,187 +363,620 @@
 			</div>
 			<!-- Footer bottom bar -->
 			<div class="d-flex flex-wrap justify-content-between align-items-center pt-4" style="border-top: 1px solid var(--footer-border);">
-				<p class="small mb-0" style="color: var(--footer-text);">© 2026 <strong style="color: var(--footer-heading);">Varnit Kumar</strong> · Krishi Mitr · All rights reserved.</p>
-				<p class="small mb-0" style="font-size: 0.75rem; color: var(--footer-text);">Made with 💚 for India's Farmers</p>
+				<p class="small mb-0">© 2026 <strong style="color: #ffffff;">Varnit Kumar</strong> · Krishi Mitr · All rights reserved.</p>
+				<p class="small mb-0" style="font-size: 0.75rem;">Made with 💚 for India's Farmers</p>
 			</div>
 		</div>
 	</footer>
 
-<!-- FarmAI Chatbot Widget -->
+﻿<!-- FarmAI Chatbot Premium Widget -->
 {% if not hide_chat %}
-<div id="chat-toggle" class="magnetic" title="Chat with FarmAI">
-  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-more"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h.01"/><path d="M12 9h.01"/><path d="M16 9h.01"/></svg>
-  <span class="chat-dot"></span>
+<style>
+/* Premium Widget CSS */
+#chat-box.premium-widget {
+    position: fixed;
+    bottom: 120px;
+    right: 30px;
+    width: 400px;
+    height: 600px;
+    max-height: 70vh;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(34, 197, 94, 0.18), transparent 38%),
+        radial-gradient(circle at 95% 100%, rgba(59, 130, 246, 0.14), transparent 40%),
+        linear-gradient(165deg, rgba(12, 19, 16, 0.96) 0%, rgba(20, 28, 24, 0.96) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(168, 230, 207, 0.24);
+    border-radius: 24px;
+    box-shadow: 0 22px 60px rgba(0,0,0,0.5);
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+    z-index: 1050;
+    transform-origin: bottom right;
+    animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#chat-box.premium-widget::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("{{ url_for('static', filename='images/3.jpg') }}");
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(5px) saturate(1.08) brightness(0.72);
+    transform: scale(1.04);
+    opacity: 0.78;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#chat-box.premium-widget::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(4, 9, 7, 0.32), rgba(4, 9, 7, 0.52));
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.8) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.chatbot-header {
+    background: linear-gradient(135deg, #153224 0%, #08120d 100%);
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,0.05);
+    position: relative;
+    z-index: 1;
+}
+
+.bot-avatar-bg {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(16, 185, 129, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #10b981;
+}
+
+.chatbot-title-text h2 {
+    margin: 0;
+    color: #a8e6cf;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.chatbot-title-text p {
+    margin: 2px 0 0 0;
+    color: #b0c0b7;
+    font-size: 0.75rem;
+}
+
+.chatbot-status-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.online-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 0 6px rgba(74, 222, 128, 0.18);
+    animation: pulseLive 1.8s infinite;
+}
+
+@keyframes pulseLive {
+    0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.25); }
+    100% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+}
+
+.header-action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+}
+
+.header-action-btn.minimize { color: #9ca3af; }
+.header-action-btn.minimize:hover { color: #fff; background: rgba(255,255,255,0.1); }
+
+.header-action-btn.close { color: #ef4444; opacity: 0.8; }
+.header-action-btn.close:hover { opacity: 1; background: rgba(239, 68, 68, 0.1); }
+
+.chat-window {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015)),
+        rgba(0,0,0,0.02);
+    z-index: 1;
+}
+
+.chat-window::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 12% 0%, rgba(34, 197, 94, 0.08), transparent 38%);
+}
+
+.message { display: flex; gap: 12px; max-width: 90%; }
+.message.user { align-self: flex-end; flex-direction: row-reverse; }
+.message.bot { align-self: flex-start; }
+
+.message-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; flex-shrink: 0;
+}
+.message.bot .message-avatar { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.message.user .message-avatar { background: #10b981; color: white; }
+
+.bubble {
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 0.97rem;
+    line-height: 1.55;
+    color: #e2e8f0;
+}
+.message.user .bubble { background: #10b981; color: white; border-top-right-radius: 4px; }
+.message.bot .bubble {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-top-left-radius: 4px;
+}
+
+.welcome-panel {
+    margin: -2px 0 8px 0;
+    padding: 14px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(16, 185, 129, 0.12), rgba(30, 41, 59, 0.18));
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+
+.welcome-panel-title {
+    color: #d9fbe8;
+    font-weight: 700;
+    font-size: 0.86rem;
+    margin-bottom: 8px;
+    letter-spacing: 0.03em;
+}
+
+.welcome-panel-sub {
+    color: rgba(230, 255, 242, 0.82);
+    font-size: 0.76rem;
+    margin-bottom: 10px;
+}
+
+.welcome-pill-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.welcome-pill {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    color: #d9fbe8;
+    border: 1px solid rgba(187, 247, 208, 0.2);
+    background: rgba(255,255,255,0.04);
+}
+
+.suggestion-chips { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 20px 10px 20px; }
+.suggestion-chips { position: relative; z-index: 1; }
+.suggestion-chip {
+    background: linear-gradient(145deg, rgba(16, 185, 129, 0.16), rgba(16, 185, 129, 0.08));
+    border: 1px solid rgba(16, 185, 129, 0.32);
+    color: #c7f9df;
+    padding: 7px 13px;
+    border-radius: 99px;
+    font-size: 0.83rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+.suggestion-chip:hover {
+    background: linear-gradient(145deg, rgba(16, 185, 129, 0.26), rgba(16, 185, 129, 0.14));
+    transform: translateY(-1px);
+}
+
+.chat-shortcut-hint {
+    padding: 0 20px 6px 20px;
+    font-size: 0.74rem;
+    color: rgba(199, 249, 223, 0.75);
+}
+
+.input-area {
+    padding: 12px 20px 20px 20px; display: flex; gap: 12px; border-top: 1px solid rgba(255,255,255,0.05);
+    position: relative;
+    z-index: 1;
+}
+.chat-input {
+    flex: 1;
+    background: linear-gradient(180deg, rgba(10, 14, 12, 0.74), rgba(9, 12, 11, 0.9));
+    border: 1px solid rgba(52, 211, 153, 0.5);
+    border-radius: 99px; padding: 10px 16px; color: #fff; outline: none;
+}
+.chat-input:focus {
+    border-color: #34d399;
+    box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.18);
+}
+.send-btn {
+    background: linear-gradient(145deg, #34d399, #10b981);
+    border: none; width: 46px; height: 46px; border-radius: 50%;
+    color: white; display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.send-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(16, 185, 129, 0.4);
+}
+
+@media (max-width: 767.98px) {
+    #chat-box.premium-widget {
+        right: 12px;
+        left: 12px;
+        width: auto;
+        height: 72vh;
+        max-height: 72vh;
+        bottom: 94px;
+    }
+
+    #chat-toggle {
+        width: 110px !important;
+        height: 110px !important;
+        right: 10px !important;
+        bottom: 12px !important;
+    }
+}
+</style>
+
+<div id="chat-toggle" onclick="togglePremiumChat()" class="magnetic" title="Chat with Krishi Mitr AI" style="position: fixed; bottom: 30px; right: 30px; display: block; background: transparent; box-shadow: none; width: 140px; height: 140px; padding: 0; cursor: pointer; transition: transform 0.3s ease; z-index: 1050;">
+  <lottie-player src="{{ url_for('static', filename='uploads/Robo.json') }}" background="transparent" speed="1" style="width: 100%; height: 100%; filter: drop-shadow(0 10px 15px rgba(16,185,129,0.3));" loop autoplay></lottie-player>
 </div>
 
-<div id="chat-box" class="glass-panel">
-  <div id="chat-header" class="d-flex align-items-center justify-content-between">
-	  <div class="d-flex align-items-center">
-		  <div class="bot-avatar-mini mr-2">
-			  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
-		  </div>
-		  <span style="font-weight: 700; letter-spacing: -0.5px; color: var(--text-main);">FarmAI Assistant</span>
-	  </div>
-	  <button class="btn p-1 opacity-70 hover-opacity-100" onclick="toggleChat()" style="background:transparent; border:none; color: var(--text-main);">
-		  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-	  </button>
-  </div>
-  <div id="chat-messages">
-	  <div class="msg msg-bot">
-		  <div class="msg-bubble">Hello! I'm your AI agent. How can I assist with your farm today?</div>
-	  </div>
-  </div>
-  <form id="chat-form" onsubmit="return false;">
-	<div id="chat-input-container">
-		<input type="text" id="userInput" placeholder="Ask about soil, crops..." autocomplete="off"/>
-		<div class="magnetic">
-			<button class="btn btn-send-glow rounded-circle d-flex align-items-center justify-content-center" type="button" onclick="sendMessage()">
-				<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send-horizontal"><path d="m3 3 3 9-3 9 19-9Z"/><path d="M6 12h16"/></svg>
-			</button>
-		</div>
-	</div>
-  </form>
+<div id="chat-box" class="premium-widget">
+    <div class="chatbot-header">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="bot-avatar-bg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-leaf"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+            </div>
+            <div class="chatbot-title-text">
+                <h2>Krishi Mitr AI</h2>
+                <p class="chatbot-status-row"><span class="online-dot"></span><span id="widgetStatusText">Gemini + RAG ready</span></p>
+            </div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <button class="header-action-btn minimize" onclick="togglePremiumChat()" title="Minimize Chat">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
+            </button>
+            <button class="header-action-btn close" onclick="endPremiumChat()" title="End Chat & Clear History">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+        </div>
+    </div>
+    
+    <div class="chat-window" id="chatWindow">
+        <div class="message bot">
+            <div class="message-avatar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                </svg>
+            </div>
+            <div class="bubble">Namaste! I'm Krishi Mitr AI, your expert agricultural assistant. How can I help you today?</div>
+        </div>
+        <div class="welcome-panel" id="chatWelcomePanel">
+            <div class="welcome-panel-title">RAG Quick Start</div>
+            <div class="welcome-panel-sub">Connected to your local farming knowledge docs and Gemini for better answers.</div>
+            <div class="welcome-pill-row">
+                <span class="welcome-pill" id="widgetGeminiPill">Gemini: Connected</span>
+                <span class="welcome-pill" id="widgetRagPill">RAG: Ready</span>
+                <span class="welcome-pill" id="widgetDocsPill">Docs: Syncing</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="suggestion-chips" id="suggestionChips">
+        <div class="suggestion-chip" onclick="fillSuggestion('Best crop for my soil type in this season')">Best crop this season</div>
+        <div class="suggestion-chip" onclick="fillSuggestion('NPK recommendation for tomato crop')">Tomato NPK plan</div>
+        <div class="suggestion-chip" onclick="fillSuggestion('Today market trend for wheat in Uttar Pradesh')">Wheat market trend</div>
+        <div class="suggestion-chip" onclick="fillSuggestion('How to calculate irrigation step by step for my field')">Irrigation steps</div>
+        <div class="suggestion-chip" onclick="fillSuggestion('Open irrigation agent')">Open irrigation agent</div>
+        <div class="suggestion-chip" onclick="fillSuggestion('Open yield prediction page')">Open yield page</div>
+    </div>
+    <div class="chat-shortcut-hint">Press Ctrl + Q anytime to open assistant</div>
+    <div class="input-area">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Ask about crops..." onkeypress="handleKeyPress(event)">
+        <button class="send-btn" onclick="sendMessage()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+    </div>
 </div>
 {% endif %}
 
     </div> <!-- End Page Content Wrapper -->
 <script>
-	/* Magnetic Interaction Script */
-	const magnetics = document.querySelectorAll('.magnetic');
-	
-	magnetics.forEach(m => {
-		m.addEventListener('mousemove', function(e) {
-			const pos = m.getBoundingClientRect();
-			const x = e.clientX - pos.left - pos.width / 2;
-			const y = e.clientY - pos.top - pos.height / 2;
-			
-			m.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-		});
-		
-		m.addEventListener('mouseleave', function(e) {
-			m.style.transform = `translate(0px, 0px)`;
-		});
-	});
-
-  const navbar = document.querySelector('.navbar-elite');
-
-  window.addEventListener('scroll', () => {
-    if(navbar && window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else if(navbar) {
-      navbar.classList.remove('scrolled');
+    /* Premium Chatbot Logic */
+    function openChatbotByShortcut() {
+        const box = document.getElementById('chat-box');
+        if (box) {
+            if (box.style.display !== 'flex') {
+                box.style.display = 'flex';
+            }
+            const input = document.getElementById('chatInput');
+            if (input) input.focus();
+            return;
+        }
+        window.location.href = '/chatbot';
     }
-  });
 
-  // Handle Global Page Load & Loader Fade Out
-  function hideLoader() {
-      const loader = document.getElementById('elite-loader');
-      if (loader && !loader.classList.contains('stay-active-override')) {
-          loader.classList.remove('active');
-          loader.style.pointerEvents = 'none'; // Ensure it's not clickable
-      }
-      // Fade in the page content smoothly
-      const pageContent = document.getElementById('page-content');
-      if (pageContent) {
-          pageContent.style.opacity = '1';
-          pageContent.style.visibility = 'visible';
-      }
-  }
-
-  window.addEventListener('load', function() {
-      setTimeout(hideLoader, 500);
-  });
-
-  // Safety timeout: Hide loader after 3 seconds anyway
-  setTimeout(hideLoader, 3000);
-
-  // Show elite loader on any form submission (if they have class elite-form)
-  const allForms = document.querySelectorAll('form.elite-form');
-  allForms.forEach(form => {
-    form.addEventListener('submit', function (e) {
-      if(form.checkValidity()) {
-          const loader = document.getElementById('elite-loader');
-          loader.classList.add('active');
-          loader.classList.add('stay-active-override'); // Prevent accidental hides
-      }
+    document.addEventListener('keydown', function (event) {
+        if (event.ctrlKey && (event.key === 'q' || event.key === 'Q')) {
+            event.preventDefault();
+            openChatbotByShortcut();
+        }
     });
-  });
 
-function toggleChat() {
-  const box = document.getElementById('chat-box');
-  const isShown = box.style.display === 'flex';
-  box.style.display = isShown ? 'none' : 'flex';
-  
-  if (!isShown) {
-	  document.getElementById('userInput').focus();
-  }
-}
+    function togglePremiumChat() {
+        const box = document.getElementById('chat-box');
+        if (box.style.display === 'flex') {
+            box.style.display = 'none';
+        } else {
+            box.style.display = 'flex';
+            document.getElementById('chatInput').focus();
+        }
+    }
+    
+    let chatHistory = [];
 
-document.getElementById('chat-toggle').addEventListener('click', toggleChat);
+    async function syncWidgetStatus() {
+        try {
+            const response = await fetch('/api/chatbot/status');
+            if (!response.ok) return;
+            const payload = await response.json();
+            const info = payload.chatbot || {};
 
-function appendMessage(sender, text) {
-  const chat = document.getElementById('chat-messages');
-  const isBot = sender === "FarmAI";
-  const msgDiv = document.createElement('div');
-  msgDiv.className = `msg ${isBot ? 'msg-bot' : 'msg-user'}`;
-  
-  const bubble = document.createElement('div');
-  bubble.className = 'msg-bubble';
-  bubble.innerText = text;
-  
-  msgDiv.appendChild(bubble);
-  chat.appendChild(msgDiv);
-  chat.scrollTop = chat.scrollHeight;
-}
+            const geminiConnected = !!info.gemini_configured;
+            const ragReady = !!info.rag_ready;
 
-function showTyping() {
-  const chat = document.getElementById('chat-messages');
-  const typingDiv = document.createElement('div');
-  typingDiv.id = 'typing-indicator';
-  typingDiv.className = 'msg msg-bot';
-  typingDiv.innerHTML = `
-    <div class="msg-bubble">
-      <div class="typing-dots">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-  `;
-  chat.appendChild(typingDiv);
-  chat.scrollTop = chat.scrollHeight;
-}
+            const widgetStatusText = document.getElementById('widgetStatusText');
+            if (widgetStatusText) {
+                widgetStatusText.textContent = geminiConnected && ragReady ? 'Gemini + RAG ready' : 'Connection check required';
+            }
 
-function hideTyping() {
-  const indicator = document.getElementById('typing-indicator');
-  if (indicator) indicator.remove();
-}
+            const geminiPill = document.getElementById('widgetGeminiPill');
+            if (geminiPill) {
+                geminiPill.textContent = geminiConnected ? 'Gemini: Connected' : 'Gemini: Missing key';
+            }
 
-async function sendMessage() {
-  const input = document.getElementById('userInput');
-  const msg = input.value.trim();
-  if (!msg) return;
-  
-  appendMessage("You", msg);
-  input.value = '';
-  
-  showTyping();
-  
-  try {
-    const response = await fetch("{{ url_for('api_assistant') }}", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ message: msg })
-    });
-    const data = await response.json();
-    hideTyping();
-    appendMessage("FarmAI", data.reply || "I could not generate a reply.");
-  } catch (e) {
-    hideTyping();
-    appendMessage("FarmAI", "There was a problem reaching the assistant.");
-  }
-}
+            const ragPill = document.getElementById('widgetRagPill');
+            if (ragPill) {
+                const backend = info.vector_backend || 'rag';
+                ragPill.textContent = ragReady ? `RAG: ${String(backend).toUpperCase()} ready` : 'RAG: Not ready';
+            }
+
+            const docsPill = document.getElementById('widgetDocsPill');
+            if (docsPill) {
+                docsPill.textContent = `Docs: ${info.doc_count || 0} loaded`;
+            }
+        } catch (err) {
+            // Keep default values if health endpoint is unavailable.
+        }
+    }
+
+    function endPremiumChat() {
+        chatHistory = [];
+        document.getElementById('chatWindow').innerHTML = `
+            <div class="message bot">
+                <div class="message-avatar">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-leaf"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                </div>
+                <div class="bubble">Namaste! I'm Krishi Mitr AI, your expert agricultural assistant. How can I help you today?</div>
+            </div>
+            <div class="welcome-panel" id="chatWelcomePanel">
+                <div class="welcome-panel-title">RAG Quick Start</div>
+                <div class="welcome-panel-sub">Connected to your local farming knowledge docs and Gemini for better answers.</div>
+                <div class="welcome-pill-row">
+                    <span class="welcome-pill" id="widgetGeminiPill">Gemini: Connected</span>
+                    <span class="welcome-pill" id="widgetRagPill">RAG: Ready</span>
+                    <span class="welcome-pill" id="widgetDocsPill">Docs: Syncing</span>
+                </div>
+            </div>
+            <div class="suggestions-container" id="suggestionChips">
+                <div class="suggestion-chip" onclick="fillSuggestion('Which crop is best for black soil?')">Best crop for black soil</div>
+                <div class="suggestion-chip" onclick="fillSuggestion('How to cure leaf spot disease in wheat?')">Wheat disease treatment</div>
+                <div class="suggestion-chip" onclick="fillSuggestion('What is the ideal NPK ratio for potatoes?')">Potato NPK ratio</div>
+                <div class="suggestion-chip" onclick="fillSuggestion('How to calculate irrigation step by step for my field')">Irrigation steps</div>
+                <div class="suggestion-chip" onclick="fillSuggestion('Open irrigation agent')">Open irrigation agent</div>
+                <div class="suggestion-chip" onclick="fillSuggestion('Open yield prediction page')">Open yield page</div>
+            </div>
+        `;
+        syncWidgetStatus();
+    }
+
+    function scrollToBottom() {
+        const chatWindow = document.getElementById('chatWindow');
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function handleKeyPress(e) {
+        if (e.key === 'Enter') sendMessage();
+    }
+
+    function fillSuggestion(text) {
+        document.getElementById('chatInput').value = text;
+        sendMessage();
+    }
+
+    function resolveNavigationCommand(text) {
+        const query = (text || '').toLowerCase();
+        const routes = [
+            { pattern: /(open|go to|take me to).*(irrigation|hydration)|irrigation agent/, url: '/agent/irrigation', label: 'Smart Irrigation' },
+            { pattern: /(open|go to|take me to).*(crop)|crop agent|crop recommendation/, url: '/agent/crop', label: 'Crop Recommendation' },
+            { pattern: /(open|go to|take me to).*(fertilizer|nutrient)/, url: '/agent/fertilizer', label: 'Fertilizer Recommendation' },
+            { pattern: /(open|go to|take me to).*(disease|pathologist)/, url: '/disease-predict', label: 'Disease Prediction' },
+            { pattern: /(open|go to|take me to).*(yield)/, url: '/yield', label: 'Yield Prediction' },
+            { pattern: /(open|go to|take me to).*(market)/, url: '/market-trends', label: 'Market Trends' },
+            { pattern: /(open|go to|take me to).*(news|agri-tech)/, url: '/agri-tech-news', label: 'Agri-Tech News' },
+            { pattern: /(open|go to|take me to).*(case study|case studies)/, url: '/case-studies', label: 'Case Studies' },
+            { pattern: /(open|go to|take me to).*(dashboard)/, url: '/dashboard', label: 'Dashboard' },
+        ];
+
+        for (const item of routes) {
+            if (item.pattern.test(query)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    async function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text) return;
+        
+        input.value = '';
+        const chips = document.getElementById('suggestionChips');
+        if (chips) chips.style.display = 'none';
+        
+        document.getElementById('chatWindow').insertAdjacentHTML('beforeend', `
+            <div class="message user">
+                <div class="message-avatar">U</div>
+                <div class="bubble">${text}</div>
+            </div>
+        `);
+        scrollToBottom();
+
+        const navCommand = resolveNavigationCommand(text);
+        if (navCommand) {
+            document.getElementById('chatWindow').insertAdjacentHTML('beforeend', `
+                <div class="message bot">
+                    <div class="message-avatar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+                            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                        </svg>
+                    </div>
+                    <div class="bubble">Opening ${navCommand.label} page now...</div>
+                </div>
+            `);
+            scrollToBottom();
+            setTimeout(() => { window.location.href = navCommand.url; }, 450);
+            return;
+        }
+        
+        const typingId = 'typing-' + Date.now();
+        document.getElementById('chatWindow').insertAdjacentHTML('beforeend', `
+            <div class="message bot" id="${typingId}">
+                <div class="message-avatar">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+                        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                    </svg>
+                </div>
+                <div class="bubble">...</div>
+            </div>
+        `);
+        scrollToBottom();
+        
+        try {
+            const response = await fetch('/api/chatbot/stream', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: text, history: chatHistory })
+            });
+            
+            document.getElementById(typingId).remove();
+            
+            const msgId = 'bot-' + Date.now();
+            document.getElementById('chatWindow').insertAdjacentHTML('beforeend', `
+                <div class="message bot">
+                    <div class="message-avatar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+                            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                        </svg>
+                    </div>
+                    <div class="bubble" id="${msgId}"></div>
+                </div>
+            `);
+            const bubble = document.getElementById(msgId);
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder("utf-8");
+            let botResponse = "";
+            let buffer = "";
+            
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+                
+                buffer += decoder.decode(value, { stream: true });
+                const events = buffer.split('\n\n');
+                buffer = events.pop(); // keep incomplete chunk
+                
+                for (let eventBlock of events) {
+                    const lines = eventBlock.split('\n');
+                    for (let line of lines) {
+                        if (line.startsWith('data: ')) {
+                            const dataStr = line.replace('data: ', '').trim();
+                            if (dataStr === '[DONE]') break;
+                            if (dataStr) {
+                                try {
+                                    const dataObj = JSON.parse(dataStr);
+                                    if (dataObj.token) botResponse += dataObj.token;
+                                    if (dataObj.error) botResponse += dataObj.error;
+                                    bubble.innerText = botResponse;
+                                    scrollToBottom();
+                                } catch (e) {
+                                    console.error('JSON Error:', e);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            chatHistory.push({ human: text, ai: botResponse });
+        } catch (err) {
+            document.getElementById(typingId).remove();
+            document.getElementById('chatWindow').insertAdjacentHTML('beforeend', `
+                <div class="message bot"><div class="bubble">Connection failed. Please try again.</div></div>
+            `);
+        }
+    }
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof syncWidgetStatus === 'function') {
+        syncWidgetStatus();
+    }
+});
+</script>
+
+
 
 <script>
 let recognition = null;
@@ -521,5 +1024,44 @@ function speakText(text) {
     document.querySelector('.navbar-elite').classList.add('scrolled');
   }
 </script>
+	<script>
+		// Global applicator for data attributes to satisfy IDE syntax checking
+		document.addEventListener('DOMContentLoaded', () => {
+			// Apply background images
+			document.querySelectorAll('[data-bg-url]').forEach(el => {
+				el.style.backgroundImage = `url('${el.getAttribute('data-bg-url')}')`;
+			});
+			// Apply widths (e.g. for progress bars)
+			document.querySelectorAll('[data-width]').forEach(el => {
+				el.style.width = el.getAttribute('data-width');
+			});
+		});
+
+        // LOADER & FADE-IN LOGIC
+        document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.getElementById('elite-loader');
+            const content = document.getElementById('page-content');
+            
+            if(loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.classList.remove('active');
+                    loader.style.display = 'none';
+                }, 800);
+            }
+            
+            if(content) {
+                content.style.opacity = '1';
+            }
+            // Initialize AOS
+            if (typeof AOS !== 'undefined') {
+                AOS.init({
+                    duration: 1000,
+                    once: true,
+                    offset: 100
+                });
+            }
+        });
+	</script>
 </body>
 </html>

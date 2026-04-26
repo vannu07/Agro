@@ -1,93 +1,269 @@
 {% extends 'layout.html' %} {% block body %}
 
-<!-- =========================================================================
-     SMART IRRIGATION — PREMIUM AGENTIC INTERFACE
-     ========================================================================= -->
-<section class="hero-cinematic vh-100 position-relative overflow-hidden d-flex align-items-center">
-    <!-- Cinematic Background -->
-    <div class="hero-cinematic-bg" style="background-image: url('https://images.unsplash.com/photo-1592982537447-6f2a6a0c7c18?auto=format&fit=crop&q=80&w=2000'); filter: saturate(0.8) brightness(0.8);"></div>
-    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 50%, rgba(255,255,255,0.9) 100%);"></div>
-    <div class="hero-cinematic-grid"></div>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&display=swap');
 
-    <div class="container position-relative z-index-100" style="padding-top: 100px;">
-        <div class="row justify-content-center">
-            <div class="col-lg-7 stagger-load">
-                
-                <!-- Agent Header -->
-                <div class="text-center mb-5">
-                    <div class="nav-item mb-4 d-inline-block">
-                        <div class="glass-panel d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; border-radius: 20px; background: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.2);">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-droplets"><path d="M7 16.3c2.2 0 4-1.8 4-4 0-3.3-4-8-4-8s-4 4.7-4 8c0 2.2 1.8 4 4 4Z"/><path d="M17 19c2.9 0 4-2.1 4-4.6 0-3.7-4-9.4-4-9.4s-4 5.7-4 9.4c0 2.5 1.1 4.6 4 4.6Z"/></svg>
+    :root {
+        --h-cyan: #22d3ee;
+        --h-blue: #3b82f6;
+        --h-dark: #020617;
+        --h-glass: rgba(15, 23, 42, 0.92);
+        --h-border: rgba(255, 255, 255, 0.15);
+    }
+
+    body {
+        font-family: 'Urbanist', sans-serif;
+        background: var(--h-dark) !important;
+        color: #f8fafc;
+    }
+
+    .h-viewport {
+        min-height: 100vh;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        padding: 120px 20px 60px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .h-viewport::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(rgba(2, 6, 23, 0.7), rgba(2, 6, 23, 0.8)), url('/static/images/harvesta_irrigation_bg.png') center/cover no-repeat;
+        filter: blur(6px) brightness(0.6);
+        z-index: -1;
+    }
+
+    .h-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 30px;
+        max-width: 1300px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .h-glass-card {
+        background: var(--h-glass);
+        backdrop-filter: blur(40px);
+        -webkit-backdrop-filter: blur(40px);
+        border: 1px solid var(--h-border);
+        border-radius: 40px;
+        padding: 40px;
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .h-title {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: 900;
+        letter-spacing: -3px;
+        line-height: 0.9;
+        margin-bottom: 20px;
+        background: linear-gradient(to bottom, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .h-label {
+        font-weight: 800;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+        display: block;
+        color: var(--h-cyan);
+    }
+
+    .h-input, .h-select {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--h-border);
+        border-radius: 20px;
+        padding: 18px 24px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .h-input:focus, .h-select:focus {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: var(--h-cyan);
+        outline: none;
+        box-shadow: 0 0 0 5px rgba(34, 211, 238, 0.1);
+    }
+
+    .btn-harvest {
+        background: var(--h-cyan);
+        color: var(--h-dark);
+        font-weight: 900;
+        text-transform: uppercase;
+        border-radius: 24px;
+        padding: 24px 40px;
+        border: none;
+        letter-spacing: 2px;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        font-size: 1.1rem;
+    }
+
+    .btn-harvest:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 50px rgba(34, 211, 238, 0.3);
+    }
+
+    .icon-box {
+        width: 60px;
+        height: 60px;
+        background: rgba(34, 211, 238, 0.1);
+        border: 1px solid rgba(34, 211, 238, 0.2);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+        color: var(--h-cyan);
+    }
+
+    .h-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(34, 211, 238, 0.1);
+        color: var(--h-cyan);
+        padding: 8px 16px;
+        border-radius: 99px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 24px;
+        border: 1px solid rgba(34, 211, 238, 0.2);
+    }
+</style>
+
+<div class="h-viewport">
+    <div class="h-grid">
+        <div class="h-glass-card" style="grid-column: span 8;">
+            <div class="h-badge">Precision Hydration Engine</div>
+            <h1 class="h-title">Smart<br>Irrigation</h1>
+            <p style="font-weight: 600; color: #94a3b8; font-size: 1.15rem; margin-bottom: 50px; max-width: 600px;">
+                Calculate exact soil moisture deficits and predict hydration intervals using telematic sensor data and weather patterns.
+            </p>
+            
+            <form method="POST" action="{{ url_for('irrigation_result') }}">
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div>
+                            <label class="h-label mb-2"><i class="fas fa-leaf mr-2" style="color: var(--h-lime);"></i>Select Crop</label>
+                            <select name="crop" class="h-select" required>
+                                <option value="" disabled selected>Select Crop</option>
+                                {% for crop in crops %}<option value="{{ crop }}">{{ crop }}</option>{% endfor %}
+                            </select>
                         </div>
                     </div>
-                    <h1 class="fluid-4xl font-weight-bold text-white mb-2" style="letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                        Smart <span class="text-gradient-primary">Irrigation</span>
-                    </h1>
-                    <p class="text-white-50 fluid-base mx-auto" style="max-width: 500px;">Hydration agents synchronized with 7-day high-resolution weather telemetry.</p>
+                    <div class="col-md-6">
+                        <div>
+                            <label class="h-label mb-2"><i class="fas fa-layer-group mr-2" style="color: var(--h-lime);"></i>Soil Profile</label>
+                            <select name="soil_type" class="h-select" required>
+                                <option value="" disabled selected>Select Soil</option>
+                                {% for soil in soil_types %}<option value="{{ soil }}">{{ soil }}</option>{% endfor %}
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Elite Form Panel -->
-                <div class="glass-panel p-5" style="border-radius: 32px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
-                    <form method="POST" action="{{ url_for('irrigation_result') }}" class="elite-form">
-                        <div class="form-elite-group mb-4">
-                            <select name="crop" class="glass-input text-white" required>
-                                <option value="" disabled selected></option>
-                                {% for crop in crops %}
-                                <option value="{{ crop }}">{{ crop }}</option>
-                                {% endfor %}
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div>
+                            <label class="h-label">Growth Stage</label>
+                            <select name="growth_stage" class="h-select" required>
+                                <option value="Germination">Germination</option>
+                                <option value="Seedling Stage" selected>Seedling Stage</option>
+                                <option value="Vegetative Growth / Root or Tuber Development">Vegetative Growth</option>
+                                <option value="Flowering">Flowering</option>
+                                <option value="Pollination">Pollination</option>
+                                <option value="Fruit/Grain/Bulb Formation">Fruiting / Grain Filling</option>
+                                <option value="Maturation">Maturation</option>
+                                <option value="Harvest">Harvest Ready</option>
                             </select>
-                            <label class="glass-label">Cultivation Module (Crop)</label>
                         </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <label class="h-label mb-2"><i class="fas fa-map-marker-alt mr-2" style="color: var(--h-lime);"></i>Region / City</label>
+                            <select name="city" class="h-select" required>
+                                <option value="" disabled selected>Select State</option>
+                                {% for state in states %}<option value="{{ state }}">{{ state }}</option>{% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-                        <div class="form-elite-group mb-4">
-                            <input type="text" name="city" class="glass-input text-white" placeholder=" " required>
-                            <label class="glass-label">Geographic Hub (City)</label>
+                <div class="row g-4 mb-5">
+                    <div class="col-md-6">
+                        <div>
+                            <label class="h-label">Soil Moisture (MOI %)</label>
+                            <input type="number" name="moi" class="h-input" placeholder="e.g. 25" step="0.1" value="25.0" required>
                         </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <label class="h-label">Sowing Interval Start</label>
+                            <input type="date" name="sowing_date" class="h-input" required>
+                        </div>
+                    </div>
+                </div>
 
-                        <div class="form-elite-group mb-5">
-                            <input type="date" name="sowing_date" class="glass-input text-white" required>
-                            <label class="glass-label">Initialization Date (Sowing)</label>
-                        </div>
+                <button type="submit" class="btn-harvest magnetic">
+                    <span>Sync Hydration Telemetry</span>
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.675.337a4 4 0 01-2.574.344l-3.113-.623a2 2 0 01-1.554-1.3l-1.021-3.064A2 2 0 014.1 8.539l3.064-1.021a2 2 0 011.3 1.554l.623 3.113a4 4 0 00.344 2.574l.337.675a6 6 0 01.517 3.86l-.477 2.387a2 2 0 01-.547 1.022L6 21"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
 
-                        <div class="row g-3 mb-5">
-                            <div class="col-6">
-                                <div class="glass-panel p-3 text-center" style="background: rgba(255, 255, 255, 0.02); border-radius: 16px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2 lucide lucide-cloud-rain"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 14v6"/><path d="M8 14v6"/><path d="M12 16v6"/></svg>
-                                    <div class="small font-weight-bold text-white-50">Weather Sync</div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="glass-panel p-3 text-center" style="background: rgba(255, 255, 255, 0.02); border-radius: 16px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-2 lucide lucide-calendar-days"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
-                                    <div class="small font-weight-bold text-white-50">Harvest Estimator</div>
-                                </div>
-                            </div>
-                        </div>
+        <div class="col-span-4 d-flex flex-column gap-4" style="grid-column: span 4;">
+            <div class="h-glass-card">
+                <div class="icon-box">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                        <path d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/>
+                    </svg>
+                </div>
+                <h3 style="font-weight: 900; margin-bottom: 15px; color: #ffffff;">Water OS</h3>
+                <p style="font-weight: 600; color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+                    Our system uses ETc mapping and weather forecasting to define the exact liter quantities required to maintain 100% turgor pressure.
+                </p>
+            </div>
 
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-elite btn-elite-glow w-100 py-3" style="font-size: 1.1rem; border-radius: 16px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M12 2v20"/><path d="m4.93 4.93 14.14 14.14"/><path d="M22 12H2"/><path d="m19.07 4.93-14.14 14.14"/></svg>
-                                Calculate Hydration Matrix
-                            </button>
+            <div class="h-glass-card" style="flex-grow: 1; border-color: rgba(34, 211, 238, 0.2);">
+                <h3 style="font-weight: 900; margin-bottom: 25px; color: var(--h-cyan);">Evaporation Index</h3>
+                <div class="d-flex flex-column gap-4">
+                    <div class="p-3 rounded-24" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span style="font-weight: 800; font-size: 0.75rem; color: #94a3b8; text-transform: uppercase;">Moisture Retention</span>
+                            <span style="color: var(--h-cyan); font-weight: 900; font-size: 0.7rem;">CALCULATING</span>
                         </div>
-                    </form>
+                        <div class="w-full bg-slate-800 rounded-full h-1.5" style="background: rgba(255,255,255,0.05);">
+                            <div class="h-1.5 rounded-full" style="width: 100%; background: var(--h-cyan); opacity: 0.3;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-5 text-center">
+                    <img src="{{ url_for('static', filename='images/harvesta_irrigation_bg.png') }}" class="rounded-32 w-100 opacity-50 grayscale hover:grayscale-0 transition-all duration-500" style="height: 200px; object-fit: cover; border-radius: 24px;">
                 </div>
             </div>
         </div>
     </div>
-</section>
-
-<!-- Elite Stagger Entrance -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    gsap.from(".stagger-load > *", {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power4.out"
-    });
-});
-</script>
+</div>
 
 {% endblock %}

@@ -1,90 +1,314 @@
 {% extends 'layout.html' %} {% block body %}
 
-<!-- =========================================================================
-     SUSTAINABILITY ADVISOR — PREMIUM AGENTIC INTERFACE
-     ========================================================================= -->
-<section class="hero-cinematic vh-100 position-relative overflow-hidden d-flex align-items-center">
-    <!-- Cinematic Background -->
-    <div class="hero-cinematic-bg" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=2000'); filter: saturate(0.8) brightness(0.8);"></div>
-    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 50%, rgba(255,255,255,0.9) 100%);"></div>
-    <div class="hero-cinematic-grid"></div>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&display=swap');
 
-    <div class="container position-relative z-index-100" style="padding-top: 100px;">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 stagger-load">
-                
-                <!-- Agent Header -->
-                <div class="text-center mb-5">
-                    <div class="nav-item mb-4 d-inline-block">
-                        <div class="glass-panel d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; border-radius: 20px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2);">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-recycle"><path d="M7 11V7a5 5 0 0 1 10 0v4"/><path d="M11 21a4 4 0 0 0 4-4v-1h-4a4 4 0 0 1-4 4Z"/><path d="M11 11H7a4 4 0 0 0-4 4v1h4a4 4 0 0 1 4-4Z"/></svg>
+    :root {
+        --h-green: #10b981;
+        --h-dark: #020617;
+        --h-glass: rgba(15, 23, 42, 0.92);
+        --h-border: rgba(255, 255, 255, 0.15);
+    }
+
+    body {
+        font-family: 'Urbanist', sans-serif;
+        background: var(--h-dark) !important;
+        color: #f8fafc;
+    }
+
+    .h-viewport {
+        min-height: 100vh;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        padding: 120px 20px 60px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .h-viewport::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(rgba(2, 6, 23, 0.7), rgba(2, 6, 23, 0.8)), url('/static/images/harvesta_sustainability_bg.png') center/cover no-repeat;
+        filter: blur(6px) brightness(0.6);
+        z-index: -1;
+    }
+
+    .h-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 30px;
+        max-width: 1300px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .h-glass-card {
+        background: var(--h-glass);
+        backdrop-filter: blur(40px);
+        -webkit-backdrop-filter: blur(40px);
+        border: 1px solid var(--h-border);
+        border-radius: 40px;
+        padding: 40px;
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .h-title {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: 900;
+        letter-spacing: -3px;
+        line-height: 0.9;
+        margin-bottom: 20px;
+        background: linear-gradient(to bottom, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .h-label {
+        font-weight: 800;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+        display: block;
+        color: var(--h-green);
+    }
+
+    .h-input, .h-select {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--h-border);
+        border-radius: 20px;
+        padding: 18px 24px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .h-input:focus, .h-select:focus {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: var(--h-green);
+        outline: none;
+        box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.1);
+    }
+
+    .btn-harvest {
+        background: var(--h-green);
+        color: var(--h-dark);
+        font-weight: 900;
+        text-transform: uppercase;
+        border-radius: 24px;
+        padding: 24px 40px;
+        border: none;
+        letter-spacing: 2px;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        font-size: 1.1rem;
+    }
+
+    .btn-harvest:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 50px rgba(16, 185, 129, 0.3);
+    }
+
+    .icon-box {
+        width: 60px;
+        height: 60px;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+        color: var(--h-green);
+    }
+
+    .h-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--h-green);
+        padding: 8px 16px;
+        border-radius: 99px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 24px;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .h-section-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        font-weight: 900; 
+        color: #ffffff; 
+        font-size: 0.9rem; 
+        text-transform: uppercase; 
+        letter-spacing: 1.5px;
+    }
+</style>
+
+<div class="h-viewport">
+    <div class="h-grid">
+        <div class="h-glass-card" style="grid-column: span 8;">
+            <div class="h-badge">Harvesta Ecological Protocol</div>
+            <h1 class="h-title">Sustain<br>Master</h1>
+            <p style="font-weight: 600; color: #94a3b8; font-size: 1.15rem; margin-bottom: 40px; max-width: 600px;">
+                Strategic Resource Management & Soil Health OS. Enter telemetry data to synthesize an ecological preservation plan.
+            </p>
+            
+            <form method="POST" action="{{ url_for('sustainability_result') }}">
+                <div class="h-section-header">Active Cultivation</div>
+                <div class="row g-4 mb-3">
+                    <div class="col-md-4">
+                        <div>
+                            <label class="h-label">Target Crop</label>
+                            <select name="crop" class="h-select" required>
+                                <option value="" disabled selected>Select Crop</option>
+                                {% for crop in crops %}<option value="{{ crop }}">{{ crop }}</option>{% endfor %}
+                            </select>
                         </div>
                     </div>
-                    <h1 class="fluid-4xl font-weight-bold text-white mb-2" style="letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                        Sustain <span class="text-gradient-primary">Master</span>
-                    </h1>
-                    <p class="text-white-50 fluid-base mx-auto" style="max-width: 500px;">Generative ecological agents for long-term soil protection and harvest rotation.</p>
+                    <div class="col-md-4">
+                        <div>
+                            <label class="h-label">Region (State)</label>
+                            <select name="region" class="h-select" required>
+                                <option value="" disabled selected>Select Region</option>
+                                {% for state in states %}<option value="{{ state }}">{{ state }}</option>{% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div>
+                            <label class="h-label">Temporal Season</label>
+                            <select name="season" class="h-select" required>
+                                <option value="Kharif">Kharif</option>
+                                <option value="Rabi">Rabi</option>
+                                <option value="Zaid">Zaid</option>
+                                <option value="Whole Year">Whole Year</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Elite Form Panel -->
-                <div class="glass-panel p-5" style="border-radius: 32px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
-                    <!-- FIX: Added missing form tag found in viewed file -->
-                    <form method="POST" action="{{ url_for('sustainability_advisor_result') }}" class="elite-form">
-                        <div class="form-elite-group mb-5">
-                            <select name="crop" class="glass-input text-white" required>
-                                <option value="" disabled selected></option>
-                                {% for crop in crops %}
-                                <option value="{{ crop }}">{{ crop }}</option>
-                                {% endfor %}
+                <div class="row g-4 mb-4">
+                    <div class="col-md-12">
+                        <div>
+                            <label class="h-label">Soil Profile/Type</label>
+                            <select name="soil_type" class="h-select" required>
+                                <option value="" disabled selected>Select Soil</option>
+                                {% for soil in soil_types %}<option value="{{ soil }}">{{ soil }}</option>{% endfor %}
                             </select>
-                            <label class="glass-label">Current Cultivation Module (Active Crop)</label>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="row mb-5">
-                            <div class="col-4">
-                                <div class="form-elite-group">
-                                    <input type="number" name="n" class="glass-input text-white text-center" placeholder=" " required>
-                                    <label class="glass-label w-100 text-center">N</label>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-elite-group">
-                                    <input type="number" name="p" class="glass-input text-white text-center" placeholder=" " required>
-                                    <label class="glass-label w-100 text-center">P</label>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-elite-group">
-                                    <input type="number" name="k" class="glass-input text-white text-center" placeholder=" " required>
-                                    <label class="glass-label w-100 text-center">K</label>
-                                </div>
-                            </div>
-                        </div>
+                <div class="h-section-header mt-4">Soil Core Nutrients & Environment</div>
 
-                        <div class="text-center mt-2">
-                            <button type="submit" class="btn btn-elite btn-elite-glow w-100 py-3" style="font-size: 1.1rem; border-radius: 16px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mr-2 lucide lucide-leaf"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
-                                Orchestrate Sustainability Plan
-                            </button>
+                <div class="row g-4 mb-3">
+                    <div class="col-md-3">
+                        <div>
+                            <label class="h-label" style="font-size: 0.65rem;">Nitrogen</label>
+                            <input type="number" name="n" class="h-input" placeholder="N" required>
                         </div>
-                    </form>
+                    </div>
+                    <div class="col-md-3">
+                        <div>
+                            <label class="h-label" style="font-size: 0.65rem;">Phosphorus</label>
+                            <input type="number" name="p" class="h-input" placeholder="P" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div>
+                            <label class="h-label" style="font-size: 0.65rem;">Potassium</label>
+                            <input type="number" name="k" class="h-input" placeholder="K" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div>
+                            <label class="h-label" style="font-size: 0.65rem;">pH Level</label>
+                            <input type="number" step="0.1" name="ph" class="h-input" placeholder="6.5" value="6.5" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-5">
+                    <div class="col-md-4">
+                        <div>
+                            <label class="h-label">Organic Matter (%)</label>
+                            <input type="number" step="0.1" name="organic" class="h-input" placeholder="2.5" value="2.5" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div>
+                            <label class="h-label">Moisture (%)</label>
+                            <input type="number" step="0.1" name="moisture" class="h-input" placeholder="15.0" value="15.0" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div>
+                            <label class="h-label">Solar Rad (BTU)</label>
+                            <input type="number" name="solar" class="h-input" placeholder="15" value="15" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-harvest magnetic">
+                    <span>Synthesize Ecological Plan</span>
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8m0 0l-4-4m4 4l4-4M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.675.337a4 4 0 01-2.574.344l-3.113-.623a2 2 0 01-1.554-1.3l-1.021-3.064A2 2 0 014.1 8.539l3.064-1.021a2 2 0 011.3 1.554l.623 3.113a4 4 0 00.344 2.574l.337.675a6 6 0 01.517 3.86l-.477 2.387a2 2 0 01-.547 1.022L6 21"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <div class="col-span-4 d-flex flex-column gap-4" style="grid-column: span 4;">
+            <div class="h-glass-card">
+                <div class="icon-box">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                        <path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                    </svg>
+                </div>
+                <h3 style="font-weight: 900; margin-bottom: 15px; color: #ffffff;">Ecological OS</h3>
+                <p style="font-weight: 600; color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;">
+                    Evaluating long-term soil elasticity to ensure your farm maximizes profit without depleting subterranean biology.
+                </p>
+            </div>
+
+            <div class="h-glass-card" style="flex-grow: 1; border-color: rgba(16, 185, 129, 0.2);">
+                <h3 style="font-weight: 900; margin-bottom: 25px; color: var(--h-green);">Biodiversity Index</h3>
+                <div class="d-flex flex-column gap-4">
+                    <div class="p-3 rounded-24" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span style="font-weight: 800; font-size: 0.75rem; color: #94a3b8; text-transform: uppercase;">Soil Regenerability</span>
+                            <span style="color: var(--h-green); font-weight: 900; font-size: 0.7rem;">CALCULATING</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-1.5" style="background: rgba(255,255,255,0.05);">
+                            <div class="h-1.5 rounded-full" style="width: 100%; background: var(--h-green); opacity: 0.3;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-5 text-center">
+                    <img src="{{ url_for('static', filename='images/harvesta_sustainability_bg.png') }}" class="rounded-32 w-100 opacity-50 grayscale hover:grayscale-0 transition-all duration-500" style="height: 200px; object-fit: cover; border-radius: 24px;">
                 </div>
             </div>
         </div>
     </div>
-</section>
-
-<!-- Elite Stagger Entrance -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    gsap.from(".stagger-load > *", {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power4.out"
-    });
-});
-</script>
+</div>
 
 {% endblock %}

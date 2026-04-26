@@ -1,119 +1,364 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<!-- Cinematic Case Study Detail Hero -->
-<section class="hero-cinematic" style="height: 70vh; min-height: 600px;">
-    <div class="hero-cinematic-bg" style="background-image: url('{{ url_for('static', filename='images/' + case.image) }}'); filter: brightness(0.65);"></div>
-    <div class="hero-cinematic-overlay" style="background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 70%, rgba(255,255,255,1) 100%);"></div>
-    
-    <div class="container h-100 d-flex align-items-center">
-        <div class="hero-cinematic-content" style="max-width: 900px;">
-            <div class="hero-eyebrow" style="background: rgba(52, 211, 153, 0.1); border: 1px solid rgba(52, 211, 153, 0.2); color: #a7f3d0;">
-                <span class="pulse-dot" style="background: #34d399;"></span>
-                Success Story: {{ case.name }}
-            </div>
-            <h1 class="fluid-5xl font-weight-bold text-white mb-4" style="text-shadow: 0 20px 50px rgba(0,0,0,0.5); line-height: 1.1;">
-                {{ case.title }}
-            </h1>
-            <div class="d-flex flex-wrap gap-4 mt-4">
-                <div class="stat-pill">
-                    <span class="text-white-50 mr-2">Location:</span> <strong>{{ case.location }}</strong>
-                </div>
-                <div class="stat-pill">
-                    <span class="text-white-50 mr-2">Primary Crop:</span> <strong>{{ case.crop }}</strong>
-                </div>
+<main class="case-detail-page">
+    <section class="case-detail-hero">
+        <div class="case-detail-bg" style="background-image: url('{{ url_for('static', filename='images/' + case.image) }}');"></div>
+        <div class="case-detail-overlay"></div>
+        <div class="container case-detail-hero-content">
+            <span class="case-detail-eyebrow">Safal Kahani: {{ case.name }}</span>
+            <h1>{{ case.title }}</h1>
+            <p>{{ case.summary }}</p>
+            <div class="case-detail-pills">
+                <span>{{ case.location }}</span>
+                <span>Crop: {{ case.crop }}</span>
+                <span>Kisan fayda</span>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Detailed Story Content -->
-<section class="case-detail-content py-5">
-    <div class="container">
+    <section class="container case-detail-layout">
         <div class="row">
-            <!-- Left: Main Narrative -->
-            <div class="col-lg-8">
-                <div class="story-card p-5 shadow-sm border-0 mb-5" style="border-radius: 32px; background: #ffffff;">
-                    <h3 class="font-weight-bold text-dark mb-4">The Challenge & Transformation</h3>
-                    <p class="lead" style="color: #475569; font-size: 1.25rem; line-height: 1.8; font-weight: 400;">
-                        {{ case.full_story }}
-                    </p>
-                    
-                    <div class="mt-5 pt-5 border-top">
-                        <h4 class="font-weight-bold text-dark mb-4">Krishi Mitr AI Agents Used</h4>
-                        <div class="d-flex flex-wrap gap-3">
-                            <div class="agent-tag">Crop Advisor</div>
-                            <div class="agent-tag">Nutrient Lab</div>
-                            <div class="agent-tag">Hydration Agent</div>
-                            <div class="agent-tag">Plant Pathologist</div>
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <div class="detail-panel">
+                    <h2>Kahani</h2>
+                    <p class="story-lead">{{ case.full_story }}</p>
+
+                    <div class="detail-block">
+                        <h3>Kya Badla</h3>
+                        <div class="detail-grid">
+                            <div>
+                                <strong>Pehle</strong>
+                                <p>Crop decision unclear tha, input waste ho raha tha, ya timing miss ho rahi thi.</p>
+                            </div>
+                            <div>
+                                <strong>Ab</strong>
+                                <p>Better guidance, zyada confidence, aur field ke liye practical plan mil gaya.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Testimonial Quote -->
-                <div class="quote-card p-5 mb-5" style="border-radius: 32px; background: #f8fafc; position: relative; border-left: 8px solid #34d399;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.1; position: absolute; top: 20px; right: 40px;"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1 0 2.5 0 5-2 7zm12 0c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1 0 2.5 0 5-2 7z"/></svg>
-                    <p class="h4 italic mb-0" style="color: #0f172a; font-weight: 500; line-height: 1.6;">
-                        "The intelligence provided by Krishi Mitr felt like having an expert agronomist standing right next to me in the field. It's not just data; it's a partner in my success."
-                    </p>
-                    <footer class="mt-3 font-weight-bold text-muted">— {{ case.name }}, {{ case.location }}</footer>
+                    <div class="detail-block">
+                        <h3>Kaun se AI Agents use hue</h3>
+                        <div class="agent-tags">
+                            <span>Crop Advisor</span>
+                            <span>Nutrient Lab</span>
+                            <span>Hydration Agent</span>
+                            <span>Plant Pathologist</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-block quote-block">
+                        <p>"Krishi Mitr ki intelligence aise lagi jaise field mein mere saath ek expert agronomist khada ho."</p>
+                        <footer>— {{ case.name }}, {{ case.location }}</footer>
+                    </div>
                 </div>
             </div>
 
-            <!-- Right: Impact Sidebar -->
             <div class="col-lg-4">
-                <div class="impact-card p-4 shadow-lg border-0" style="border-radius: 28px; background: linear-gradient(135deg, #064e3b 0%, #065f46 100%); color: #ffffff; position: sticky; top: 120px;">
-                    <h5 class="font-weight-bold mb-4" style="letter-spacing: 1px; text-transform: uppercase; font-size: 0.9rem; opacity: 0.8;">Key Impact Metrics</h5>
-                    
+                <div class="impact-panel">
+                    <h3>Impact ek nazar mein</h3>
                     {% for stat in case.stats %}
-                    <div class="impact-stat mb-4 pb-4 border-bottom" style="border-color: rgba(255,255,255,0.1) !important;">
-                        <h2 class="font-weight-bold mb-1" style="color: #34d399;">{{ stat.split(' ')[0] }}</h2>
-                        <p class="mb-0" style="opacity: 0.9; font-weight: 500;">{{ ' '.join(stat.split(' ')[1:]) }}</p>
+                    <div class="impact-item">
+                        <div class="impact-value">{{ stat.split(' ')[0] }}</div>
+                        <div class="impact-text">{{ ' '.join(stat.split(' ')[1:]) }}</div>
                     </div>
                     {% endfor %}
 
-                    <div class="mt-2 pt-2 text-center">
-                        <a href="{{ url_for('crop_recommend') }}" class="btn btn-outline-light btn-block py-3" style="border-radius: 12px; font-weight: 700;">Start Your Success Story</a>
+                    <div class="impact-actions">
+                        <a href="{{ url_for('crop_recommendation') }}">Apni safalta shuru karein</a>
+                        <a href="{{ url_for('case_studies') }}" class="secondary-link">Wapas case studies par</a>
                     </div>
+                </div>
+
+                <div class="lesson-panel">
+                    <h3>Kisan ke liye lesson</h3>
+                    <p>Ek time par ek AI recommendation use karein. Irrigation, nutrients, ya timing mein chhota change bhi season bhar mein real improvement de sakta hai.</p>
                 </div>
             </div>
         </div>
-        
-        <div class="text-center mt-5">
-            <a href="{{ url_for('case_studies') }}" class="btn-link text-dark font-weight-bold" style="text-decoration: none; font-size: 1.1rem;">
-                <i class="fa fa-arrow-left mr-2"></i> Back to all Case Studies
-            </a>
-        </div>
-    </div>
-</section>
+    </section>
+</main>
 
 <style>
-    .hero-cinematic-content {
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Sora:wght@600;700;800&display=swap');
+
+    .case-detail-page {
+        --detail-dark: #0f172a;
+        --detail-ink: #1f2937;
+        background:
+            radial-gradient(circle at top left, rgba(34, 197, 94, 0.12), transparent 32%),
+            radial-gradient(circle at top right, rgba(15, 118, 110, 0.12), transparent 28%),
+            #f7faf7;
+        color: var(--detail-ink);
+        font-family: 'Manrope', sans-serif;
+    }
+
+    .case-detail-hero {
+        min-height: 70vh;
         position: relative;
-        z-index: 10;
-        margin-top: -6rem;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
     }
-    .stat-pill {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        padding: 0.75rem 1.5rem;
-        border-radius: 100px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #ffffff;
-        font-size: 1rem;
+
+    .case-detail-bg,
+    .case-detail-overlay {
+        position: absolute;
+        inset: 0;
     }
-    .agent-tag {
-        background: #f1f5f9;
+
+    .case-detail-bg {
+        background-size: cover;
+        background-position: center;
+        transform: scale(1.04);
+    }
+
+    .case-detail-overlay {
+        background: linear-gradient(115deg, rgba(2, 8, 23, 0.92), rgba(2, 8, 23, 0.56), rgba(15, 23, 42, 0.92));
+    }
+
+    .case-detail-hero-content {
+        position: relative;
+        z-index: 1;
+        color: #f8fafc;
+        padding-top: calc(var(--nav-height) + 48px);
+        padding-bottom: 52px;
+        max-width: 900px;
+    }
+
+    .case-detail-eyebrow {
+        display: inline-block;
+        margin-bottom: 14px;
+        color: #86efac;
+        font-weight: 800;
+        letter-spacing: 0.2em;
+        font-size: 0.78rem;
+    }
+
+    .case-detail-hero h1 {
+        font-family: 'Sora', sans-serif;
+        font-size: clamp(2.2rem, 5vw, 4.5rem);
+        line-height: 1.05;
+        margin-bottom: 14px;
+    }
+
+    .case-detail-hero p {
+        max-width: 760px;
+        color: rgba(248, 250, 252, 0.9);
+        font-size: clamp(1rem, 1.8vw, 1.2rem);
+        line-height: 1.6;
+    }
+
+    .case-detail-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 22px;
+    }
+
+    .case-detail-pills span {
+        background: rgba(15, 23, 42, 0.62);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: #f8fafc;
+    }
+
+    .case-detail-layout {
+        margin-top: -56px;
+        position: relative;
+        z-index: 3;
+        padding-bottom: 60px;
+    }
+
+    .detail-panel,
+    .impact-panel,
+    .lesson-panel {
+        background: rgba(255, 255, 255, 0.96);
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(2, 8, 23, 0.1);
+    }
+
+    .detail-panel {
+        padding: 28px;
+    }
+
+    .detail-panel h2,
+    .detail-panel h3,
+    .impact-panel h3,
+    .lesson-panel h3 {
+        font-family: 'Sora', sans-serif;
+        color: var(--detail-dark);
+        font-weight: 700;
+    }
+
+    .story-lead {
+        font-size: 1.08rem;
+        line-height: 1.8;
         color: #475569;
-        padding: 0.5rem 1.25rem;
-        border-radius: 100px;
-        font-weight: 600;
-        font-size: 0.9rem;
     }
-    .case-detail-content {
-        margin-top: -120px;
-        position: relative;
-        z-index: 20;
+
+    .detail-block {
+        margin-top: 24px;
+    }
+
+    .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 12px;
+    }
+
+    .detail-grid div {
+        background: #f8fafc;
+        border-radius: 18px;
+        padding: 16px;
+        border: 1px solid rgba(15, 23, 42, 0.06);
+    }
+
+    .detail-grid strong {
+        display: block;
+        margin-bottom: 8px;
+        color: #0f766e;
+    }
+
+    .detail-grid p {
+        margin-bottom: 0;
+        color: #475569;
+        line-height: 1.55;
+    }
+
+    .agent-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 12px;
+    }
+
+    .agent-tags span {
+        background: #ecfdf5;
+        color: #14532d;
+        border: 1px solid #bbf7d0;
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-weight: 800;
+        font-size: 0.85rem;
+    }
+
+    .quote-block {
+        background: linear-gradient(135deg, #0f172a 0%, #14532d 100%);
+        color: #f8fafc;
+        border-radius: 22px;
+        padding: 20px;
+    }
+
+    .quote-block p {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: 10px;
+        color: rgba(248, 250, 252, 0.96);
+    }
+
+    .quote-block footer {
+        color: rgba(248, 250, 252, 0.74);
+        font-weight: 700;
+    }
+
+    .impact-panel {
+        padding: 24px;
+        background: linear-gradient(165deg, #064e3b 0%, #0f766e 100%);
+        color: #f8fafc;
+        position: sticky;
+        top: 120px;
+        margin-bottom: 18px;
+    }
+
+    .impact-panel h3 {
+        color: #ffffff;
+        margin-bottom: 18px;
+    }
+
+    .impact-item {
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .impact-value {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #a7f3d0;
+        margin-bottom: 4px;
+    }
+
+    .impact-text {
+        color: rgba(248, 250, 252, 0.9);
+        line-height: 1.5;
+    }
+
+    .impact-actions {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+    }
+
+    .impact-actions a {
+        display: block;
+        text-align: center;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .impact-actions a:first-child {
+        background: #ffffff;
+        color: #0f172a;
+    }
+
+    .impact-actions .secondary-link {
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .lesson-panel {
+        padding: 22px;
+        background: #f8fafc;
+    }
+
+    .lesson-panel p {
+        margin-bottom: 0;
+        line-height: 1.65;
+        color: #475569;
+    }
+
+    @media (max-width: 991.98px) {
+        .impact-panel {
+            position: static;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .case-detail-layout {
+            margin-top: -30px;
+        }
+
+        .detail-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .detail-panel {
+            padding: 20px;
+        }
+
+        .impact-panel,
+        .lesson-panel {
+            padding: 18px;
+        }
     }
 </style>
 {% endblock %}

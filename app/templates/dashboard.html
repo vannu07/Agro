@@ -1,191 +1,324 @@
 {% extends 'layout.html' %}
+{% set hide_nav = True %}
+{% set hide_chat = True %}
+
 {% block body %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard-redesign.css') }}">
 
-<div class="dashboard-mesh-bg"></div>
-
-<main class="dashboard-elite-wrapper" style="padding-top: 100px; min-height: 100vh; position: relative; z-index: 1;">
-    <div class="container pb-5 stagger-load">
-        
-        <!-- Dashboard Header -->
-        <div class="row mb-5 align-items-end">
-            <div class="col-lg-7">
-                <div class="d-flex align-items-center mb-3">
-                    <span class="badge badge-mini mr-3" style="background: rgba(16, 185, 129, 0.1); color: var(--elite-primary-light);">SYSTEMS NOMINAL</span>
-                    <div class="pulse-green mr-2"></div>
-                    <span class="text-muted small fw-700 text-uppercase" style="letter-spacing: 1px;">Orchestrator v3.0 Elite</span>
-                </div>
-                {% if session.get('user') %}
-                <h1 class="fluid-5xl font-weight-bold mb-0" style="letter-spacing: -2px;">
-                    <span id="time-greeting">Welcome</span>, 
-                    <span class="text-gradient-primary">{{ session.get('user').get('userinfo').get('name', 'Farmer') }}</span>
-                </h1>
-                {% else %}
-                <h1 class="fluid-5xl font-weight-bold mb-0">Intelligence <span class="text-gradient-primary">Hub</span></h1>
-                {% endif %}
-                <p class="fluid-base text-muted mt-2 mb-0">Premium agricultural orchestration with real-time AI telemetry.</p>
-            </div>
-            <div class="col-lg-5 mt-4 mt-lg-0 d-flex justify-content-lg-end">
-                <div class="chronos-box glass-panel-premium" style="border-left: 4px solid var(--elite-accent);">
-                    <div class="icon-wrap-pill" style="background: var(--elite-accent); color: var(--elite-primary); width: 50px; height: 50px; border-radius: 15px;">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="ml-3">
-                        <div class="chronos-time" id="live-clock" style="color: var(--elite-primary);">00:00:00</div>
-                        <div class="chronos-greeting" id="live-date">...</div>
-                    </div>
-                </div>
-            </div>
+<div class="harvesta-wrapper">
+    <!-- Sidebar - Light Beige (1:1 Harvesta) -->
+    <aside class="h-sidebar">
+        <div class="h-logo">
+            <lottie-player src="{{ url_for('static', filename='images/Tractor.json') }}" background="transparent" speed="1" style="width: 45px; height: 45px;" loop autoplay></lottie-player>
+            <span>Krishi Mitr</span>
         </div>
 
-        <!-- Bento Grid Layout -->
-        <div class="bento-grid-dashboard">
-            <!-- Hero Analytics Card -->
-            <div class="bento-item hero-card glass-panel-premium p-4 p-md-5">
-                <div class="row h-100">
-                    <div class="col-lg-7 d-flex flex-column justify-content-center">
-                        <div class="badge-mini mb-3" style="background: rgba(251, 191, 36, 0.1); color: var(--elite-accent);">ANALYTICS ENGINE</div>
-                        <h2 class="fluid-4xl font-weight-bold mb-3">Cultivation <span class="text-gradient-primary">Matrix</span></h2>
-                        <p class="text-muted mb-4">AI-driven predictive modeling based on regional soil chemistry and localized climate telemetry.</p>
-                        <div class="d-flex gap-3">
-                            <a href="{{ url_for('crop_recommend') }}" class="btn-elite-premium" style="background: var(--elite-accent); color: var(--elite-primary); border: none; text-decoration: none;">
-                                <i class="fas fa-plus me-2"></i> New Analysis
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 d-none d-lg-flex align-items-center justify-content-center">
-                        <div class="yield-chart-container" style="height: 250px;">
-                            <canvas id="yieldChart"></canvas>
-                        </div>
-                    </div>
+        <nav class="h-nav">
+            <div class="h-nav-item active" onclick="showView('overview', this)">
+                <i class="fas fa-grid-2"></i>
+                <span>Dashboard</span>
+            </div>
+            <div class="h-nav-item" onclick="showView('profile', this)">
+                <i class="fas fa-user-circle"></i>
+                <span>Profile Setup</span>
+            </div>
+            <div class="h-nav-item" onclick="showView('history', this)">
+                <i class="fas fa-clock-rotate-left"></i>
+                <span>Activity History</span>
+            </div>
+            <div class="h-nav-item" onclick="showView('market', this)">
+                <i class="fas fa-chart-line-up"></i>
+                <span>Market Trends</span>
+            </div>
+        </nav>
+
+        <div class="h-nav" style="margin-top: auto; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 2rem;">
+            <div class="h-nav-item"><i class="fas fa-bell"></i> Notification <span class="badge bg-warning ms-2" style="border-radius: 50px;">2</span></div>
+            <div class="h-nav-item" onclick="showView('profile')"><i class="fas fa-cog"></i> Settings</div>
+            <div class="d-flex align-items-center gap-3 mt-4">
+                <img src="https://ui-avatars.com/api/?name=User&background=064e3b&color=fff" style="width: 45px; height: 45px; border-radius: 15px;" alt="User">
+                <div>
+                    <div style="font-weight: 800; font-size: 0.9rem;">{{ session.get('user', {}).get('userinfo', {}).get('name', 'Farmer Manager') }}</div>
+                    <div style="font-size: 0.8rem; color: var(--h-text-muted);">Pro License</div>
                 </div>
             </div>
+            <a href="{{ url_for('home') }}" class="h-nav-item mt-3" style="text-decoration: none; border: 1px solid rgba(0,0,0,0.05);">
+                <i class="fas fa-arrow-left"></i> Exit to Home
+            </a>
+        </div>
+    </aside>
 
-            <!-- Stats Items -->
-            <div class="bento-item stat-pill-box glass-panel-premium p-4">
-                <div class="icon-wrap-pill mb-3" style="color: var(--elite-primary-light);"><i class="fas fa-leaf"></i></div>
-                <div class="stat-val counter" data-target="{{ crop_stats.total_rows if crop_stats else 2200 }}">0</div>
-                <div class="stat-label">Data Points</div>
+    <!-- Main Viewport (Aerial Background) -->
+    <main class="h-main">
+        <header class="d-flex justify-content-between align-items-center mb-5 mt-2">
+            <div>
+                <nav style="display: flex; align-items: center; gap: 10px; font-weight: 800; color: #64748b; font-size: 0.85rem;">
+                    <span style="color: #121415;">Field 01</span>
+                    <span style="opacity: 0.4;">/</span>
+                    <span>GPS 41°23'N 91°08'W</span>
+                </nav>
             </div>
-
-            <div class="bento-item stat-pill-box glass-panel-premium p-4">
-                <div class="icon-wrap-pill mb-3" style="color: var(--elite-accent);"><i class="fas fa-robot"></i></div>
-                <div class="stat-val counter" data-target="06">0</div>
-                <div class="stat-label">AI Agents</div>
-            </div>
-
-            <div class="bento-item stat-pill-box glass-panel-premium p-4">
-                <div class="icon-wrap-pill mb-3" style="color: var(--elite-primary);"><i class="fas fa-award"></i></div>
-                <div class="stat-val" style="color: var(--elite-primary);">MASTER</div>
-                <div class="stat-label">User Tier</div>
-            </div>
-
-            <!-- Activity Log (Double Column Height) -->
-            <div class="bento-item activity-log-card glass-panel-premium p-4">
-                <div class="d-flex justify-content-between mb-4">
-                    <h5 class="font-weight-bold mb-0" style="color: var(--elite-primary);">Execution Log</h5>
-                    <div class="live-blink-dot" style="background: var(--elite-accent);"></div>
+            <div class="h-pills">
+                <div class="h-pill" style="background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);">
+                    <i class="fas fa-wind" style="color: #64748b;"></i> Wind <span style="margin-left: 10px; font-weight: 800;">8 km/h</span>
                 </div>
-                <div class="custom-scrollbar-mini" style="max-height: 400px; overflow-y: auto;">
-                    {% if recent_activities %}
-                        {% for activity in recent_activities %}
-                        <div class="log-item mb-3 p-3 glass-panel-pill">
-                            <div class="d-flex justify-content-between small mb-1">
-                                <span class="text-primary font-weight-bold" style="color: var(--elite-primary-light) !important;">{{ activity.type | upper }}</span>
-                                <span class="text-muted">{{ activity.time }}</span>
+                <div class="h-pill" style="background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);">
+                    <i class="fas fa-cloud-rain" style="color: #64748b;"></i> Soil Watering <span style="margin-left: 10px; font-weight: 800;">12h</span>
+                </div>
+                <div class="h-pill" style="background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);">
+                    <i class="fas fa-location-dot" style="color: #64748b;"></i> Location <span style="margin-left: 10px; font-weight: 800;">Nebraska</span>
+                </div>
+            </div>
+        </header>
+
+        <section id="view-overview" class="dashboard-view active">
+            <div class="h-grid mb-5">
+                <!-- METRIC CARDS -->
+                <div class="h-stat-card">
+                    <div style="font-size: 0.75rem; font-weight: 800; color: var(--h-text-muted); text-transform: uppercase; letter-spacing: 1px;">Planted area</div>
+                    <div style="font-size: 1.8rem; font-weight: 900; margin-top: 5px;">125ha</div>
+                </div>
+                <div class="h-stat-card">
+                    <div style="font-size: 0.75rem; font-weight: 800; color: var(--h-text-muted); text-transform: uppercase; letter-spacing: 1px;">Current NDVI</div>
+                    <div style="font-size: 1.8rem; font-weight: 900; margin-top: 5px;">0.62</div>
+                </div>
+                <div class="h-stat-card">
+                    <div style="font-size: 0.75rem; font-weight: 800; color: var(--h-text-muted); text-transform: uppercase; letter-spacing: 1px;">Humidity</div>
+                    <div style="font-size: 1.8rem; font-weight: 900; margin-top: 5px;">19%</div>
+                </div>
+                <div class="h-stat-card">
+                    <div style="font-size: 0.75rem; font-weight: 800; color: var(--h-text-muted); text-transform: uppercase; letter-spacing: 1px;">Market Pulse</div>
+                    <div id="market-pulse-price" style="font-size: 1.8rem; font-weight: 900; margin-top: 5px;">₹2,400</div>
+                    <div id="market-pulse-crop" style="font-size: 0.75rem; font-weight: 700; color: #10b981;">Wheat • Up 1.5%</div>
+                </div>
+
+                <!-- OPTIMAL INVENTORY CARD -->
+                <div class="h-panel-glass" style="grid-column: span 2; display: flex; align-items: center; gap: 40px; padding: 40px; border-radius: 35px; background: rgba(255,255,255,0.65); border: 1px solid rgba(255,255,255,0.5); backdrop-filter: blur(20px);">
+                    <div class="h-circle-container">
+                        <svg class="h-circle-svg" width="130" height="130" viewBox="0 0 130 130">
+                            <circle class="h-circle-bg" cx="65" cy="65" r="50"></circle>
+                            <circle class="h-circle-val" cx="65" cy="65" r="50" style="stroke-dashoffset: 113;"></circle>
+                        </svg>
+                        <div class="h-circle-text">64%</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <span class="badge" style="background: var(--h-lime); color: #000; font-weight: 900; margin-bottom: 8px; border-radius: 6px; text-transform: uppercase; font-size: 0.65rem; letter-spacing: 1.5px; padding: 5px 10px;">Optimal zone</span>
+                        <h2 style="font-size: 40px; font-weight: 900; margin-bottom: 25px; color: #121415;">Cultivation Inventory</h2>
+                        <div style="display: flex; gap: 20px; align-items: center;">
+                            <div style="display: flex;">
+                                <img src="{{ url_for('static', filename='images/corn.png') }}" style="width: 58px; height: 58px; border-radius: 50%; border: 4px solid white; margin-right: -20px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); object-fit: cover;">
+                                <img src="{{ url_for('static', filename='images/potato.png') }}" style="width: 58px; height: 58px; border-radius: 50%; border: 4px solid white; margin-right: -18px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); object-fit: cover;">
+                                <img src="{{ url_for('static', filename='images/carrot.png') }}" style="width: 58px; height: 58px; border-radius: 50%; border: 4px solid white; box-shadow: 0 8px 20px rgba(0,0,0,0.1); object-fit: cover;">
                             </div>
-                            <p class="small mb-0 opacity-70">Query sequence finalized successfully.</p>
+                            <button class="h-btn-lime" style="width: 58px; height: 58px; border-radius: 20px; display: flex; align-items: center; justify-content: center; padding: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                <i class="fas fa-plus" style="font-size: 1.3rem;"></i>
+                            </button>
                         </div>
-                        {% endfor %}
-                    {% else %}
-                        <div class="text-center py-5 opacity-30 small">No recent telemetry logs.</div>
-                    {% endif %}
+                    </div>
+                </div>
+
+                <!-- AI ASSISTANT BLOCK -->
+                <div style="grid-column: span 2;" class="h-stat-card p-0 overflow-hidden flex-row border-0" style="background: rgba(255,255,255,0.45); border-radius: 35px;">
+                    <div style="flex: 1; padding: 45px; display: flex; flex-direction: column; justify-content: center;">
+                        <p style="font-size: 12px; text-transform: uppercase; letter-spacing: 2.5px; color: #64748b; font-weight: 800; margin-bottom: 20px;">Field Insight Assistant</p>
+                        <h3 style="font-size: 2.4rem; font-weight: 900; line-height: 1.2; color: #121415;">"The conditions are <span style="color: var(--h-lime); background: #121415; padding: 2px 12px; border-radius: 12px; display: inline-block; margin: 0 5px;">ideal</span> for your corn crop."</h3>
+                        <div style="margin-top: 40px; background: white; border-radius: 18px; padding: 18px 25px; display: flex; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.06);">
+                            <i class="fas fa-search" style="color: #cbd5e1;"></i>
+                            <input type="text" placeholder="Ask AI Farmer for a report..." style="border: none; outline: none; margin-left:18px; width:100%; font-weight:700; font-size:1rem; color: #121415;">
+                        </div>
+                    </div>
+                    <div style="width: 350px; position: relative;">
+                        <img src="{{ url_for('static', filename='images/farmer_portrait.png') }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; bottom: 35px; left: 35px; background: rgba(255,255,255,0.85); backdrop-filter: blur(15px); padding: 14px 22px; border-radius: 18px; font-weight: 900; font-size: 0.85rem; color: #121415; box-shadow: 0 8px 25px rgba(0,0,0,0.1);">
+                            <span style="color: #10b981; margin-right: 5px;">●</span> Online AI Agent
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="bento-item stat-pill-box glass-panel-premium p-4">
-                <div class="icon-wrap-pill mb-3" style="color: var(--elite-primary-light);"><i class="fas fa-bolt"></i></div>
-                <div class="stat-val counter" data-target="99.8">0</div>
-                <div class="stat-label">AI Uptime %</div>
+            <!-- ANALYTICS ROW -->
+            <div class="row g-4 mb-5">
+                <!-- NPK -->
+                <div class="col-lg-4">
+                    <div class="h-stat-card h-100" style="padding: 35px;">
+                        <div class="d-flex justify-content-between align-items-center mb-5">
+                            <div>
+                                <div style="font-weight: 900; font-size: 1.3rem; margin-bottom: 5px;">NPK Levels</div>
+                                <div style="font-size: 0.85rem; font-weight: 700; color: var(--h-text-muted);">Analysis Record</div>
+                            </div>
+                            <button class="btn" style="background: var(--h-lime); font-weight: 900; border-radius: 12px; padding: 8px 18px; font-size: 0.8rem;">PRO REPORT</button>
+                        </div>
+                        <div class="npk-p-row">
+                            <div class="d-flex justify-content-between npk-label"><span>Nitrogen</span> <span style="color: #121415;">48%</span></div>
+                            <div class="npk-bar-wrap"><div class="npk-bar-fill" style="width: 48%;"></div><div class="npk-target" style="left: 60%;"></div></div>
+                        </div>
+                        <div class="npk-p-row">
+                            <div class="d-flex justify-content-between npk-label"><span>Phosphorus</span> <span style="color: #121415;">40%</span></div>
+                            <div class="npk-bar-wrap"><div class="npk-bar-fill" style="width: 40%;"></div><div class="npk-target" style="left: 55%;"></div></div>
+                        </div>
+                        <div class="npk-p-row">
+                            <div class="d-flex justify-content-between npk-label"><span>Potassium</span> <span style="color: #121415;">55%</span></div>
+                            <div class="npk-bar-wrap"><div class="npk-bar-fill" style="width: 55%;"></div><div class="npk-target" style="left: 70%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- LEAF INDEX -->
+                <div class="col-lg-4">
+                    <div class="h-stat-card h-100" style="padding: 35px; align-items: center; text-align: center;">
+                        <h4 style="font-weight: 900; margin-bottom: 30px; align-self: flex-start; font-size: 1.3rem;">Leaf Area Index</h4>
+                        <div style="position: relative; width: 180px; height: 180px;">
+                            <canvas id="leafChart"></canvas>
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                <div style="font-size: 2rem; font-weight: 900;">2.4</div>
+                                <div style="font-size: 0.75rem; font-weight: 800; color: var(--h-text-muted); text-transform: uppercase;">Index</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- SOIL MOISTURE -->
+                <div class="col-lg-4">
+                    <div class="h-stat-card h-100" style="padding: 35px;">
+                        <h4 style="font-weight: 900; margin-bottom: 25px; font-size: 1.3rem;">Soil Moisture</h4>
+                        <div style="height: 180px;">
+                            <canvas id="soilChart"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</main>
+        </section>
 
+        <!-- VIEW WRAPPERS (Empty for now but preserved for js) -->
+        <section id="view-profile" class="dashboard-view"></section>
+        <section id="view-history" class="dashboard-view"></section>
+        <section id="view-market" class="dashboard-view" style="padding-bottom: 100px;">
+            <div class="h-panel-glass p-5" style="border-radius: 40px; background: rgba(255,255,255,0.7); backdrop-filter: blur(20px);">
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <h2 style="font-weight: 900; font-size: 2.5rem; letter-spacing: -1px;">Mandi Intelligence <span style="color: #10b981;">Live</span></h2>
+                    <div class="h-pill" style="background: #121415; color: var(--h-lime);">
+                        <i class="fas fa-sync fa-spin"></i> Synchronized
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-borderless align-middle" style="font-weight: 700;">
+                        <thead>
+                            <tr style="text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; color: #64748b; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                                <th class="pb-4">Commodity</th>
+                                <th class="pb-4">State/Market</th>
+                                <th class="pb-4">Modal Price</th>
+                                <th class="pb-4">Range</th>
+                                <th class="pb-4">Trend</th>
+                            </tr>
+                        </thead>
+                        <tbody id="market-live-body">
+                            <!-- Populated by JS -->
+                            <tr><td colspan="5" class="text-center py-5">Fetching live market data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    function initDashboard() {
-        updateChronos();
-        setInterval(updateChronos, 1000);
-
-        // Counter Animation
-        const counters = document.querySelectorAll('.counter');
-        counters.forEach(counter => {
-            const target = parseFloat(counter.getAttribute('data-target'));
-            let count = 0;
-            const speed = 2000 / target; // Total 2 seconds
-            
-            const updateCount = () => {
-                const increment = target / 100;
-                if (count < target) {
-                    count += increment;
-                    counter.innerText = target % 1 === 0 ? Math.ceil(count) : count.toFixed(1);
-                    setTimeout(updateCount, 20);
-                } else {
-                    counter.innerText = target;
-                }
-            };
-            updateCount();
+    function showView(viewId, el) {
+        document.querySelectorAll('.h-nav-item').forEach(l => l.classList.remove('active'));
+        if(el) el.classList.add('active');
+        document.querySelectorAll('.dashboard-view').forEach(v => {
+            v.classList.remove('active');
+            if(v.id === 'view-' + viewId) v.classList.add('active');
         });
+    }
 
-        // Yield Matrix Chart
-        const ctx = document.getElementById('yieldChart');
-        if (ctx) {
-            const yieldData = {
-                labels: [{% for row in yield_stats %}"{{ row.crop }}"{% if not loop.last %}, {% endif %}{% endfor %}],
+    // LEAF CHART (Triple Doughnut Mockup)
+    const leafCtx = document.getElementById('leafChart');
+    if (leafCtx) {
+        new Chart(leafCtx, {
+            type: 'doughnut',
+            data: {
+                datasets: [
+                    { data: [70, 30], backgroundColor: ['#FFB555', 'transparent'], borderWidth: 0, cutout: '85%' },
+                    { data: [50, 50], backgroundColor: ['#E1F12E', 'transparent'], borderWidth: 0, cutout: '70%', weight: 1.5 },
+                    { data: [40, 60], backgroundColor: ['#64748b', 'transparent'], borderWidth: 0, cutout: '55%' }
+                ]
+            },
+            options: { cutout: '50%', plugins: { legend: { display: false } } }
+        });
+    }
+
+    // SOIL CHART (Area)
+    const soilCtx = document.getElementById('soilChart');
+    if (soilCtx) {
+        new Chart(soilCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
                 datasets: [{
-                    label: 'Yield Benchmarks',
-                    data: [{% for row in yield_stats %}{{ row.avg_yield }}{% if not loop.last %}, {% endif %}{% endfor %}],
-                    backgroundColor: 'rgba(16, 185, 129, 0.2)',
-                    borderColor: '#10b981',
-                    borderWidth: 2,
+                    data: [10, 15, 68, 40, 55, 30, 45],
+                    borderColor: '#121415',
+                    backgroundColor: 'rgba(225, 241, 46, 0.1)',
                     fill: true,
-                    tension: 0.4
+                    tension: 0.4,
+                    borderWidth: 4,
+                    pointRadius: 0
                 }]
-            };
-
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [{% for row in yield_stats %}"{{ row.crop }}"{% if not loop.last %}, {% endif %}{% endfor %}],
-                    datasets: [{
-                        label: 'Yield Benchmarks',
-                        data: [{% for row in yield_stats %}{{ row.avg_yield }}{% if not loop.last %}, {% endif %}{% endfor %}],
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        borderColor: '#10b981',
-                        borderWidth: 3,
-                        pointBackgroundColor: '#fbbf24', // Sunflower Yellow points
-                        pointBorderColor: '#ffffff',
-                        pointHoverRadius: 6,
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { display: false },
-                        x: { 
-                            grid: { display: false },
-                            ticks: { color: 'rgba(6, 78, 59, 0.4)', font: { size: 10, weight: '700' } }
-                        }
-                    }
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false }, ticks: { font: { weight: '800', size: 10 } } },
+                    y: { display: false }
                 }
-            });
+            }
+        });
+    }
+
+    // MARKET DATA FETCHING
+    async function fetchMarketData() {
+        try {
+            const response = await fetch('/api/market-trends');
+            const result = await response.json();
+            if (result.status === 'ok') {
+                const data = result.data;
+                
+                // Update Pulse Widget
+                if (data.length > 0) {
+                    document.getElementById('market-pulse-price').innerText = '₹' + data[0].modal_price;
+                    document.getElementById('market-pulse-crop').innerText = `${data[0].commodity} • ${data[0].state}`;
+                }
+
+                // Update Market Table
+                const tbody = document.getElementById('market-live-body');
+                tbody.innerHTML = '';
+                data.slice(0, 20).forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.style.borderBottom = '1px solid rgba(0,0,0,0.02)';
+                    tr.innerHTML = `
+                        <td class="py-4"><span style="background: #121415; color: white; padding: 4px 12px; border-radius: 8px; font-size: 0.8rem;">${row.commodity}</span></td>
+                        <td class="py-4 text-muted" style="font-size: 0.85rem;">${row.state} <br> <span style="font-size: 0.7rem; font-weight: 500;">${row.market}</span></td>
+                        <td class="py-4" style="font-size: 1.1rem; font-weight: 900;">₹${row.modal_price}</td>
+                        <td class="py-4 text-muted">₹${row.min_price} - ₹${row.max_price}</td>
+                        <td class="py-4"><span style="color: #10b981;"><i class="fas fa-arrow-trend-up"></i> BULLISH</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+        } catch (err) {
+            console.error("Failed to fetch market data", err);
         }
     }
 
-    document.addEventListener('DOMContentLoaded', initDashboard);
+    // Initial fetch
+    fetchMarketData();
+    // Refresh every 5 mins
+    setInterval(fetchMarketData, 300000);
 </script>
 
+<style>
+    .dashboard-view { display: none; }
+    .dashboard-view.active { display: block; }
+</style>
 {% endblock %}

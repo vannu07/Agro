@@ -1,0 +1,50 @@
+PROJECT NAVIGATION KNOWLEDGE
+These routes are available in Krishi Mitr:
+- /
+- /about
+- /agri-tech-news
+- /api/agent/<agent_name>
+- /api/agent/full-analysis
+- /api/agent/smart
+- /api/assistant
+- /api/chatbot/feedback
+- /api/chatbot/status
+- /api/chatbot/stream
+- /api/market-trends
+- /api/memory
+- /callback
+- /case-studies
+- /case-study/<slug>
+- /chatbot
+- /crop-predict
+- /dashboard
+- /disease-predict
+- /fertilizer-predict
+- /irrigation-predict
+- /login
+- /logout
+- /market-trends
+- /profile
+- /services
+- /sustainability-predict
+- /yield
+- /yield-predict
+
+PROJECT AGENTS
+- crop_agent.py
+- disease_agent.py
+- fertilizer_agent.py
+- irrigation_agent.py
+- sustainability_agent.py
+- yield_agent.py
+
+KEY PAGE MAPPINGS
+- Open irrigation agent: /agent/irrigation
+- Open crop recommendation: /agent/crop
+- Open fertilizer recommendation: /agent/fertilizer
+- Open disease prediction: /disease-predict
+- Open yield page: /yield
+- Open market trends: /market-trends
+- Open agri-tech news: /agri-tech-news
+- Open case studies: /case-studies
+- Open dashboard: /dashboard

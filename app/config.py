@@ -1,1 +1,4 @@
-weather_api_key = "0e6937bbe4074774987cbe2e17df6ed6"
+import os
+
+
+weather_api_key = os.getenv("WEATHER_API_KEY") or os.getenv("weather_api_key", "")

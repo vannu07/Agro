@@ -1,26 +1,180 @@
 {% extends 'layout.html' %} {% block body %}
 
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&display=swap');
 
+    body {
+        font-family: 'Urbanist', sans-serif;
+        background: #020617;
+        color: #f8fafc;
+    }
 
+    .error-viewport {
+        min-height: 100vh;
+        background: radial-gradient(circle at top right, rgba(220, 38, 38, 0.15), transparent),
+                    radial-gradient(circle at bottom left, rgba(239, 68, 68, 0.05), transparent),
+                    #020617;
+        padding: 120px 20px 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-<div class="container py-2 mx-auto my-50 h-10 text-center" style="margin: 9rem;">
-  <div class="row">
-    <div class="col-sm py-2 py-md-3">
-      <div class="card card-body" style="justify-content: center; background-color:blanchedalmond">
-        <h1 class="text-center" style="color: black; font-size: 20px;"><b>Sorry we couldn't process your request
-            currently. <br> Please try again</b></h1>
+    .error-card {
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(40px);
+        -webkit-backdrop-filter: blur(40px);
+        border-radius: 40px;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 40px rgba(239, 68, 68, 0.05);
+        padding: 60px 40px;
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        animation: cardEntry 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
+    @keyframes cardEntry {
+        0% { transform: scale(0.9) translateY(40px); opacity: 0; }
+        100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
 
-        <a href="{{ url_for('home') }}">
-          <button type="submit" class="btn btn-info text-center" style="
-        color: black;
-        font-weight: bold;
-        margin: 1rem;">
-            Try again
-          </button>
-        </a>
-      </div>
+    .error-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 6px;
+        background: linear-gradient(90deg, #ef4444, #f87171);
+    }
+
+    .error-icon-wrapper {
+        width: 100px;
+        height: 100px;
+        background: rgba(239, 68, 68, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 30px;
+        border: 2px dashed rgba(239, 68, 68, 0.3);
+        animation: pulseError 2.5s infinite;
+    }
+
+    @keyframes pulseError {
+        0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.3); }
+        70% { box-shadow: 0 0 0 25px rgba(239, 68, 68, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    .error-icon-wrapper i {
+        font-size: 3rem;
+        color: #ef4444;
+        filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.4));
+    }
+
+    .error-title {
+        font-size: 2.8rem;
+        font-weight: 900;
+        letter-spacing: -1.5px;
+        margin-bottom: 20px;
+        color: #ffffff;
+    }
+
+    .error-msg-box {
+        background: rgba(239, 68, 68, 0.05);
+        border: 1px solid rgba(239, 68, 68, 0.1);
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 40px;
+    }
+
+    .error-msg-box p {
+        color: #fca5a5;
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    .btn-retry {
+        background: #ef4444;
+        color: #ffffff;
+        border: none;
+        border-radius: 100px;
+        padding: 18px 40px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 10px 30px rgba(239, 68, 68, 0.2);
+        text-decoration: none;
+        width: 100%;
+        justify-content: center;
+        font-size: 1.1rem;
+        cursor: pointer;
+    }
+
+    .btn-retry:hover {
+        background: #f87171;
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(239, 68, 68, 0.3);
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .btn-dash {
+        background: rgba(255, 255, 255, 0.03);
+        color: #94a3b8;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 100px;
+        padding: 16px 40px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        width: 100%;
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .btn-dash:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        text-decoration: none;
+    }
+</style>
+
+<div class="error-viewport">
+    <div class="error-card">
+        <div class="error-icon-wrapper">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        
+        <h1 class="error-title">Signal Lost</h1>
+        
+        <div class="error-msg-box">
+            <p>
+                {{ error if error else "Agent telemetry timeout. The neural network encountered a connection disruption while synchronizing with the central node. Please verify region parameters and try again." }}
+            </p>
+        </div>
+
+        <div class="d-flex flex-column">
+            <button onclick="window.history.back()" class="btn-retry">
+                <i class="fas fa-sync-alt"></i> Re-Initialize Sequence
+            </button>
+            <a href="{{ url_for('dashboard') }}" class="btn-dash">
+                Return to Intelligence Hub
+            </a>
+        </div>
     </div>
-  </div>
 </div>
+
 {% endblock %}

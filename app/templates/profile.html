@@ -1,0 +1,78 @@
+{% extends 'layout.html' %} 
+
+{% block body %}
+<section class="profile-page vh-100 position-relative overflow-hidden d-flex align-items-center" style="background: var(--elite-dark);">
+    <!-- Background -->
+    <div class="position-absolute w-100 h-100" style="top: 0; left: 0; z-index: 0;">
+        <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=2600" class="w-100 h-100" style="object-fit: cover; opacity: 0.3;" alt="Leaves Macro">
+        <div class="overlay-gradient-radial"></div>
+    </div>
+
+    <div class="container position-relative z-index-2">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <!-- Elite Profile Card -->
+                <div class="glass-panel-dark p-5 g-profile-panel">
+                    <div class="text-center mb-5">
+                        <div class="profile-avatar-wrapper mb-4">
+                            {% if user and user.picture %}
+                                <img src="{{ user.picture }}" alt="Profile" class="rounded-circle shadow-glow" style="width: 120px; height: 120px; border: 3px solid var(--elite-primary-light);">
+                            {% else %}
+                                <div class="rounded-circle shadow-glow d-flex align-items-center justify-content-center mx-auto" style="width: 120px; height: 120px; border: 3px solid var(--elite-primary-light); background: var(--glass-bg); font-size: 3rem;">
+                                    <i class="fa fa-user-circle"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <h2 class="fluid-3xl font-weight-bold mb-2 text-white">{{ user.name if user else 'Elite User' }}</h2>
+                        <p class="text-gradient-primary font-weight-bold">{{ user.email if user else 'user@Krishi Mitr.ai' }}</p>
+                    </div>
+
+                    <div class="profile-details-grid mb-5">
+                        <div class="glass-panel p-3 mb-3 d-flex align-items-center">
+                            <i class="fa fa-id-badge mr-3 text-muted"></i>
+                            <div>
+                                <small class="text-muted text-uppercase d-block">Account Type</small>
+                                <span class="text-white">Premium Enterprise Agent</span>
+                            </div>
+                        </div>
+                        <div class="glass-panel p-3 mb-3 d-flex align-items-center">
+                            <i class="fa fa-shield mr-3 text-muted"></i>
+                            <div>
+                                <small class="text-muted text-uppercase d-block">Security Status</small>
+                                <span class="text-success font-weight-bold"><i class="fa fa-check-circle mr-1"></i> Verified Ecosystem Access</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="magnetic w-100">
+                                <a href="{{ url_for('dashboard') }}" class="btn btn-outline-light w-100" style="border-radius: 12px; padding: 0.8rem;">
+                                    Dashboard
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="magnetic w-100">
+                                <a href="{{ url_for('logout') }}" class="btn btn-danger w-100" style="border-radius: 12px; padding: 0.8rem;">
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // Reveal animations for profile page
+    const tl = gsap.timeline();
+    tl.from(".g-profile-panel", { y: 60, opacity: 0, duration: 1, ease: "power4.out" })
+      .from(".profile-avatar-wrapper", { scale: 0.8, opacity: 0, duration: 0.6, ease: "back.out(2)" }, "-=0.5")
+      .from(".profile-details-grid .glass-panel", { x: -20, opacity: 0, stagger: 0.1, duration: 0.5, ease: "power2.out" }, "-=0.3");
+});
+</script>
+{% endblock %}

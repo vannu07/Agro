@@ -14,6 +14,14 @@ app/Runtime.txt
 .venv/
 venv/
 ENV/
+.agent/
+.gsd/
+.ai_config/
+
+# Generated runtime artifacts
+chroma_db/
+app/static/uploads/
+*.sqlite3
 
 # Python
 __pycache__/
@@ -27,4 +35,4 @@ pip-delete-this-directory.txt
 .toast
 .lucid
 .idea/
-*.log
+*.log

@@ -1,0 +1,772 @@
+{% extends "layout.html" %}
+
+{% block title %}Krishi Mitr AI | Agricultural Platform{% endblock %}
+
+{% block body %}
+<style>
+/* Premium Agricultural Chatbot Theme */
+.chat-status-strip {
+    max-width: 900px;
+    margin: 20px auto 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.chat-status-card {
+    background: rgba(14, 22, 18, 0.82);
+    border: 1px solid rgba(168, 230, 207, 0.2);
+    border-radius: 14px;
+    padding: 10px 12px;
+    color: #cfe8dc;
+    font-size: 0.86rem;
+}
+
+.chat-status-card strong {
+    display: block;
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.status-pill-ok,
+.status-pill-warn {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 2px 8px;
+    margin-left: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.status-pill-ok {
+    background: rgba(34, 197, 94, 0.18);
+    color: #bbf7d0;
+}
+
+.status-pill-warn {
+    background: rgba(245, 158, 11, 0.18);
+    color: #fde68a;
+}
+
+.chatbot-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: rgba(25, 35, 30, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(168, 230, 207, 0.15);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.chatbot-header {
+    background: linear-gradient(135deg, #122a1f 0%, #08120d 100%);
+    padding: 24px 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chatbot-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.bot-avatar-bg {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(16, 185, 129, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+}
+
+.chatbot-title-text h2 {
+    margin: 0;
+    color: #a8e6cf;
+    font-size: 1.4rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+}
+
+.chatbot-title-text p {
+    margin: 4px 0 0 0;
+    color: #8fa099;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.end-chat-btn {
+    background: transparent;
+    color: #64748b;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.end-chat-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.chat-window {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    background: transparent;
+}
+
+.message {
+    display: flex;
+    gap: 16px;
+    max-width: 85%;
+    animation: messagePop 0.3s ease-out;
+}
+
+@keyframes messagePop {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.message.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.message.bot {
+    align-self: flex-start;
+}
+
+.message-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    overflow: hidden;
+}
+
+.message.bot .message-avatar {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #10b981;
+}
+
+.message.user .message-avatar {
+    background: #10b981;
+    color: white;
+}
+
+.bubble {
+    padding: 16px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    line-height: 1.6;
+    word-wrap: break-word;
+    color: #e2e8f0;
+}
+
+.message.user .bubble {
+    background: #10b981;
+    color: white;
+    border-top-right-radius: 4px;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+}
+
+.message.bot .bubble {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-top-left-radius: 4px;
+}
+
+.typing-indicator {
+    display: flex;
+    gap: 6px;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    border-top-left-radius: 4px;
+    width: fit-content;
+}
+
+.typing-indicator span {
+    width: 6px;
+    height: 6px;
+    background: #a8e6cf;
+    border-radius: 50%;
+    animation: typing 1.4s infinite;
+}
+
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+    0%, 100% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(-4px); opacity: 1; }
+}
+
+.input-container {
+    padding: 0 32px 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.suggestion-chips {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.suggestion-chip {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    color: #a8e6cf;
+    padding: 8px 16px;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.suggestion-chip:hover {
+    background: rgba(16, 185, 129, 0.2);
+    transform: translateY(-2px);
+}
+
+.input-area {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 12px 12px 12px 24px;
+    border-radius: 99px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    transition: border-color 0.3s ease;
+}
+
+.input-area:focus-within {
+    border-color: #10b981;
+}
+
+.chat-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    font-family: inherit;
+}
+
+.chat-input::placeholder {
+    color: rgba(255,255,255,0.3);
+}
+
+.send-btn {
+    background: #10b981;
+    color: white;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.send-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+}
+
+.send-btn svg {
+    width: 20px;
+    height: 20px;
+    transform: translateX(-1px);
+}
+
+/* Feedback Modal Overlay */
+.feedback-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.feedback-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.feedback-modal {
+    background: #11221b;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 40px;
+    border-radius: 24px;
+    text-align: center;
+    width: 90%;
+    max-width: 450px;
+    transform: scale(0.9);
+    transition: transform 0.4s ease;
+}
+
+.feedback-overlay.active .feedback-modal {
+    transform: scale(1);
+}
+
+.feedback-modal h3 {
+    color: #a8e6cf;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.feedback-modal p {
+    color: #8fa099;
+    margin-bottom: 32px;
+}
+
+.emoji-select {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.emoji-btn {
+    font-size: 2.5rem;
+    background: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.emoji-btn:hover {
+    background: rgba(255,255,255,0.05);
+    transform: scale(1.1);
+}
+
+.emoji-btn.selected {
+    background: rgba(168, 230, 207, 0.2);
+    border-color: #a8e6cf;
+}
+
+.feedback-textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 16px;
+    border-radius: 12px;
+    color: #fff;
+    resize: none;
+    height: 100px;
+    margin-bottom: 24px;
+    font-family: inherit;
+}
+
+.submit-feedback-btn {
+    background: #a8e6cf;
+    color: #0d1a14;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 99px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.submit-feedback-btn:hover {
+    background: #8bd2ba;
+    box-shadow: 0 0 20px rgba(168, 230, 207, 0.3);
+}
+
+/* Scrollbar styling */
+.chat-window::-webkit-scrollbar {
+    width: 6px;
+}
+.chat-window::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.02);
+}
+.chat-window::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+}
+
+/* Custom premium SVG symbol */
+.premium-bot-svg {
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 767.98px) {
+    .chat-status-strip {
+        grid-template-columns: 1fr;
+        margin: 14px auto 0 auto;
+    }
+}
+</style>
+
+<section class="chat-status-strip" id="chatStatusStrip">
+    <div class="chat-status-card">
+        <small>Gemini Connection</small>
+        <strong id="geminiStatusText">
+            {% if chatbot_status and chatbot_status.gemini_configured %}
+            Connected <span class="status-pill-ok">OK</span>
+            {% else %}
+            Not configured <span class="status-pill-warn">WARN</span>
+            {% endif %}
+        </strong>
+    </div>
+    <div class="chat-status-card">
+        <small>RAG Pipeline</small>
+        <strong id="ragStatusText">
+            {% if chatbot_status and chatbot_status.rag_ready %}
+            Ready <span class="status-pill-ok">OK</span>
+            {% else %}
+            Not ready <span class="status-pill-warn">WARN</span>
+            {% endif %}
+        </strong>
+    </div>
+    <div class="chat-status-card">
+        <small>Knowledge Docs</small>
+        <strong id="docCountText">{{ (chatbot_status or {}).get('doc_count', 0) }} files loaded</strong>
+    </div>
+</section>
+
+<div class="chatbot-container">
+    <div class="chatbot-header">
+        <div class="chatbot-title">
+            <div class="bot-avatar-bg">
+                <!-- Embedded Premium Agricultural AI Spark/Leaf SVG instead of robot -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="premium-bot-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                    <circle cx="15.5" cy="8.5" r="1.5" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="chatbot-title-text">
+                <h2>Krishi Mitr AI</h2>
+                <p>Always online • Deep Learning Agricultural Agent</p>
+            </div>
+        </div>
+        <button class="end-chat-btn" onclick="endChat()" title="End Chat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+    
+    <div class="chat-window" id="chatWindow">
+        <div class="message bot">
+            <div class="message-avatar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                </svg>
+            </div>
+            <div class="bubble">Namaste! I'm Krishi Mitr AI, your expert agricultural assistant. How can I help you optimize your farm today?</div>
+        </div>
+    </div>
+    
+    <div class="input-container">
+        <div class="suggestion-chips" id="suggestionChips">
+            <div class="suggestion-chip" onclick="fillSuggestion('Provide a full soil analysis guide')">Provide a full soil analysis guide</div>
+            <div class="suggestion-chip" onclick="fillSuggestion('What is the NPK ratio for tomatoes?')">What is the NPK ratio for tomatoes?</div>
+            <div class="suggestion-chip" onclick="fillSuggestion('How do I treat early blight?')">How do I treat early blight?</div>
+        </div>
+        <div class="input-area">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about soil, crops, diseases..." onkeypress="handleKeyPress(event)">
+            <button class="send-btn" onclick="sendMessage()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Feedback Overlay -->
+    <div class="feedback-overlay" id="feedbackOverlay">
+        <div class="feedback-modal">
+            <h3>Feedback</h3>
+            <p>How was your experience with the assistant?</p>
+            <div class="emoji-select">
+                <button class="emoji-btn" onclick="selectEmoji('😞', this)">😞</button>
+                <button class="emoji-btn" onclick="selectEmoji('😐', this)">😐</button>
+                <button class="emoji-btn" onclick="selectEmoji('😊', this)">😊</button>
+                <button class="emoji-btn" onclick="selectEmoji('🤩', this)">🤩</button>
+            </div>
+            <textarea class="feedback-textarea" id="feedbackComment" placeholder="Leave a comment (optional)..."></textarea>
+            <button class="submit-feedback-btn" onclick="submitFeedback()">Submit Feedback</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let chatHistory = [];
+let selectedEmoji = null;
+
+function scrollToBottom() {
+    const chatWindow = document.getElementById('chatWindow');
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+function handleKeyPress(e) {
+    if (e.key === 'Enter') {
+        sendMessage();
+    }
+}
+
+function fillSuggestion(text) {
+    document.getElementById('chatInput').value = text;
+    sendMessage();
+}
+
+async function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if (!text) return;
+    
+    input.value = '';
+    
+    // Hide suggestions once chat starts
+    document.getElementById('suggestionChips').style.display = 'none';
+    
+    // Add user message to UI
+    appendUserMessage(text);
+    
+    // Add typing indicator
+    const typingId = 'typing-' + Date.now();
+    const chatWindow = document.getElementById('chatWindow');
+    chatWindow.insertAdjacentHTML('beforeend', `
+        <div class="message bot" id="${typingId}">
+            <div class="message-avatar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                </svg>
+            </div>
+            <div class="typing-indicator">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    `);
+    scrollToBottom();
+    
+    // Prepare API call
+    const payload = {
+        query: text,
+        history: chatHistory
+    };
+    
+    try {
+        const response = await fetch('/api/chatbot/stream', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        
+        // Remove typing indicator
+        document.getElementById(typingId).remove();
+        
+        // Setup new bot message bubble
+        const msgId = 'bot-' + Date.now();
+        chatWindow.insertAdjacentHTML('beforeend', `
+            <div class="message bot">
+                <div class="message-avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+                        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                    </svg>
+                </div>
+                <div class="bubble" id="${msgId}"></div>
+            </div>
+        `);
+        
+        const bubble = document.getElementById(msgId);
+        
+        // Handle SSE stream manually using fetch reader
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder("utf-8");
+        let botResponse = "";
+        
+        while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            
+            const chunk = decoder.decode(value, { stream: true });
+            const lines = chunk.split('\\n');
+            
+            for (let line of lines) {
+                if (line.startsWith('data: ')) {
+                    const dataStr = line.replace('data: ', '').trim();
+                    if (dataStr === '[DONE]') break;
+                    if (dataStr) {
+                        try {
+                            const dataObj = JSON.parse(dataStr);
+                            if (dataObj.token !== null && dataObj.token !== undefined) {
+                                botResponse += dataObj.token;
+                                bubble.innerText = botResponse;
+                                scrollToBottom();
+                            }
+                            if (dataObj.error) {
+                                botResponse = dataObj.error;
+                                bubble.innerText = botResponse;
+                                scrollToBottom();
+                            }
+                        } catch (e) {
+                            console.error('Error parsing chunk:', e);
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Push to history
+        chatHistory.push({ human: text, ai: botResponse });
+        
+    } catch (err) {
+        document.getElementById(typingId).remove();
+        chatWindow.insertAdjacentHTML('beforeend', `
+            <div class="message bot">
+                <div class="message-avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+                        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                    </svg>
+                </div>
+                <div class="bubble">I'm having a bit of trouble connecting to my brain right now. Please try again in a moment!</div>
+            </div>
+        `);
+        scrollToBottom();
+    }
+}
+
+function appendUserMessage(text) {
+    const chatWindow = document.getElementById('chatWindow');
+    chatWindow.insertAdjacentHTML('beforeend', `
+        <div class="message user">
+            <div class="message-avatar">U</div>
+            <div class="bubble">${text}</div>
+        </div>
+    `);
+    scrollToBottom();
+}
+
+function endChat() {
+    document.getElementById('feedbackOverlay').classList.add('active');
+}
+
+function selectEmoji(emoji, btn) {
+    selectedEmoji = emoji;
+    document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+}
+
+async function submitFeedback() {
+    if (!selectedEmoji) {
+        alert("Please select an emoji rating.");
+        return;
+    }
+    
+    const comment = document.getElementById('feedbackComment').value.trim();
+    
+    try {
+        await fetch('/api/chatbot/feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ emoji: selectedEmoji, comment: comment })
+        });
+        
+        // Reset and clear
+        document.getElementById('feedbackOverlay').classList.remove('active');
+        document.getElementById('chatWindow').innerHTML = `
+            <div class="message bot">
+                <div class="message-avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+                        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                    </svg>
+                </div>
+                <div class="bubble">Thank you for your feedback! The chat has been cleared. You can start a new conversation whenever you're ready.</div>
+            </div>
+        `;
+        document.getElementById('suggestionChips').style.display = 'flex';
+        chatHistory = [];
+        selectedEmoji = null;
+        document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+        document.getElementById('feedbackComment').value = '';
+    } catch(err) {
+        alert("Error saving feedback. Please try again.");
+    }
+}
+
+async function refreshChatStatus() {
+    try {
+        const response = await fetch('/api/chatbot/status');
+        if (!response.ok) return;
+        const payload = await response.json();
+        const state = payload.chatbot || {};
+
+        const geminiText = state.gemini_configured
+            ? 'Connected <span class="status-pill-ok">OK</span>'
+            : 'Not configured <span class="status-pill-warn">WARN</span>';
+
+        const ragText = state.rag_ready
+            ? 'Ready <span class="status-pill-ok">OK</span>'
+            : 'Not ready <span class="status-pill-warn">WARN</span>';
+
+        document.getElementById('geminiStatusText').innerHTML = geminiText;
+        document.getElementById('ragStatusText').innerHTML = ragText;
+        document.getElementById('docCountText').textContent = `${state.doc_count || 0} files loaded`;
+    } catch (e) {
+        // Keep current rendered values as fallback.
+    }
+}
+
+document.addEventListener('DOMContentLoaded', refreshChatStatus);
+</script>
+{% endblock %}

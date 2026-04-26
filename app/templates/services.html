@@ -1,0 +1,358 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<section class="services-hero">
+    <div class="services-hero-overlay"></div>
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <div class="services-kicker">Krishi Mitr Agentic Stack</div>
+                <h1 class="services-title">All 6 AI Services In One Place</h1>
+                <p class="services-subtitle">Ek hi page par saare smart agents: crop planning se lekar irrigation tak, everything you need for data-driven farming.</p>
+                <div class="services-actions">
+                    <a class="btn btn-services-primary" href="#all-services">Explore All Services</a>
+                    <a class="btn btn-services-ghost" href="{{ url_for('dashboard') }}">Open Dashboard</a>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-flex justify-content-center">
+                <div class="services-lottie-wrap">
+                    <lottie-player src="{{ url_for('static', filename='images/Tractor.json') }}" background="transparent" speed="1.1" style="width: 220px; height: 220px;" loop autoplay></lottie-player>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="all-services" class="services-grid-wrap">
+    <div class="container">
+        <div class="section-head text-center">
+            <h2>Premium Service Suite</h2>
+            <p>Choose your agent and get practical recommendations instantly.</p>
+        </div>
+
+        <div class="services-grid">
+            <article class="service-card service-crop">
+                <div class="service-top">
+                    <span class="service-pill">Crop Advisor</span>
+                    <span class="service-dot"></span>
+                </div>
+                <h3>Smart Crop Recommendation</h3>
+                <p>Soil NPK, pH, humidity, rainfall aur local weather ke basis par best crop suggest karta hai.</p>
+                <a href="{{ url_for('crop_recommendation') }}" class="service-link">Launch Crop Agent</a>
+            </article>
+
+            <article class="service-card service-fertilizer">
+                <div class="service-top">
+                    <span class="service-pill">Nutrient Lab</span>
+                    <span class="service-dot"></span>
+                </div>
+                <h3>Precision Fertilizer Plan</h3>
+                <p>Farm ke nutrient gaps ko identify karke exact fertilizer ratio aur usage guidance deta hai.</p>
+                <a href="{{ url_for('fertilizer_recommendation') }}" class="service-link">Launch Fertilizer Agent</a>
+            </article>
+
+            <article class="service-card service-disease">
+                <div class="service-top">
+                    <span class="service-pill">Plant Pathologist</span>
+                    <span class="service-dot"></span>
+                </div>
+                <h3>Leaf Disease Detection</h3>
+                <p>Leaf image upload karo, AI disease detect karega aur treatment recommendation dega.</p>
+                <a href="{{ url_for('disease_prediction') }}" class="service-link">Launch Disease Agent</a>
+            </article>
+
+            <article class="service-card service-yield">
+                <div class="service-top">
+                    <span class="service-pill">Precision Yield</span>
+                    <span class="service-dot"></span>
+                </div>
+                <h3>Yield Prediction</h3>
+                <p>Historical data aur current farm context se season-wise production estimate karta hai.</p>
+                <a href="{{ url_for('yield_prediction_form') }}" class="service-link">Launch Yield Agent</a>
+            </article>
+
+            <article class="service-card service-sustain">
+                <div class="service-top">
+                    <span class="service-pill">Sustain Master</span>
+                    <span class="service-dot"></span>
+                </div>
+                <h3>Sustainability Advisor</h3>
+                <p>Long-term soil health, crop rotation aur sustainable farming strategy ready karta hai.</p>
+                <a href="{{ url_for('sustainability_advisor') }}" class="service-link">Launch Sustainability Agent</a>
+            </article>
+
+            <article class="service-card service-irrigation">
+                <div class="service-top">
+                    <span class="service-pill">Hydration Agent</span>
+                    <span class="service-dot"></span>
+                </div>
+                <h3>Smart Irrigation Planner</h3>
+                <p>Crop stage aur climate signals ke hisaab se optimized irrigation schedule banata hai.</p>
+                <a href="{{ url_for('irrigation_form') }}" class="service-link">Launch Irrigation Agent</a>
+            </article>
+        </div>
+    </div>
+</section>
+
+<style>
+    .services-hero {
+        position: relative;
+        padding: 130px 0 90px;
+        color: #f8fafc;
+        background:
+            radial-gradient(circle at 15% 20%, rgba(34, 197, 94, 0.16), transparent 42%),
+            radial-gradient(circle at 82% 15%, rgba(59, 130, 246, 0.14), transparent 44%),
+            linear-gradient(140deg, rgba(4, 18, 11, 0.72) 0%, rgba(13, 29, 21, 0.66) 45%, rgba(20, 42, 31, 0.7) 100%),
+            url("{{ url_for('static', filename='images/farmer_1.avif') }}") center center / cover no-repeat;
+        overflow: hidden;
+    }
+
+    .services-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(2, 6, 5, 0.08), rgba(2, 6, 5, 0.36));
+    }
+
+    .services-kicker {
+        display: inline-block;
+        padding: 0.35rem 0.85rem;
+        border-radius: 999px;
+        background: rgba(168, 230, 207, 0.18);
+        border: 1px solid rgba(168, 230, 207, 0.35);
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .services-title {
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        color: #ecfeff;
+    }
+
+    .services-subtitle {
+        max-width: 680px;
+        font-size: 1.04rem;
+        color: rgba(226, 232, 240, 0.92);
+        line-height: 1.75;
+        margin-bottom: 1.7rem;
+    }
+
+    .services-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+
+    .btn-services-primary {
+        border-radius: 12px;
+        padding: 0.9rem 1.3rem;
+        font-weight: 700;
+        border: 1px solid rgba(16, 185, 129, 0.65);
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: #042f22;
+        text-decoration: none;
+    }
+
+    .btn-services-primary:hover {
+        color: #022417;
+        transform: translateY(-1px);
+    }
+
+    .btn-services-ghost {
+        border-radius: 12px;
+        padding: 0.9rem 1.3rem;
+        font-weight: 700;
+        border: 1px solid rgba(203, 213, 225, 0.45);
+        background: rgba(15, 23, 42, 0.22);
+        color: #f8fafc;
+        text-decoration: none;
+    }
+
+    .btn-services-ghost:hover {
+        color: #ffffff;
+        background: rgba(15, 23, 42, 0.36);
+        transform: translateY(-1px);
+    }
+
+    .services-lottie-wrap {
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(circle, rgba(236, 253, 245, 0.22), rgba(16, 185, 129, 0.08));
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.32);
+    }
+
+    .services-grid-wrap {
+        padding: 72px 0 88px;
+        background: linear-gradient(180deg, #f8faf8 0%, #eef5f0 100%);
+    }
+
+    .section-head h2 {
+        font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+        font-weight: 800;
+        color: #052e16;
+        letter-spacing: -0.03em;
+        margin-bottom: 0.55rem;
+    }
+
+    .section-head p {
+        color: #475569;
+        margin-bottom: 2rem;
+        font-size: 1.02rem;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    .service-card {
+        position: relative;
+        border-radius: 20px;
+        padding: 1.3rem 1.3rem 1.2rem;
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        background: #ffffff;
+        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .service-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 42px rgba(15, 23, 42, 0.14);
+    }
+
+    .service-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.8rem;
+    }
+
+    .service-pill {
+        border-radius: 999px;
+        padding: 0.25rem 0.72rem;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+        background: rgba(15, 23, 42, 0.06);
+        color: #0f172a;
+    }
+
+    .service-dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--dot-color, #22c55e);
+        box-shadow: 0 0 0 5px var(--dot-glow, rgba(34, 197, 94, 0.2));
+    }
+
+    .service-card h3 {
+        font-size: 1.15rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 0.6rem;
+        line-height: 1.35;
+    }
+
+    .service-card p {
+        font-size: 0.95rem;
+        color: #475569;
+        margin-bottom: 1rem;
+        line-height: 1.65;
+    }
+
+    .service-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        padding: 0.68rem 0.95rem;
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-decoration: none;
+        color: #ffffff;
+        background: var(--cta-color, #10b981);
+        width: 100%;
+    }
+
+    .service-link:hover {
+        color: #ffffff;
+        filter: brightness(0.96);
+    }
+
+    .service-crop {
+        --dot-color: #10b981;
+        --dot-glow: rgba(16, 185, 129, 0.28);
+        --cta-color: #10b981;
+    }
+
+    .service-fertilizer {
+        --dot-color: #f59e0b;
+        --dot-glow: rgba(245, 158, 11, 0.25);
+        --cta-color: #f59e0b;
+    }
+
+    .service-disease {
+        --dot-color: #ef4444;
+        --dot-glow: rgba(239, 68, 68, 0.25);
+        --cta-color: #ef4444;
+    }
+
+    .service-yield {
+        --dot-color: #3b82f6;
+        --dot-glow: rgba(59, 130, 246, 0.25);
+        --cta-color: #3b82f6;
+    }
+
+    .service-sustain {
+        --dot-color: #059669;
+        --dot-glow: rgba(5, 150, 105, 0.25);
+        --cta-color: #059669;
+    }
+
+    .service-irrigation {
+        --dot-color: #0ea5e9;
+        --dot-glow: rgba(14, 165, 233, 0.25);
+        --cta-color: #0ea5e9;
+    }
+
+    @media (max-width: 991px) {
+        .services-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .services-hero {
+            padding: 112px 0 72px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .services-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .services-title {
+            font-size: 2.15rem;
+        }
+
+        .services-subtitle {
+            font-size: 0.95rem;
+        }
+
+        .services-grid-wrap {
+            padding: 56px 0 68px;
+        }
+    }
+</style>
+{% endblock %}

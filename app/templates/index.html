@@ -1,160 +1,931 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<!-- banner -->
-<section class="banner_w3lspvt" id="home">
-	<div class="csslider infinity" id="slider1">
-	
-				<div class="banner-top" style="position: relative;">
-					<div class="banner-overlay"></div>
-					<div class="overlay">
-						<div class="container">
-							<div class="w3layouts-banner-info text-center" data-aos="zoom-in" data-aos-duration="1500">
-								
 
-								<h3 class="text-wh">FarmIQ</h3>
-								<h5 class="text-bk mb-2">AI-Powered Agricultural Assistant</h5>
-								<h4 class="text-wh mx-auto my-4"><b>Get informed decisions about your farming strategy.</b></h4>
-								<br>
-								<h4 class="text-wh mx-auto my-4"><strong> Here are some questions we'll answer</strong></h4>
-								<p class="text-li mx-auto mt-2">
-									1. What crop to plant here? <br>
-									2. What fertilizer to use? <br>
-									3. Which disease do your crop have?<br>
-									4. How to cure the disease?</p>
-							</div>
-						</div>
-					</div>
-				</div>
-	</div>
-</section>
-<!-- //banner -->
+<!-- =====================================================================
+     HERO — CINEMATIC ANIMATED BACKGROUND (Video-Like Effect)
+     ===================================================================== -->
+<section class="hero-cinematic">
+    <!-- Animated background image (Ken Burns / cinematic zoom = video feel) -->
+    <div class="hero-cinematic-bg"></div>
+    <!-- Dark gradient overlay -->
+    <div class="hero-cinematic-overlay"></div>
+    <!-- Animated grid overlay -->
+    <div class="hero-cinematic-grid"></div>
+    <!-- Particle canvas overlay -->
+    <div class="hero-cinematic-particles" id="particle-container"></div>
 
-<!-- core values -->
-<section class="core-value py-5">
-	<div class="container py-md-4">
-		<h3 class="heading mb-sm-5 mb-4 text-center"> About Us</h3>
-		<div class="row core-grids">
-			<div class="col-lg-6 core-left" data-aos="fade-right" data-aos-duration="1000">
-				<img src="{{ url_for('static', filename='images/core.jpg') }}" class="img-fluid" alt="" />
-			</div>
-			<div class="col-lg-6 core-right" data-aos="fade-left" data-aos-duration="1000">
-				<h3 class="mt-4">Improving Agriculture, Improving Lives, Cultivating Crops To Make Farmers Increase
-					Profit.</h3>
-				<p class="mt-3">We use state-of-the-art machine learning and deep learning technologies to help you
-					guide through
-					the entire farming process. Make informed decisions to understand the demographics of your area,
-					understand the
-					factors that affect your crop and keep them healthy for a super awesome successful yield.</p>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- //core values -->
-
-<!-- Products & Services -->
-<section class="blog py-5" id="services">
-	<div class="container py-md-5">
-		<h3 class="heading mb-sm-5 mb-4 text-center"> Our Services</h3>
-		<div class="row blog-grids">
-			<div class="col-lg-4 col-md-6 blog-left mb-lg-0 mb-sm-5 pb-lg-0 pb-5" data-aos="fade-up" data-aos-delay="100">
-				<img src="{{ url_for('static', filename='images/s3.jpg') }}" class="img-fluid" alt="" />
-				<a href="{{ url_for('crop_recommend') }}">
-					<div class="blog-info">
-
-						<h4><i class="fa fa-leaf"></i> Crop</h4>
-
-						<p class="mt-2"> Recommendation about the type of crops to be cultivated which is best suited
-							for the respective conditions</p>
-						<a href="{{ url_for('crop_recommend') }}" class="learn-more-btn">Learn More</a>
-					</div>
-				</a>
-			</div>
-			<div class="col-lg-4 col-md-6 blog-right mt-lg-0 mt-5 pt-lg-0 pt-md-5" data-aos="fade-up" data-aos-delay="300">
-				<img src="{{ url_for('static', filename='images/s2.jpg') }}" class="img-fluid" alt="" />
-				<a href="{{ url_for('fertilizer_recommendation') }}">
-					<div class="blog-info">
-						<h4><i class="fa fa-tint"></i>Fertilizer</h4>
-						<p class="mt-2">Recommendation about the type of fertilizer best suited for the particular soil
-							and the recommended crop</p>
-						<a href="{{ url_for('fertilizer_recommendation') }}" class="learn-more-btn">Learn More</a>
-					</div>
-				</a>
-			</div>
-			<div class="col-lg-4 col-md-6 blog-right mt-lg-0 mt-5 pt-lg-0 pt-md-5"data-aos="fade-up" data-aos-delay="500">
-
-				<img src="{{ url_for('static', filename='images/s4.jpg') }}" class="img-fluid" alt="">
-
-				<!-- <img src="images/s4.jpg" class="img-fliud" alt="" /> -->
-				<a href="{{ url_for('disease_prediction') }}">
-					<div class="blog-info">
-						<h4><i class="fa fa-bug"></i>Crop Disease</h4>
-						<p class="mt-2">Predicting the name and causes of crop disease and suggestions to cure it</p>
-						<a href="{{ url_for('disease_prediction') }}" class="learn-more-btn">Learn More</a>
-					</div>
-				</a>
-			</div>
-		</div>
-	</div>
-</section>
-<div class="container text-center my-5" data-aos="zoom-in" data-aos-duration="1000">
-  <a href="https://soilhealth.dac.gov.in/home" target="_blank" class="soil-health-btn">
-    Check Your Soil Health Report
-  </a>
-</div>
-<!-- //Products & Services -->
- <section class="container mt-5">
-  <h3 class="text-center mb-4 text-success">Frequently Asked Questions</h3>
-  <div class="accordion" id="faqAccordion">
-
-    <div class="card">
-      <div class="card-header" id="headingOne">
-        <h2 class="mb-0">
-          <button class="btn btn-link text-left" type="button" data-toggle="collapse" data-target="#collapseOne">
-            How accurate are the crop predictions?
-          </button>
-        </h2>
-      </div>
-      <div id="collapseOne" class="collapse show" data-parent="#faqAccordion">
-        <div class="card-body">
-          Predictions are based on historical data and machine learning models trained on soil and climate data.
+<!-- Floating HUD Stats Panel (Bottom Center) -->
+    <div class="hero-hud d-none d-lg-flex">
+        <div class="hud-card">
+            <div class="hud-label">Crop Health Index</div>
+            <div class="hud-value"><span id="hud-health">94</span>%</div>
+            <div class="hud-sub">↑ 6% from last month</div>
         </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-header" id="headingTwo">
-        <h2 class="mb-0">
-          <button class="btn btn-link text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo">
-            What if I don’t know my soil values?
-          </button>
-        </h2>
-      </div>
-      <div id="collapseTwo" class="collapse" data-parent="#faqAccordion">
-        <div class="card-body">
-          You can get your soil tested at local agriculture departments or use government portals like Soil Health Card.
+        <div class="hud-card">
+            <div class="hud-label">AI Agents Active</div>
+            <div class="hud-value"><span>6</span> Live</div>
+            <div class="hud-sub">All systems nominal</div>
         </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-
-
-
-<!-- Creating custom grid and hover effect
-<section>
-<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-    <div class="hovereffect">
-        <img class="img-responsive" src="images/s2.jpg" alt="">
-        <div class="overlay">
-           <h2>Hover effect 1</h2>
-           <a class="info" href="#">link here</a>
+        <div class="hud-card">
+            <div class="hud-label">Yield Forecast</div>
+            <div class="hud-value">+<span>28</span>%</div>
+            <div class="hud-sub">Above national average</div>
         </div>
     </div>
-</div> -->
 
-</html>
+    <!-- Hero Content -->
+    <div class="container hero-cinematic-content">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="hero-logo-lockup mb-4">
+                    <lottie-player src="{{ url_for('static', filename='images/Tractor.json') }}" background="transparent" speed="1.2" class="hero-logo-lottie" loop autoplay></lottie-player>
+                    <div class="hero-logo-meta">
+                        <span class="hero-logo-kicker">Official Brand Mark</span>
+                        <strong>Krishi Mitr Platform</strong>
+                    </div>
+                </div>
+                <div class="hero-eyebrow">
+                    <span class="pulse-dot"></span>
+                    AI-Driven Agriculture · Powered by Deep Learning
+                </div>
+                <h1 class="fluid-9xl font-weight-bold text-white mb-2 hero-title" style="letter-spacing: -4px; line-height: 0.9; text-shadow: 0 20px 50px rgba(0,0,0,0.4);">
+                    Krishi <span class="text-gradient-primary">Mitr</span>
+                </h1>
+                <p class="fluid-2xl mb-5 hero-subtitle" style="max-width: 700px; color: rgba(255,255,255,0.95); font-weight: 600; line-height: 1.4; letter-spacing: -0.5px;">
+                    The Future of Agriculture — <span style="color: #34d399;">Powered by Agentic AI</span>
+                </p>
+                <div class="d-flex flex-wrap align-items-center" style="gap: 1.25rem;">
+                    <div class="magnetic">
+                        <a href="/services" class="btn btn-vibrant-glow" style="padding: 1.2rem 2.8rem; font-size: 1.05rem; border-radius: 14px; font-weight: 700;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                            Launch AI Agents
+                        </a>
+                    </div>
+                    <a href="#services" class="d-inline-flex align-items-center" style="color: #64748b; font-size: 0.9rem; font-weight: 600; text-decoration: none; gap: 0.5rem; transition: color 0.3s ease;" onmouseover="this.style.color='#059669'" onmouseout="this.style.color='#64748b'">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                        Explore Agents
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <span>Scroll</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+    </div>
+</section>
+
+
+<!-- =====================================================================
+     STATS BAR
+     ===================================================================== -->
+<section class="stats-bar">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 col-md-3 stat-item" data-counter="500" data-suffix="+">
+                <span class="stat-number counter-animate">500<span>+</span></span>
+                <span class="stat-label">Farmers Empowered</span>
+            </div>
+            <div class="col-6 col-md-3 stat-item" data-counter="6">
+                <span class="stat-number counter-animate">6</span>
+                <span class="stat-label">AI Agents Active</span>
+            </div>
+            <div class="col-6 col-md-3 stat-item" data-counter="30" data-suffix="%">
+                <span class="stat-number counter-animate">30<span>%</span></span>
+                <span class="stat-label">Avg Yield Increase</span>
+            </div>
+            <div class="col-6 col-md-3 stat-item" data-counter="99" data-decimal=".9" data-suffix="%">
+                <span class="stat-number counter-animate">99<span>.9%</span></span>
+                <span class="stat-label">Platform Uptime</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================================
+     MARQUEE — TECH STACK
+     ===================================================================== -->
+<section class="marquee-section">
+    <p class="marquee-label">Powered By</p>
+    <div style="overflow:hidden; position:relative;">
+        <div class="marquee-track">
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-satellite"><path d="M13 7 9 3 5 7l4 4Z"/><path d="m17 11 4 4-4 4-4-4Z"/><path d="m3 21 8-9"/><path d="m16.5 14.5 2.5 2.5"/></svg>
+                Satellite Imagery
+            </div>
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thermometer"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>
+                Soil Sensors
+            </div>
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cloud-rain"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 14v6"/><path d="M8 14v6"/><path d="M12 16v6"/></svg>
+                Weather Data
+            </div>
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-leaf"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                Crop Intelligence
+            </div>
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                Market Analytics
+            </div>
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-droplets"><path d="M7 16.3c2.2 0 4-1.8 4-4 0-3.3-4-8-4-8s-4 4.7-4 8c0 2.2 1.8 4 4 4Z"/><path d="M17 19c2.9 0 4-2.1 4-4.6 0-3.7-4-9.4-4-9.4s-4 5.7-4 9.4c0 2.5 1.1 4.6 4 4.6Z"/></svg>
+                Irrigation Control
+            </div>
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-radio"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.2 19.1 19.1"/></svg>
+                Precision Farming
+            </div>
+            <!-- Duplicate for seamless loop -->
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-satellite"><path d="M13 7 9 3 5 7l4 4Z"/><path d="m17 11 4 4-4 4-4-4Z"/><path d="m3 21 8-9"/><path d="m16.5 14.5 2.5 2.5"/></svg>
+                Satellite Imagery
+            </div>
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thermometer"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>
+                Soil Sensors
+            </div>
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cloud-rain"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 14v6"/><path d="M8 14v6"/><path d="M12 16v6"/></svg>
+                Weather Data
+            </div>
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-leaf"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                Crop Intelligence
+            </div>
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                OpenAI GPT-4
+            </div>
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+                Scikit-Learn
+            </div>
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                Flask + Python
+            </div>
+            <div class="marquee-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                ResNet-9 Vision
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================================
+     SERVICES — AGENTIC ECOSYSTEM (PREMIUM BENTO)
+     ===================================================================== -->
+<section id="services" class="services-section">
+    <div class="container">
+        <div class="text-center mb-5 g-reveal">
+            <div class="section-eyebrow mx-auto" style="max-width: fit-content;">Agentic Intelligence</div>
+            <h2 class="fluid-4xl font-weight-bold mb-4 text-dark">Modular AI Ecosystem</h2>
+            <p class="lead mx-auto" style="max-width: 650px; color: var(--text-muted);">Six specialized AI agents working in harmony — providing full-cycle agricultural insights from soil health to harvest logistics.</p>
+        </div>
+
+        <div class="bento-grid-v2 g-bento-container">
+            <!-- Crop Advisor -->
+            <div class="service-card" style="--card-color: #10b981; --card-glow: rgba(16,185,129,0.35); --icon-bg: rgba(16,185,129,0.1);">
+                <div class="service-icon-wrap">
+                    <!-- Leaf icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                </div>
+                <h4>Crop Advisor</h4>
+                <p>Determines ideal crop varieties based on NPK ratios, soil pH, humidity, and hyper-localized weather data using ensemble ML models.</p>
+                <a href="{{ url_for('crop_recommendation') }}" class="service-card-link" style="color: #10b981;">
+                    Launch Agent
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+
+            <!-- Nutrient Lab -->
+            <div class="service-card" style="--card-color: #eab308; --card-glow: rgba(234,179,8,0.35); --icon-bg: rgba(234,179,8,0.1);">
+                <div class="service-icon-wrap">
+                    <!-- Flask/beaker icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l1 9H8L9 3z"/><path d="M8 12c-.8.8-2 2.3-2 4a6 6 0 0 0 12 0c0-1.7-1.2-3.2-2-4"/><line x1="12" y1="3" x2="12" y2="12"/></svg>
+                </div>
+                <h4>Nutrient Lab</h4>
+                <p>Precision-balanced fertilizer output targeting specific soil nutrient deficiencies with exact NPK compound ratios and dosage schedules.</p>
+                <a href="{{ url_for('fertilizer_recommendation') }}" class="service-card-link" style="color: #eab308;">
+                    Launch Agent
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+
+            <!-- Plant Pathologist -->
+            <div class="service-card" style="--card-color: #ef4444; --card-glow: rgba(239,68,68,0.35); --icon-bg: rgba(239,68,68,0.1);">
+                <div class="service-icon-wrap">
+                    <!-- Scan/eye icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><path d="M17.5 6.5 20 4"/><path d="M6.5 6.5 4 4"/></svg>
+                </div>
+                <h4>Plant Pathologist</h4>
+                <p>Deep ResNet-9 computer vision model providing instant leaf disease and pest diagnosis from a single photo upload — 38 disease classes.</p>
+                <a href="{{ url_for('disease_prediction') }}" class="service-card-link" style="color: #ef4444;">
+                    Launch Agent
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+
+            <!-- Precision Yield -->
+            <div class="service-card" style="--card-color: #3b82f6; --card-glow: rgba(59,130,246,0.35); --icon-bg: rgba(59,130,246,0.1);">
+                <div class="service-icon-wrap">
+                    <!-- TrendingUp icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                </div>
+                <h4>Precision Yield</h4>
+                <p>District-level yield forecasting combining historical production data with environmental modeling for accurate seasonal projections.</p>
+                <a href="{{ url_for('yield_prediction_form') }}" class="service-card-link" style="color: #3b82f6;">
+                    Launch Agent
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+
+            <!-- Sustain Master -->
+            <div class="service-card" style="--card-color: #059669; --card-glow: rgba(5,150,105,0.35); --icon-bg: rgba(5,150,105,0.1);">
+                <div class="service-icon-wrap">
+                    <!-- Recycle/loop icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><polyline points="23 20 23 14 17 14"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+                </div>
+                <h4>Sustain Master</h4>
+                <p>Long-term crop rotation advisor maintaining soil biome integrity, biodiversity, and regenerative growth cycles across seasons.</p>
+                <a href="{{ url_for('sustainability_advisor') }}" class="service-card-link" style="color: #059669;">
+                    Launch Agent
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+
+            <!-- Hydration Agent -->
+            <div class="service-card" style="--card-color: #0ea5e9; --card-glow: rgba(14,165,233,0.35); --icon-bg: rgba(14,165,233,0.1);">
+                <div class="service-icon-wrap">
+                    <!-- Droplets icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                </div>
+                <h4>Hydration Agent</h4>
+                <p>Weather-synchronized irrigation scheduling to minimize waste, optimize plant hydration timing, and reduce operational water costs.</p>
+                <a href="{{ url_for('irrigation_form') }}" class="service-card-link" style="color: #0ea5e9;">
+                    Launch Agent
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+</section>
+
+
+<!-- =====================================================================
+     SOLUTIONS MATRIX — PREMIUM AGENTIC SOLUTIONS
+     ===================================================================== -->
+<section class="solutions-matrix">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Left: Text content -->
+            <div class="col-lg-5">
+                <h2 class="matrix-title mb-3 reveal-item">
+                    <span class="text-muted-dark">Advanced &</span>
+                    <span class="text-muted-dark" style="display: block; margin-top: -15px;">Innovative</span>
+                    <span class="text-gold">Solutions</span>
+                </h2>
+                
+                <p class="matrix-subheader reveal-item">Empowering agriculture with comprehensive intelligence</p>
+
+                <!-- List Items -->
+                <div class="matrix-list">
+                    <a href="{{ url_for('crop_recommendation') }}" class="matrix-item reveal-item">
+                        <div class="matrix-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sprout"><path d="M7 20h10"/><path d="M10 20c5.5 0 5.5-10 10-10"/><path d="M10 20c0-5.5 10-5.5 10-10"/><path d="M12 20a10 10 0 0 0 10-10c0-5.5-4.5-10-10-10a10 10 0 0 0-10 10c0 5.5 4.5 10 10 10Z"/></svg>
+                        </div>
+                        <div class="matrix-content">
+                            <h5>Soil Pilot</h5>
+                            <p>Optimize crop growth and soil health with advanced soil testing and AI-based advisory reports for peak productivity.</p>
+                        </div>
+                    </a>
+
+                    <a href="{{ url_for('fertilizer_recommendation') }}" class="matrix-item reveal-item">
+                        <div class="matrix-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flask-conical"><path d="M10 2v7.5l-5.4 9.7a2 2 0 0 0 1.7 2.8h11.4a2 2 0 0 0 1.7-2.8L14 9.5V2"/><path d="M8.5 2h7"/><path d="M7 16h10"/></svg>
+                        </div>
+                        <div class="matrix-content">
+                            <h5>Nutrient Lab</h5>
+                            <p>Precision-balanced fertilizer output targeting specific soil nutrient deficiencies with exact NPK compound ratios and dosage schedules.</p>
+                        </div>
+                    </a>
+
+                    <a href="{{ url_for('disease_prediction') }}" class="matrix-item reveal-item">
+                        <div class="matrix-icon-box">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scan-eye"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/><path d="M7 12h.01"/><path d="M17 12h.01"/></svg>
+                        </div>
+                        <div class="matrix-content">
+                            <h5>Plant Pathologist</h5>
+                            <p>Deep ResNet-9 computer vision model providing instant leaf disease and pest diagnosis from a single photo upload — 38 disease classes.</p>
+                        </div>
+                    </a>
+                </div>
+
+                <a href="{{ url_for('dashboard') }}" class="btn-matrix-more reveal-item">Find Out More</a>
+            </div>
+
+            <!-- Right: Image with Nodes -->
+            <div class="col-lg-7 reveal-right">
+                <div class="matrix-img-wrap">
+                    <img src="{{ url_for('static', filename='images/crop.png') }}" class="matrix-main-img" alt="Core AI Solutions">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================================
+     HOW IT WORKS
+     ===================================================================== -->
+<section class="how-it-works">
+    <div class="container">
+        <div class="text-center mb-2 g-reveal">
+            <div class="section-eyebrow mx-auto" style="max-width: fit-content;">Simple 3-Step Process</div>
+            <h2 class="fluid-4xl font-weight-bold mb-4 text-dark">How It Works</h2>
+            <p class="lead mx-auto" style="max-width: 580px; color: var(--text-muted);">From farm data to actionable insights in seconds — no agronomy degree required.</p>
+        </div>
+
+        <div class="how-steps g-steps">
+            <div class="how-step">
+                <div class="how-step-number">01</div>
+                <div class="how-step-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                </div>
+                <h5>Input Your Farm Data</h5>
+                <p>Provide soil parameters (N, P, K, pH), your location, and weather data — or simply upload a leaf photo for disease detection.</p>
+            </div>
+
+            <div class="how-step">
+                <div class="how-step-number">02</div>
+                <div class="how-step-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                </div>
+                <h5>AI Agents Analyze</h5>
+                <p>Our specialized ML and LLM-powered agents process your data against 10+ years of agricultural research, IoT signals, and satellite data.</p>
+            </div>
+
+            <div class="how-step">
+                <div class="how-step-number">03</div>
+                <div class="how-step-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <h5>Get Actionable Insights</h5>
+                <p>Receive precise, farm-ready recommendations: which crops to plant, exact fertilizer formulas, disease treatment plans, and irrigation schedules.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================================
+     CASE STUDIES — REAL-WORLD HIGHLIGHT
+     ===================================================================== -->
+<section class="case-studies-highlight py-5">
+    <div class="container">
+        <div class="mb-5">
+            <h2 class="font-weight-bold text-dark mb-1" style="font-size: 2.8rem; letter-spacing: -1px;">Case Studies</h2>
+            <p class="lead font-weight-bold" style="color: #475569; font-size: 1.1rem;">Explore How Others Driving Success In Action!</p>
+        </div>
+
+        <div class="row no-gutters shadow-lg overflow-hidden" style="border-radius: 20px;">
+            <!-- Left: Visual -->
+            <div class="col-lg-7">
+                <div class="h-100 position-relative" style="min-height: 400px;">
+                    <img src="{{ url_for('static', filename='images/case_study_highlight.png') }}" alt="Farmers using AI" class="w-100 h-100 object-cover position-absolute" style="top: 0; left: 0;">
+                </div>
+            </div>
+            <!-- Right: Content -->
+            <div class="col-lg-5">
+                <div class="h-100 p-5 d-flex flex-column justify-content-center" style="background: #4d7c5f; color: #ffffff;">
+                    <p class="mb-4 lead" style="font-weight: 500; font-size: 1.25rem; line-height: 1.6;">
+                        Krishi Mitr empowers agriculture with comprehensive intelligence and a suite of advanced solutions to enhance every aspect of farming:
+                    </p>
+                    <ul class="list-unstyled mb-5" style="font-size: 1.1rem; font-weight: 600;">
+                        <li class="mb-3 d-flex align-items-center">
+                            <span class="mr-2" style="font-size: 1.5rem;">•</span> Precision Farming Excellence
+                        </li>
+                        <li class="mb-3 d-flex align-items-center">
+                            <span class="mr-2" style="font-size: 1.5rem;">•</span> Sustainable Growth
+                        </li>
+                        <li class="mb-3 d-flex align-items-center">
+                            <span class="mr-2" style="font-size: 1.5rem;">•</span> AI Innovations
+                        </li>
+                        <li class="mb-3 d-flex align-items-center">
+                            <span class="mr-2" style="font-size: 1.5rem;">•</span> Modern Crop Production
+                        </li>
+                        <li class="mb-0 d-flex align-items-center">
+                            <span class="mr-2" style="font-size: 1.5rem;">•</span> Resilient Agriculture
+                        </li>
+                    </ul>
+                    <a href="{{ url_for('case_studies') }}" class="btn-highlight-case d-inline-flex align-items-center" style="color: #ffffff; text-decoration: none; font-weight: 700; font-size: 1.1rem; gap: 0.75rem; transition: transform 0.3s ease;">
+                        <div style="width: 40px; height: 40px; background: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #4d7c5f;">
+                            <i class="fa fa-chevron-right" style="font-size: 0.8rem; margin-left: 2px;"></i>
+                        </div>
+                        View Case Study
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero-logo-lockup {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.65rem 1rem;
+        border-radius: 999px;
+        background: rgba(10, 20, 16, 0.55);
+        border: 1px solid rgba(52, 211, 153, 0.35);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .hero-logo-lottie {
+        width: 86px;
+        height: 86px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.92);
+        padding: 0.3rem;
+        border: 1px solid rgba(255, 255, 255, 0.65);
+    }
+
+    .hero-logo-meta {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.1;
+    }
+
+    .hero-logo-kicker {
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(226, 232, 240, 0.9);
+        font-weight: 600;
+    }
+
+    .hero-logo-meta strong {
+        color: #ffffff;
+        font-size: 1.12rem;
+        font-weight: 800;
+    }
+
+    @media (max-width: 576px) {
+        .hero-logo-lockup {
+            padding: 0.5rem 0.72rem;
+            gap: 0.6rem;
+        }
+
+        .hero-logo-lottie {
+            width: 64px;
+            height: 64px;
+        }
+
+        .hero-logo-kicker {
+            font-size: 0.64rem;
+        }
+
+        .hero-logo-meta strong {
+            font-size: 0.92rem;
+        }
+    }
+
+    .btn-highlight-case:hover {
+        transform: translateX(8px);
+    }
+    .object-cover { object-fit: cover; }
+</style>
+
+
+
+<!-- =====================================================================
+     FUTURE SERVICES — UPCOMING TECH
+     ===================================================================== -->
+<section class="future-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Left: Premium generated future tech image -->
+            <div class="col-lg-6 mb-5 mb-lg-0 g-future-img">
+                <div class="future-img-wrap">
+                    <img src="{{ url_for('static', filename='images/future_tech.png') }}"
+                         alt="Future Smart Farming Technology"
+                         style="border-radius: 28px;">
+                    <div class="future-img-overlay">
+                        <span class="future-img-label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            Powered by Autonomous AI Systems
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Content + upcoming service cards -->
+            <div class="col-lg-6 pl-lg-5 g-future-content">
+                <div class="section-eyebrow mb-3">On The Horizon</div>
+                <h2 class="fluid-3xl font-weight-bold mb-3 text-dark">
+                    Next-Level Farming Tech:<br>
+                    <span class="text-gradient-primary">Coming to Krishi Mitr</span>
+                </h2>
+                <p class="mb-4" style="color: var(--text-muted); line-height: 1.75;">We're integrating cutting-edge hardware and satellite systems directly into the Krishi Mitr ecosystem. The future of precision agriculture is just around the corner.</p>
+
+                <div>
+                    <div class="upcoming-card" style="--card-accent: #34d399; --icon-bg: rgba(52,211,153,0.1); background: #ffffff;">
+                        <div class="upcoming-icon">🛰️</div>
+                        <div class="upcoming-content">
+                            <h6 class="text-dark">Satellite Crop Monitoring</h6>
+                            <p>Real-time NDVI and crop stress analysis from orbital imagery</p>
+                        </div>
+                        <span class="badge-coming-soon ml-auto flex-shrink-0">✦ Soon</span>
+                    </div>
+
+                    <div class="upcoming-card" style="--card-accent: #3b82f6; --icon-bg: rgba(59,130,246,0.1); background: #ffffff;">
+                        <div class="upcoming-icon">🤖</div>
+                        <div class="upcoming-content">
+                            <h6 class="text-dark">Autonomous Drone Integration</h6>
+                            <p>AI-guided aerial spraying, monitoring, and field mapping drones</p>
+                        </div>
+                        <span class="badge-coming-soon ml-auto flex-shrink-0">✦ Soon</span>
+                    </div>
+
+                    <div class="upcoming-card" style="--card-accent: #eab308; --icon-bg: rgba(234,179,8,0.1); background: #ffffff;">
+                        <div class="upcoming-icon">🌡️</div>
+                        <div class="upcoming-content">
+                            <h6 class="text-dark">Real-time IoT Soil Sensors</h6>
+                            <p>Sub-field precision with moisture, temperature, and NPK sensors</p>
+                        </div>
+                        <span class="badge-coming-soon ml-auto flex-shrink-0">✦ Soon</span>
+                    </div>
+
+                    <div class="upcoming-card" style="--card-accent: #a855f7; --icon-bg: rgba(168,85,247,0.1); background: #ffffff;">
+                        <div class="upcoming-icon">📊</div>
+                        <div class="upcoming-content">
+                            <h6 class="text-dark">Predictive Market Analytics</h6>
+                            <p>Crop-price futures analysis and optimal harvest timing calculator</p>
+                        </div>
+                        <span class="badge-coming-soon ml-auto flex-shrink-0">✦ Soon</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================================
+     ABOUT / EMPOWERING THE FARMER
+     ===================================================================== -->
+<section class="about-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0 g-about-visual">
+                <div class="about-img-container">
+                    <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?q=80&w=2070&auto=format&fit=crop"
+                         alt="Empowering the Modern Farmer"
+                         style="border-radius: 28px;">
+                    <div class="about-img-badge">
+                        <div class="about-badge-icon">🌾</div>
+                        <div class="about-badge-text">
+                            <strong class="counter-animate-inline" data-target="30">30%</strong>
+                            <span>Average Yield Increase</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 pl-lg-5 g-about-text">
+                <div class="section-eyebrow mb-3">Our Mission</div>
+                <h2 class="fluid-3xl mb-4 text-dark font-weight-bold">
+                    Empowering the<br>
+                    <span class="text-gradient-elite">Modern Farmer</span>
+                </h2>
+                <p class="fluid-base mb-4" style="color: var(--text-muted);">
+                    Krishi Mitr uses state-of-the-art machine learning and agentic AI to guide you through the complete farming lifecycle — from seeding to harvest.
+                </p>
+                <div>
+                    <div class="check-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Increase yield efficiency by up to 30% with data-driven crop selection</span>
+                    </div>
+                    <div class="check-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Reduce fertilizer waste with precision soil analysis and targeted formulas</span>
+                    </div>
+                    <div class="check-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Early disease detection via computer vision — before visible symptoms appear</span>
+                    </div>
+                    <div class="check-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Save water by up to 40% with AI-optimized irrigation scheduling</span>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-elite" style="padding: 1rem 2.5rem; font-size: 1rem; border-radius: 12px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        View Analytics Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================================
+     TESTIMONIALS
+     ===================================================================== -->
+<section class="testimonials-section">
+    <div class="container">
+        <div class="text-center mb-5 g-reveal">
+            <div class="section-eyebrow mx-auto" style="max-width: fit-content;">Farmer Stories</div>
+            <h2 class="fluid-4xl font-weight-bold mb-4 text-dark">Trusted By<br><span class="text-gradient-accent">Real Farmers</span></h2>
+            <p class="lead mx-auto" style="max-width: 540px; color: var(--text-muted);">Join hundreds of farmers already transforming their yields with AI-powered intelligence.</p>
+        </div>
+
+        <div class="row g-testimonials">
+            <div class="col-md-4 mb-4 mb-md-0">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="testimonial-text">"Krishi Mitr's Crop Advisor recommended switching to soybean this season based on my soil NPK. I was skeptical, but yields increased by 34%. This AI actually knows farming."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">👨🏽‍🌾</div>
+                        <div>
+                            <div class="testimonial-name">Ramesh Patel</div>
+                            <div class="testimonial-location">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Rajkot, Gujarat
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 mb-md-0">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="testimonial-text">"The Plant Pathologist caught early blight on my tomato crop 2 weeks before I could see it. The treatment plan worked perfectly. Saved my entire crop this monsoon season."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">👩🏽‍🌾</div>
+                        <div>
+                            <div class="testimonial-name">Priya Sharma</div>
+                            <div class="testimonial-location">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Nashik, Maharashtra
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="testimonial-text">"The Hydration Agent cut my irrigation costs by 40%. I now water my rice paddies at the exact optimal time. My water bill has never been lower and my crop is healthier."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">👴🏽</div>
+                        <div>
+                            <div class="testimonial-name">Gurpreet Singh</div>
+                            <div class="testimonial-location">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Ludhiana, Punjab
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- =====================================================================
+     FINAL CTA SECTION
+     ===================================================================== -->
+<section class="cta-section">
+    <div class="container text-center">
+        <div class="g-cta-content">
+            <div class="section-eyebrow mx-auto mb-4" style="max-width: fit-content; background: rgba(5, 150, 105, 0.05); border-color: rgba(5, 150, 105, 0.2); color: #059669;">
+                Start Today — It's Free
+            </div>
+            <h2 class="fluid-5xl font-weight-bold text-dark mb-4" style="letter-spacing: -1.5px;">
+                Start Your AI Farming<br>
+                <span style="background: linear-gradient(135deg, #065f46 0%, #0d9488 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Journey Today</span>
+            </h2>
+            <p class="lead mb-5 mx-auto" style="max-width: 560px; color: var(--text-muted);">
+                Join hundreds of farmers using AI to work smarter — not harder. Analyze your first crop in under 2 minutes.
+            </p>
+            <div class="d-flex flex-wrap justify-content-center align-items-center" style="gap: 1.25rem;">
+                <a href="{{ url_for('crop_recommendation') }}" class="btn-elite-white">
+                    Launch Free Analysis
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+                <a href="{{ url_for('dashboard') }}" style="color: rgba(255,255,255,0.7); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: color 0.3s ease;" onmouseover="this.style.color='white'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    View Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Scroll to top button -->
+<button id="scroll-to-top" aria-label="Scroll to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+
+<!-- =====================================================================
+     JavaScript: Particles + Counter + Mouse Glow + Scroll Reveal
+     ===================================================================== -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // ---- Spawn particles ----
+    const container = document.getElementById('particle-container');
+    if (container) {
+        for (let i = 0; i < 18; i++) {
+            const d = document.createElement('div');
+            d.className = 'particle';
+            const size = Math.random() * 3 + 1.5;
+            d.style.cssText = `
+                width: ${size}px; height: ${size}px;
+                left: ${Math.random() * 100}%;
+                animation-duration: ${Math.random() * 12 + 8}s;
+                animation-delay: ${Math.random() * 10}s;
+                opacity: ${Math.random() * 0.6 + 0.2};
+                background: rgba(${Math.random() > 0.5 ? '52,211,153' : '234,179,8'},0.7);
+            `;
+            container.appendChild(d);
+        }
+    }
+
+    // ---- CSS-based scroll reveal (safe — no hidden elements) ----
+    // Add a tiny stylesheet for reveal animations
+    const style = document.createElement('style');
+    style.textContent = `
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal-item.revealed { opacity: 1; transform: translateY(0); }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal-left.revealed { opacity: 1; transform: translateX(0); }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal-right.revealed { opacity: 1; transform: translateX(0); }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.93);
+            transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+        }
+        .reveal-scale.revealed { opacity: 1; transform: scale(1); }
+    `;
+    document.head.appendChild(style);
+
+    // Mark elements for reveal
+    const revealMap = [
+        { sel: '.service-card',        cls: 'reveal-item',   delay: true },
+        { sel: '.how-step',            cls: 'reveal-item',   delay: true },
+        { sel: '.testimonial-card',    cls: 'reveal-item',   delay: true },
+        { sel: '.upcoming-card',       cls: 'reveal-item',   delay: true },
+        { sel: '.g-reveal',            cls: 'reveal-item',   delay: false },
+        { sel: '.g-future-img',        cls: 'reveal-left',   delay: false },
+        { sel: '.g-future-content',    cls: 'reveal-right',  delay: false },
+        { sel: '.g-about-visual',      cls: 'reveal-scale',  delay: false },
+        { sel: '.g-about-text',        cls: 'reveal-right',  delay: false },
+        { sel: '.g-cta-content',       cls: 'reveal-item',   delay: false },
+        { sel: '.stat-item',           cls: 'reveal-item',   delay: true  },
+    ];
+
+    revealMap.forEach(({ sel, cls, delay }) => {
+        document.querySelectorAll(sel).forEach((el, i) => {
+            el.classList.add(cls);
+            if (delay) el.style.transitionDelay = `${i * 0.08}s`;
+        });
+    });
+
+    // IntersectionObserver to trigger revelation
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal-item, .reveal-left, .reveal-right, .reveal-scale')
+            .forEach(el => revealObserver.observe(el));
+
+    // ---- Counter animation on scroll ----
+    const observerCounter = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.counted) {
+                entry.target.dataset.counted = 'true';
+                entry.target.querySelectorAll('.stat-number').forEach(el => {
+                    const raw  = el.textContent;
+                    const num  = parseFloat(raw.replace(/[^0-9.]/g, ''));
+                    const suf  = raw.replace(/[0-9. ]/g, '');
+                    const step = ts => {
+                        if (!step.t0) step.t0 = ts;
+                        const p = Math.min((ts - step.t0) / 1800, 1);
+                        const e = 1 - Math.pow(1 - p, 3);
+                        el.textContent = Math.floor(e * num) + suf;
+                        if (p < 1) requestAnimationFrame(step);
+                        else el.textContent = num + suf;
+                    };
+                    requestAnimationFrame(step);
+                });
+            }
+        });
+    }, { threshold: 0.3 });
+    const statsBar = document.querySelector('.stats-bar');
+    if (statsBar) observerCounter.observe(statsBar);
+
+    // ---- Service card mouse glow ----
+    document.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const r = card.getBoundingClientRect();
+            card.style.setProperty('--mouse-x', `${e.clientX - r.left}px`);
+            card.style.setProperty('--mouse-y', `${e.clientY - r.top}px`);
+        });
+    });
+
+    // ---- Scroll to top button ----
+    const scrollBtn = document.getElementById('scroll-to-top');
+    if (scrollBtn) {
+        window.addEventListener('scroll', () => {
+            scrollBtn.classList.toggle('visible', window.scrollY > 600);
+        });
+    }
+
+    // ---- GSAP — HERO entrance ONLY (no ScrollTrigger) ----
+    if (typeof gsap !== 'undefined') {
+        const tl = gsap.timeline({ delay: 0.1 });
+        tl.from(".hero-eyebrow",  { y: 20, opacity: 0, duration: 0.8, ease: "power3.out" })
+          .from(".hero-title",     { y: 40, opacity: 0, duration: 1,   ease: "power3.out" }, "-=0.5")
+          .from(".hero-subtitle",  { y: 25, opacity: 0, duration: 0.8, ease: "power3.out" }, "-=0.6")
+          .from(".hero-cinematic-content .d-flex", { y: 20, opacity: 0, duration: 0.7, ease: "power3.out" }, "-=0.5");
+    }
+
+    // ---- 3D Tilt on service cards ----
+    document.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const r  = card.getBoundingClientRect();
+            const x  = e.clientX - r.left;
+            const y  = e.clientY - r.top;
+            const cx = r.width / 2, cy = r.height / 2;
+            card.style.transform = `perspective(1000px) rotateX(${((y-cy)/cy)*-4}deg) rotateY(${((x-cx)/cx)*4}deg) translateY(-8px)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+        });
+    });
+
+    // ---- Bento Card Elite 3D Tilt ----
+    document.querySelectorAll('.bento-card-elite').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const r = card.getBoundingClientRect();
+            const x = e.clientX - r.left, y = e.clientY - r.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+            const cx = r.width/2, cy = r.height/2;
+            card.style.transform = `perspective(1000px) rotateX(${((y-cy)/cy)*-5}deg) rotateY(${((x-cx)/cx)*5}deg) scale3d(1.02,1.02,1.02)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1,1,1)';
+        });
+    });
+
+    // ---- Animate HUD health counter ----
+    let hudVal = 87;
+    setInterval(() => {
+        hudVal = 87 + Math.round(Math.random() * 10);
+        const el = document.getElementById('hud-health');
+        if (el) el.textContent = hudVal;
+    }, 3000);
+});
+</script>
 
 {% endblock %}

@@ -1,70 +1,115 @@
 {% extends 'layout.html' %}
 {% block body %}
 
-<main class="news-nexus-wrapper">
-    <!-- News Hero -->
-    <section class="news-hero text-center text-white d-flex align-items-center justify-content-center">
-        <div class="hero-bg" style="background-image: url('{{ url_for('static', filename='images/future_tech.png') }}');"></div>
-        <div class="hero-overlay"></div>
-        
-        <div class="container position-relative z-index-10" style="padding-top: calc(var(--nav-height) + 60px);">
-            <div class="g-reveal-up">
-                <div class="intro-label mb-2 text-uppercase tracking-widest small font-weight-bold" style="color: var(--elite-accent);">Insights • Technology Radar</div>
-                <h1 class="fluid-6xl font-weight-bold mb-4" style="letter-spacing: -2px; text-shadow: 0 10px 30px rgba(0,0,0,0.6);">Stay ahead with <span class="text-gradient-primary">daily breakthroughs</span> in sustainable farming technology.</h1>
+<main class="agri-news-page">
+    <section class="agri-news-hero">
+        <div class="agri-news-hero-bg" style="background-image: url('{{ url_for('static', filename='images/future_tech.png') }}');"></div>
+        <div class="agri-news-hero-overlay"></div>
+        <div class="container agri-news-hero-content">
+            <span class="agri-news-eyebrow">AGRI TECH NEWS</span>
+            <h1>Smart Updates, Better Profit for Farmers</h1>
+            <p>Understand each update in plain language: what happened, how it helps your farm, and what action you can take this week.</p>
+            <div class="agri-news-hero-chips">
+                <span>Yield Planning</span>
+                <span>Price Awareness</span>
+                <span>Risk Reduction</span>
             </div>
         </div>
     </section>
 
-    <!-- News Grid -->
-    <section class="container py-120">
-        <div class="row mb-5 g-reveal-up">
-            <div class="col-lg-8">
-                <h2 class="fluid-4xl font-weight-bold text-dark">Latest Breakthroughs</h2>
-                <p class="text-muted">Stay updated with the technologies shaping the future of farming.</p>
+    <section class="container agri-benefits-section">
+        <div class="row">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <div class="agri-panel agri-panel-soft">
+                    <h2>How This Page Benefits Farmers</h2>
+                    <div class="agri-benefit-grid">
+                        <article>
+                            <h3>Right Time Decisions</h3>
+                            <p>Know when to sell, when to store, and when to change input strategy based on policy and market signals.</p>
+                        </article>
+                        <article>
+                            <h3>Lower Crop Risk</h3>
+                            <p>Stay prepared for pest, weather, and cost shocks by following early alerts and technology advisories.</p>
+                        </article>
+                        <article>
+                            <h3>Better Input Spending</h3>
+                            <p>Use technology news to avoid wasteful fertilizer, water, and pesticide decisions across the season.</p>
+                        </article>
+                        <article>
+                            <h3>Faster Adoption</h3>
+                            <p>Get practical tips on how to start with useful tools in small steps without high upfront investment.</p>
+                        </article>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-4 text-lg-right d-flex align-items-center justify-content-lg-end">
-                <div class="filter-pills d-flex gap-2">
-                    <span class="pill-elite active">All</span>
-                    <span class="pill-elite">Policy</span>
-                    <span class="pill-elite">Tech</span>
+
+            <div class="col-lg-4">
+                <div class="agri-panel agri-panel-contrast">
+                    <h3>This Week Action Plan</h3>
+                    <ul class="agri-checklist">
+                        <li>Review one policy update and check your crop eligibility.</li>
+                        <li>Compare mandi modal prices before selling bulk produce.</li>
+                        <li>Try one precision practice on a small plot first.</li>
+                        <li>Track weekly input costs in a notebook or app.</li>
+                    </ul>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="news-grid-elite">
+    <section class="container agri-news-list-section">
+        <div class="agri-section-head">
+            <h2>Latest Agri-Tech Updates</h2>
+            <p>Each card includes a direct farmer takeaway so information becomes action.</p>
+        </div>
+
+        <div class="agri-news-grid">
             {% for item in news_items %}
-            <div class="news-item-premium g-reveal-up" style="transition-delay: {{ loop.index0 * 0.15 }}s;">
-                <div class="card-glass-elite tilt-card">
-                    <div class="news-img-container">
-                        <img src="{{ url_for('static', filename='images/' + item.image) }}" alt="{{ item.title }}">
-                        <div class="category-pill">{{ item.category }}</div>
-                    </div>
-                    <div class="p-4">
-                        <div class="d-flex align-items-center mb-3">
-                            <span class="dot-active mr-2"></span>
-                            <span class="small font-weight-bold opacity-60">{{ item.date }}</span>
-                        </div>
-                        <h4 class="font-weight-bold mb-3" style="line-height: 1.4;">{{ item.title }}</h4>
-                        <p class="text-muted small mb-4">{{ item.summary }}</p>
-                        <a href="#" class="btn-link-elite">
-                            View Analysis <i class="fa fa-chevron-right ml-2"></i>
-                        </a>
+            <article class="agri-news-card" style="animation-delay: {{ loop.index0 * 0.08 }}s;">
+                <div class="agri-news-image-wrap">
+                    {% if item.image and item.image.startswith('http') %}
+                    <img src="{{ item.image }}" alt="{{ item.title }}" referrerpolicy="no-referrer">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='images/' + item.image) }}" alt="{{ item.title }}">
+                    {% endif %}
+                    <span class="agri-news-category">{{ item.category }}</span>
+                </div>
+                <div class="agri-news-body">
+                    <p class="agri-news-date">{{ item.date }}</p>
+                    <h3>
+                        {% if item.url %}
+                        <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer" class="agri-news-source-link">{{ item.title }}</a>
+                        {% else %}
+                        {{ item.title }}
+                        {% endif %}
+                    </h3>
+                    <p>{{ item.summary }}</p>
+                    <div class="agri-farmer-takeaway">
+                        <strong>Farmer Benefit:</strong>
+                        {% if item.benefit %}
+                        {{ item.benefit }}
+                        {% elif item.category == 'Policy' %}
+                        Higher support and safer planning for season-wise crop choices.
+                        {% elif item.category == 'Technology' %}
+                        Reduce water and labor usage while maintaining crop performance.
+                        {% else %}
+                        Improve resilience and crop quality with better seed and field practices.
+                        {% endif %}
                     </div>
                 </div>
-            </div>
+            </article>
             {% endfor %}
         </div>
     </section>
 
-    <!-- CT: Newsletter Integration -->
-    <section class="section-newsletter py-120 overflow-hidden position-relative">
-        <div class="container text-center g-reveal-up">
-            <div class="glass-panel p-5 d-inline-block max-w-800 mx-auto">
-                <h2 class="fluid-3xl font-weight-bold mb-4">Subscribe to the <span class="text-gradient-primary">Weekly Radar</span></h2>
-                <p class="lead text-muted mb-5">Join 15,000+ progressive farmers and agronomists receiving our AI-curated tech digests every Monday.</p>
-                <form class="d-flex flex-column flex-md-row gap-2 justify-content-center">
-                    <input type="email" class="form-control glass-input max-w-400" placeholder="Enter your email address" required>
-                    <button class="btn btn-elite px-5">Join Nexus</button>
+    <section class="agri-news-cta-wrap">
+        <div class="container">
+            <div class="agri-news-cta">
+                <h2>Want This in Simple Weekly Format?</h2>
+                <p>Get one-page summaries in easy language for your family and farm workers.</p>
+                <form class="agri-cta-form" onsubmit="return false;">
+                    <input type="email" placeholder="Enter your email address">
+                    <button type="submit">Get Weekly Farmer Brief</button>
                 </form>
             </div>
         </div>
@@ -72,149 +117,377 @@
 </main>
 
 <style>
-    .news-nexus-wrapper { background: #f8fafc; }
-    
-    .news-hero {
-        min-height: 100vh;
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Sora:wght@600;700;800&display=swap');
+
+    .agri-news-page {
+        --agri-primary: #0f766e;
+        --agri-secondary: #22c55e;
+        --agri-dark: #0f172a;
+        --agri-ink: #1f2937;
+        --agri-warm: #f7f9f4;
+        --agri-card: #ffffff;
+        background:
+            radial-gradient(circle at 90% 10%, rgba(34, 197, 94, 0.16), transparent 35%),
+            radial-gradient(circle at 0% 50%, rgba(15, 118, 110, 0.14), transparent 38%),
+            var(--agri-warm);
+        color: var(--agri-ink);
+        font-family: 'Manrope', sans-serif;
+    }
+
+    .agri-news-hero {
+        min-height: 78vh;
         position: relative;
         overflow: hidden;
+        display: flex;
+        align-items: center;
     }
-    
-    .hero-bg {
+
+    .agri-news-hero-bg,
+    .agri-news-hero-overlay {
         position: absolute;
         inset: 0;
+    }
+
+    .agri-news-hero-bg {
         background-size: cover;
         background-position: center;
-        z-index: 1;
-        transform: scale(1.05);
-        animation: heroKenBurns 20s infinite alternate;
+        transform: scale(1.06);
+        animation: agriHeroZoom 18s ease-in-out infinite alternate;
     }
-    
-    .hero-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, rgba(2, 6, 23, 0.98) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(2, 6, 23, 0.98) 100%);
-        z-index: 2;
+
+    .agri-news-hero-overlay {
+        background: linear-gradient(108deg, rgba(2, 8, 23, 0.92) 10%, rgba(2, 8, 23, 0.54) 52%, rgba(15, 23, 42, 0.9) 100%);
     }
-    
-    .news-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        gap: 30px;
-    }
-    
-    .news-card-v2 {
-        height: 100%;
-    }
-    
-    .card-inner {
-        border-radius: 24px;
-        overflow: hidden;
-        height: 100%;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        background: #ffffff;
-        border: 1px solid rgba(0,0,0,0.05);
-    }
-    
-    .news-img-wrap {
-        height: 240px;
+
+    .agri-news-hero-content {
         position: relative;
-        overflow: hidden;
+        z-index: 1;
+        color: #f8fafc;
+        max-width: 900px;
+        padding-top: calc(var(--nav-height) + 48px);
+        padding-bottom: 54px;
     }
-    
-    .news-img-wrap img {
+
+    .agri-news-eyebrow {
+        display: inline-block;
+        font-weight: 800;
+        font-size: 0.77rem;
+        letter-spacing: 0.24em;
+        color: #6ee7b7;
+        margin-bottom: 12px;
+    }
+
+    .agri-news-hero h1 {
+        font-family: 'Sora', sans-serif;
+        font-size: clamp(2rem, 5vw, 4.4rem);
+        line-height: 1.08;
+        margin-bottom: 16px;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+    }
+
+    .agri-news-hero p {
+        font-size: clamp(1rem, 2vw, 1.3rem);
+        line-height: 1.6;
+        color: rgba(248, 250, 252, 0.9);
+        max-width: 760px;
+    }
+
+    .agri-news-hero-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 24px;
+    }
+
+    .agri-news-hero-chips span {
+        background: rgba(15, 23, 42, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-size: 0.84rem;
+        font-weight: 700;
+    }
+
+    .agri-news-source-link {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .agri-news-source-link:hover {
+        text-decoration: underline;
+    }
+
+    .agri-benefits-section {
+        margin-top: -72px;
+        position: relative;
+        z-index: 3;
+        padding-bottom: 36px;
+    }
+
+    .agri-panel {
+        border-radius: 24px;
+        padding: 26px;
+        height: 100%;
+        box-shadow: 0 20px 42px rgba(2, 8, 23, 0.14);
+    }
+
+    .agri-panel-soft {
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(15, 118, 110, 0.16);
+        backdrop-filter: blur(7px);
+    }
+
+    .agri-panel-contrast {
+        background: linear-gradient(165deg, #0f766e 0%, #14532d 100%);
+        color: #ecfeff;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .agri-panel h2,
+    .agri-panel h3 {
+        font-family: 'Sora', sans-serif;
+        margin-bottom: 14px;
+        font-weight: 700;
+    }
+
+    .agri-benefit-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .agri-benefit-grid article {
+        background: #ffffff;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 16px;
+        padding: 14px;
+    }
+
+    .agri-benefit-grid h3 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .agri-benefit-grid p {
+        font-size: 0.93rem;
+        margin: 0;
+        line-height: 1.55;
+    }
+
+    .agri-checklist {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .agri-checklist li {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 12px;
+        line-height: 1.45;
+    }
+
+    .agri-checklist li::before {
+        content: '\2713';
+        position: absolute;
+        left: 0;
+        top: -1px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        color: #083344;
+        background: #a7f3d0;
+        font-weight: 900;
+    }
+
+    .agri-news-list-section {
+        padding-top: 22px;
+        padding-bottom: 46px;
+    }
+
+    .agri-section-head {
+        margin-bottom: 22px;
+    }
+
+    .agri-section-head h2 {
+        font-family: 'Sora', sans-serif;
+        font-size: clamp(1.45rem, 2.7vw, 2.2rem);
+        margin-bottom: 6px;
+    }
+
+    .agri-news-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+        gap: 18px;
+    }
+
+    .agri-news-card {
+        background: var(--agri-card);
+        border: 1px solid rgba(15, 23, 42, 0.09);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 28px rgba(2, 8, 23, 0.08);
+        animation: agriRise 0.7s ease both;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .agri-news-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 32px rgba(2, 8, 23, 0.13);
+    }
+
+    .agri-news-image-wrap {
+        position: relative;
+        height: 180px;
+    }
+
+    .agri-news-image-wrap img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.8s ease;
     }
-    
-    .news-card-v2:hover .news-img-wrap img {
-        transform: scale(1.1);
-    }
-    
-    .category-tag {
+
+    .agri-news-category {
         position: absolute;
-        bottom: 20px;
-        left: 20px;
-        background: rgba(2, 6, 23, 0.8);
-        backdrop-filter: blur(10px);
-        color: white;
-        padding: 6px 16px;
-        border-radius: 30px;
-        font-size: 0.75rem;
+        left: 12px;
+        top: 12px;
+        background: rgba(2, 8, 23, 0.8);
+        color: #f8fafc;
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-size: 0.74rem;
         font-weight: 700;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
+        letter-spacing: 0.04em;
     }
-    
-    .link-premium {
-        font-weight: 700;
-        color: #10b981;
-        display: inline-flex;
-        align-items: center;
-        text-decoration: none;
-        transition: gap 0.3s ease;
+
+    .agri-news-body {
+        padding: 16px;
     }
-    
-    .link-premium:hover {
-        gap: 8px;
-        color: #059669;
-    }
-    
-    .pill-elite {
-        padding: 8px 20px;
-        border-radius: 30px;
-        background: rgba(0,0,0,0.03);
-        font-weight: 600;
+
+    .agri-news-date {
+        color: #64748b;
         font-size: 0.85rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
+        margin-bottom: 8px;
+        font-weight: 700;
     }
-    
-    .pill-elite.active {
-        background: #10b981;
-        color: white;
+
+    .agri-news-body h3 {
+        font-family: 'Sora', sans-serif;
+        font-size: 1.13rem;
+        line-height: 1.38;
+        margin-bottom: 8px;
+        color: var(--agri-dark);
     }
-    
-    @keyframes heroKenBurns {
-        from { transform: scale(1); }
+
+    .agri-news-body p {
+        margin-bottom: 12px;
+        line-height: 1.55;
+        font-size: 0.94rem;
+    }
+
+    .agri-farmer-takeaway {
+        background: #ecfdf5;
+        border: 1px solid #99f6e4;
+        color: #134e4a;
+        border-radius: 12px;
+        padding: 10px 12px;
+        font-size: 0.88rem;
+        line-height: 1.45;
+    }
+
+    .agri-news-cta-wrap {
+        padding: 26px 0 70px;
+    }
+
+    .agri-news-cta {
+        background: linear-gradient(120deg, #0f172a 0%, #1d4ed8 48%, #0f766e 100%);
+        color: #f8fafc;
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 22px 46px rgba(2, 8, 23, 0.24);
+    }
+
+    .agri-news-cta h2 {
+        font-family: 'Sora', sans-serif;
+        font-size: clamp(1.4rem, 2.2vw, 2rem);
+        margin-bottom: 8px;
+        color: #ffffff;
+    }
+
+    .agri-news-cta p {
+        margin-bottom: 14px;
+        color: rgba(248, 250, 252, 0.88);
+    }
+
+    .agri-cta-form {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .agri-cta-form input {
+        flex: 1 1 280px;
+        min-height: 48px;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 12px;
+        padding: 0 14px;
+        background: rgba(255, 255, 255, 0.12);
+        color: #f8fafc;
+        outline: none;
+    }
+
+    .agri-cta-form input::placeholder {
+        color: rgba(248, 250, 252, 0.72);
+    }
+
+    .agri-cta-form button {
+        min-height: 48px;
+        border: 0;
+        border-radius: 12px;
+        padding: 0 18px;
+        background: #22c55e;
+        color: #052e16;
+        font-weight: 800;
+    }
+
+    @keyframes agriHeroZoom {
+        from { transform: scale(1.02); }
         to { transform: scale(1.1); }
     }
+
+    @keyframes agriRise {
+        from { opacity: 0; transform: translateY(14px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 991.98px) {
+        .agri-benefits-section {
+            margin-top: -28px;
+        }
+
+        .agri-benefit-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .agri-news-hero {
+            min-height: 70vh;
+        }
+
+        .agri-panel {
+            padding: 18px;
+        }
+
+        .agri-news-cta {
+            padding: 20px;
+        }
+    }
 </style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Vanilla Tilt initialization
-        const cards = document.querySelectorAll('.tilt-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 25;
-                const rotateY = (centerX - x) / 25;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
-            });
-        });
-
-        // GSAP Revelations
-        gsap.registerPlugin(ScrollTrigger);
-        const reveals = document.querySelectorAll('.g-reveal-up');
-        reveals.forEach(el => {
-            gsap.fromTo(el, { y: 60, opacity: 0 }, {
-                y: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
-                scrollTrigger: { trigger: el, start: 'top 85%' }
-            });
-        });
-    });
-</script>
 
 {% endblock %}

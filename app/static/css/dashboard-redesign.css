@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --h-lime: #E1F12E;
+    --h-orange: #FFB555;
+    --h-cream: #EDF0C2;
+    --h-beige: #E3E4D6;
+    --h-dark: #121415;
+    --h-text-muted: #5e6467;
+    --h-white: rgba(255, 255, 255, 0.95);
+    --h-panel: rgba(255, 255, 255, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Urbanist', sans-serif;
+}
+
+body {
+    background: #f8fafc;
+    overflow: hidden;
+    color: var(--h-dark);
+}
+
+/* Dashboard Wrapper */
+.harvesta-wrapper {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Sidebar Styling (Light Beige) */
+.h-sidebar {
+    width: 260px;
+    background: var(--h-beige);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 100;
+}
+
+.h-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 1.4rem;
+    margin-bottom: 3rem;
+}
+
+.h-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.h-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-weight: 600;
+    color: var(--h-text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.h-nav-item i { font-size: 1.2rem; }
+.h-nav-item:hover { background: rgba(0,0,0,0.05); color: var(--h-dark); }
+.h-nav-item.active { background: rgba(0,0,0,0.08); color: var(--h-dark); }
+
+/* Main Content with Aerial Background */
+.h-main {
+    flex: 1;
+    position: relative;
+    overflow-y: auto;
+    background: url('/static/images/harvesta_aerial_field_background.png') center/cover no-repeat;
+    background-color: #f8fafc;
+    padding: 2rem;
+}
+
+/* Blurred Content Overlay */
+.h-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+}
+
+/* Glass Panels */
+.h-stat-card {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 28px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+    transition: transform 0.3s ease;
+}
+.h-stat-card:hover { transform: translateY(-5px); }
+
+/* Circular Progress Perfection */
+.h-circle-container {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.h-circle-svg {
+    transform: rotate(-90deg);
+}
+.h-circle-bg { fill: none; stroke: #EDF0C2; stroke-width: 10; }
+.h-circle-val {
+    fill: none;
+    stroke: var(--h-lime);
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 314;
+    stroke-dashoffset: 113; /* 64% of 314 is ~200, so 314-201 = 113 */
+    transition: stroke-dashoffset 1s ease-in-out;
+}
+.h-circle-text {
+    position: absolute;
+    font-size: 28px;
+    font-weight: 800;
+    color: #121415;
+}
+
+/* Top Header Info */
+.h-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.h-header-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.h-header-title h1 { font-weight: 800; font-size: 2.2rem; }
+.h-pills { display: flex; gap: 10px; }
+.h-pill {
+    background: var(--h-panel);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Optimal Zone Card */
+.h-card-optimal {
+    grid-column: span 2;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 40px;
+}
+
+.h-progress-circle {
+    position: relative;
+    width: 140px;
+    height: 140px;
+}
+
+/* NPK Progress */
+.npk-p-row {
+    margin-bottom: 1.5rem;
+}
+.npk-label { font-weight: 800; font-size: 0.9rem; margin-bottom: 8px; }
+.npk-bar-wrap { height: 6px; background: #eaecf0; border-radius: 10px; position: relative; }
+.npk-bar-fill { height: 100%; border-radius: 10px; background: var(--h-dark); }
+.npk-target { position: absolute; height: 10px; width: 2px; background: var(--h-lime); top: -2px; }
+
+/* AI Assistant */
+.h-ai-block {
+    grid-column: span 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.h-farmer-img {
+    width: 100%;
+    border-radius: 30px;
+    box-shadow: 10px 10px 40px rgba(0,0,0,0.2);
+}
+
+.h-btn-lime {
+    background: var(--h-lime);
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.h-btn-lime:hover { transform: translateY(-2px); }
+
+/* Soil Moisture Chart Styling */
+.h-chart-wrap {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 1.5rem;
+}
+
+/* Custom Scrollbar for urban look */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }

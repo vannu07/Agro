@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmIQ UI Validator</title>
+    <!-- Use local css -->
+    <link href="app/static/css/modern.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body style="padding-top: 100px;">
+    <div class="container">
+        <div class="glass p-5 mb-5 shadow-pro" style="background: white;">
+            <h1 class="text-gradient mb-4">Design Pertection Validator</h1>
+            <p class="lead">If you can see this, the **FarmIQ Design System** is working perfectly on your machine.</p>
+            
+            <hr class="my-5">
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h3>1. Premium Buttons (Check Shimmer)</h3>
+                    <div class="magnetic mt-3">
+                        <button class="btn btn-premium btn-lg">
+                            Hover Me for Shimmer <i class="fa fa-magic ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h3>2. Pro Glassmorphism</h3>
+                    <div class="glass p-4 text-center" style="max-width: 300px;">
+                        <span class="text-primary"><i class="fa fa-leaf fa-3x"></i></span>
+                        <h4 class="mt-3">Blur Check</h4>
+                        <p class="small text-muted">This card should have a soft blur and layered shadow.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-info glass border-0 mt-5">
+                <h5><i class="fa fa-info-circle mr-2"></i> How to resolve "No Interface"</h5>
+                <ol>
+                    <li>Go to <b>http://127.0.0.1:5000</b> in your browser.</li>
+                    <li>If the page is blank, press <b>Ctrl + F5</b> (Windows) or <b>Cmd + Shift + R</b> (Mac) to force refresh the cache.</li>
+                    <li>Ensure NO other application is using port 5000.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts for Magnetic Effect -->
+    <script>
+        const magnetics = document.querySelectorAll('.magnetic');
+        magnetics.forEach(m => {
+            m.addEventListener('mousemove', function(e) {
+                const pos = m.getBoundingClientRect();
+                const x = e.clientX - pos.left - pos.width / 2;
+                const y = e.clientY - pos.top - pos.height / 2;
+                m.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+            m.addEventListener('mouseleave', function(e) {
+                m.style.transform = `translate(0px, 0px)`;
+            });
+        });
+    </script>
+</body>
+</html>
