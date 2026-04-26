@@ -102,59 +102,75 @@ graph LR
     Expert[Agri-Expert] -- Research Documents --> KM
 ```
 
-### 5.2 DFD Level 1: Detailed Functional Decomposition
-The Level 1 diagram breaks down the "Krishi Mitr System" into its core sub-processes, identifying the flow of data between internal logic and data stores.
+### 5.2 DFD Level 1: Functional Decomposition of Krishi Mitr
+The Level 1 diagram breaks down the system into its operational components, showing how data flows through the specialized **Agentic Intelligence Layer**.
 
 ```mermaid
 graph TD
     %% Entities
-    F[Farmer]
-    EX[Agri-Expert]
+    User[Farmer/Admin]
+    Expert[Agri-Expert]
     
-    %% Processes
-    P1[1.0 User Profiling & Auth]
-    P2[2.0 Input Processing & Vectorization]
-    P3[3.0 Agentic Orchestration Layer]
-    P4[4.0 Model Inference Engine]
-    P5[5.0 Knowledge Retrieval - RAG]
-    P6[6.0 report Generation & LLM Reasoning]
+    %% Main Control Processes
+    P1[1.0 Request Ingestion & Parsing]
+    P2[2.0 Task Orchestration - P.A.O.R Loop]
+    
+    %% Specialized Agent Sub-Processes
+    subgraph "Agentic Intelligence Layer"
+        A1[3.1 Pathologist - Image Analysis]
+        A2[3.2 Crop Advisor - Soil Metrics]
+        A3[3.3 Hydration - Moisture Prediction]
+        A4[3.4 Yield Forecasting - History Analysis]
+        A5[3.5 Sustain Master - Health Check]
+    end
+    
+    %% Synthesis & Output
+    P4[4.0 Knowledge Retrieval - RAG]
+    P5[5.0 LLM Reflection & report Synthesis]
 
     %% Data Stores
-    D1[(User Database)]
-    D2[(Model Store - .pkl/.pth)]
+    D1[(System Databases - SQLite/CSV)]
+    D2[(Model Registry - .pkl/.pth)]
     D3[(ChromaDB Vector Store)]
-    D4[(Agricultural Knowledge Base)]
 
-    %% Connections
-    F -- Credentials --> P1
-    P1 <--> D1
+    %% High-Fidelity Data Flows
+    User -- Soil/Image/Query --> P1
+    P1 -- Normalized Data --> P2
+    P2 <--> D1
     
-    F -- Soil/Image/Text --> P2
-    P2 -- Cleaned Data --> P3
+    %% Orchestration Dispatch
+    P2 -- Dispatch --> A1
+    P2 -- Dispatch --> A2
+    P2 -- Dispatch --> A3
+    P2 -- Dispatch --> A4
+    P2 -- Dispatch --> A5
     
-    EX -- Research Docs --> P2
-    P2 -- Embeddings --> D3
+    %% Intelligence Feedback
+    A1 <--> D2
+    A2 <--> D2
+    A3 <--> D2
+    A4 <--> D2
+    A5 <--> D2
     
-    P3 -- Task Assignment --> P4
-    P4 <--> D2
-    P4 -- Prediction Result --> P3
+    A1 & A2 & A3 & A4 & A5 -- Agent Insights --> P2
     
-    P3 -- Semantic Query --> P5
-    P5 <--> D3
-    P5 <--> D4
-    P5 -- Contextual Data --> P3
+    %% RAG Enrichment
+    Expert -- Guidelines/Research --> P4
+    P4 <--> D3
+    P2 -- Semantic Request --> P4
+    P4 -- Domain Context --> P2
     
-    P3 -- Raw Data + Context --> P6
-    P6 -- Final Actionable Advice --> F
+    %% Final Output Flow
+    P2 -- Aggregated Context --> P5
+    P5 -- Actionable Agri-Report --> User
 ```
 
-#### Process Descriptions for Your Teacher:
-- **Process 1.0**: Manages user sessions and personalized farm profiles.
-- **Process 2.0**: Handles multi-modal inputs. It normalizes sensor data and converts research papers into vector embeddings.
-- **Process 3.0**: The "Orchestrator" which uses the P.A.O.R loop to decide which agents (Crop, Disease, etc.) should handle the request.
-- **Process 4.0**: Execution of the machine learning models (Random Forest, ResNet9).
-- **Process 5.0**: Retrieves domain-specific knowledge from the local vector database (RAG) to ensure the advice is factually correct.
-- **Process 6.0**: Uses an LLM to synthesize all technical outputs into easy-to-read advice for the farmer.
+#### Detailed Process Descriptions (For Teacher Discussion):
+- **1.0 Request Ingestion**: Captures multi-modal inputs (GPS, Soil NPK, Leaf Images). It performs data validation before passing it to the brain.
+- **2.0 Orchestrator (P.A.O.R)**: This is the central controller. It **Plans** which agents to call, **Acts** by dispatching tasks, **Observes** the results, and **Reflects** using an LLM to ensure accuracy.
+- **3.x Agent Sub-processes**: These are the engine rooms. They load specific ML models from `D2: Model Registry` to perform inference. This separation allows the system to scale—adding a new "Market Agent" simply requires adding another sub-process here.
+- **4.0 RAG Retrieval**: This process connects the system to the real world. It pulls information from authorized research papers (stored as vectors) to ground the AI's advice in science.
+- **5.0 Output Synthesis**: The final stage where complex mathematical predictions are translated into human-readable, multilingual agricultural advice.
 
 ---
 
