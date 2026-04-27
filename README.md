@@ -1,128 +1,149 @@
-# Farm-IQ-AI-Powered-Smart-Farming-Assistant🌿
-#### A simple ML and DL based website which recommends the best crop to grow, fertilizers to use and the diseases caught by your crops.
+# Krishi Mitr: AI-Powered Smart Farming Ecosystem 🌾🤖
 
-## DISCLAIMER ⚠️
-This is a POC(Proof of concept) kind-of project. The data used here comes up with no guarantee from the creator. So, don't use it for making farming decisions. If you do so, the creator is not responsible for anything. However, this project presents the idea that how we can use ML/DL into precision farming if developed at large scale and with authentic and verified data.
+<div align="center">
+  <img src="https://img.shields.io/badge/Agentic%20AI-Orchestrated-blueviolet?style=for-the-badge&logo=openai" alt="Agentic AI">
+  <img src="https://img.shields.io/badge/RAG-Powered-green?style=for-the-badge&logo=chromadb" alt="RAG">
+  <img src="https://img.shields.io/badge/Framework-Flask-black?style=for-the-badge&logo=flask" alt="Flask">
+  <img src="https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python" alt="Python">
+  <img src="https://img.shields.io/badge/UI-Glassmorphism-orange?style=for-the-badge&logo=css3" alt="UI">
+</div>
 
-## MOTIVATION 💪
-- Farming is one of the major sectors that influences a country’s economic growth. 
+---
 
-- In country like India, majority of the population is dependent on agriculture for their livelihood. Many new technologies, such as Machine Learning and Deep Learning, are being implemented into agriculture so that it is easier for farmers to grow and maximize their yield. 
+## 🌟 Overview
+**Krishi Mitr** (The Farmer's Friend) is a state-of-the-art **Agentic AI** ecosystem designed to bridge the gap between advanced agricultural science and grassroots farming. By leveraging a multi-agent orchestration layer and **Retrieval-Augmented Generation (RAG)**, Krishi Mitr provides highly personalized, reasoned, and data-backed strategies for precision agriculture.
 
-- In this project, I present a website in which the following applications are implemented; Crop recommendation, Fertilizer recommendation and Plant disease prediction, respectively. 
+---
 
-    - In the crop recommendation application, the user can provide the soil data from their side and the application will predict which crop should the user grow. 
-    
-    - For the fertilizer recommendation application, the user can input the soil data and the type of crop they are growing, and the application will predict what the soil lacks or has excess of and will recommend improvements. 
-    
-    - For the last application, that is the plant disease prediction application, the user can input an image of a diseased plant leaf, and the application will predict what disease it is and will also give a little background about the disease and suggestions to cure it.
+## 🚀 The Agentic Squad (Specialized AI Agents)
 
-## DATA SOURCE 📊
-- [Crop recommendation dataset ](https://www.kaggle.com/atharvaingle/crop-recommendation-dataset) (custom built dataset)
-- [Fertilizer suggestion dataset](https://github.com/vannu07/Farm-IQ-AI-Powered-Smart-Farming-Assistant/blob/main/app/Data/fertilizer.csv) (custom built dataset)
-- [Disease detection dataset](https://www.kaggle.com/vipoooool/new-plant-diseases-dataset)
+Our system is powered by a team of specialized AI agents, each an expert in its domain.
 
-## Notebooks 📓
-##### I have also published the corresponding code on Kaggle Notebooks.
-- [Crop Recommendation](https://www.kaggle.com/atharvaingle/what-crop-to-grow)
-- [Disease Detection](https://www.kaggle.com/atharvaingle/plant-disease-classification-resnet-99-2)
+| 🧙‍♂️ Agent | 🎯 Primary Goal | 🧠 Model Intelligence |
+| :--- | :--- | :--- |
+| **Crop Advisor** | Recommend optimal crops based on soil & climate. | **Random Forest (99.09% Acc)** |
+| **Plant Pathologist** | Diagnose 38 leaf diseases from a single photo. | **ResNet9 CNN (99.21% Acc)** |
+| **Nutrient Lab** | Analyze deficiencies and suggest fertilizer plans. | **Expert Rule Engine + CSV Logic** |
+| **Precision Yield** | Forecast expected harvest output per hectare. | **XGBoost / RF Regressor** |
+| **Sustain Master** | Plan crop rotation & long-term soil health. | **Sustainability Scoring Engine** |
+| **Agri-Bot (RAG)** | Answer complex queries via verified research. | **OpenAI GPT-4o + ChromaDB** |
 
-# Built with 🛠️
-<code><img height="30" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png"></code>
-<code><img height="30" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/html/html.png"></code>
-<code><img height="30" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/css/css.png"></code>
-<code><img height="30" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png"></code>
-<code><img height="30" src="https://github.com/tomchen/stack-icons/raw/master/logos/bootstrap.svg"></code>
-<code><img height="30" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/git/git.png"></code>
-<code><img height="30" src="https://symbols.getvecta.com/stencil_80/56_flask.3a79b5a056.jpg"></code>
-<code><img height="30" src="https://cdn.iconscout.com/icon/free/png-256/heroku-225989.png"></code>
+---
 
-<code><img height="30" src="https://raw.githubusercontent.com/numpy/numpy/7e7f4adab814b223f7f917369a72757cd28b10cb/branding/icons/numpylogo.svg"></code>
-<code><img height="30" src="https://raw.githubusercontent.com/pandas-dev/pandas/761bceb77d44aa63b71dda43ca46e8fd4b9d7422/web/pandas/static/img/pandas.svg"></code>
-<code><img height="30" src="https://matplotlib.org/_static/logo2.svg"></code>
-<code><img height="30" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1280px-Scikit_learn_logo_small.svg.png"></code>
-<code><img height="30" src="https://raw.githubusercontent.com/pytorch/pytorch/39fa0b5d0a3b966a50dcd90b26e6c36942705d6d/docs/source/_static/img/pytorch-logo-dark.svg"></code>
+## 🔄 Intelligent Workflow (P.A.O.R Loop)
 
-## How to use 💻
-- Crop Recommendation system ==> enter the corresponding nutrient values of your soil, state and city. Note that, the N-P-K (Nitrogen-Phosphorous-Pottasium) values to be entered should be the ratio between them. Refer [this website](https://www.gardeningknowhow.com/garden-how-to/soil-fertilizers/fertilizer-numbers-npk.htm) for more information.
-Note: When you enter the city name, make sure to enter mostly common city names. Remote cities/towns may not be available in the [Weather API](https://openweathermap.org/) from where humidity, temperature data is fetched.
+Krishi Mitr utilizes the **Plan-Act-Observe-Reflect** loop to ensure every piece of advice is contextually accurate.
 
-- Fertilizer suggestion system ==> Enter the nutrient contents of your soil and the crop you want to grow. The algorithm will tell which nutrient the soil has excess of or lacks. Accordingly, it will give suggestions for buying fertilizers.
+```mermaid
+sequenceDiagram
+    participant Farmer as 👨‍🌾 Farmer
+    participant ORCH as 🧠 Orchestrator
+    participant ML as 🤖 ML Agents (RF/CNN)
+    participant RAG as 📚 RAG Knowledge Base
+    participant LLM as ✍️ Reasoning Engine (GPT-4o)
 
-- Disease Detection System ==> Upload an image of leaf of your plant. The algorithm will tell the crop type and whether it is diseased or healthy. If it is diseased, it will tell you the cause of the disease and suggest you how to prevent/cure the disease accordingly.
-Note that, for now it only supports following crops
+    Farmer->>ORCH: Soil Data + Query
+    Note over ORCH: Plan: Identify required agents
+    ORCH->>ML: Inference (Crop/Disease Prediction)
+    ML-->>ORCH: Raw Metrics (e.g., Crop=Rice)
+    ORCH->>ML: Calculate Fertilizer Gaps
+    ML-->>ORCH: Nutrient Recommendations
+    ORCH->>RAG: Fetch Verified Cultivation Guides
+    RAG-->>ORCH: Research-backed Best Practices
+    Note over ORCH: Observe & Reflect: Synthesize Data
+    ORCH->>LLM: Pass Metrics + RAG Context + History
+    LLM-->>Farmer: Structured, Natural Language Advice
+```
 
-<details>
-  <summary>Supported crops
-</summary>
+---
 
-- Apple
-- Blueberry
-- Cherry
-- Corn
-- Grape
-- Pepper
-- Orange
-- Peach
-- Potato
-- Soybean
-- Strawberry
-- Tomato
-- Squash
-- Raspberry
-</details>
+## 📚 RAG Architecture (Retrieval-Augmented Generation)
 
-## How to run locally 🛠️
-- Make sure Python 3.10+ and git are installed.
-- Clone the repository and open a terminal in the project root.
-- Create and activate a virtual environment:
-  ```
-  python -m venv .venv
-  # Windows PowerShell
-  .\.venv\Scripts\Activate.ps1
-  # macOS/Linux
-  source .venv/bin/activate
-  ```
-- Install dependencies:
-  ```
-  pip install -r requirements.txt
-  pip install -r app/requirements.txt
-  ```
-- Create a `.env` file (or update existing one) and set at least:
-  ```
-  WEATHER_API_KEY=your_weatherapi_key
-  GEMINI_API_KEY=your_gemini_key
-  ```
-- Run the Flask app:
-  ```
-  python app/app.py
-  ```
-- Open the local URL shown in the terminal (typically `http://127.0.0.1:5000`).
+To eliminate "AI Hallucinations," our **Agri-Bot** utilizes a high-fidelity RAG pipeline:
+1.  **Ingestion**: 100+ verified research papers and government guidelines.
+2.  **Vectorization**: Processed via `text-embedding-3-small`.
+3.  **Storage**: Persistent vector search via **ChromaDB**.
+4.  **Retrieval**: Finds the top 3 most relevant context chunks for every query.
+5.  **Synthesis**: The LLM uses these chunks as a "Ground Truth" to generate advice.
 
-## Contribute 👨‍💻
-Please read [CONTRIBUTING.md](https://github.com/vannu07/Farm-IQ-AI-Powered-Smart-Farming-Assistant/blob/main/Contributing.md) for details on our code of conduct, and the process for submitting pull requests to us.
+---
 
-## Usage ⚙️
-You can use this project for further developing it and adding your work in it. If you use this project, kindly mention the original source of the project and mention the link of this repo in your report.
+## 🎨 UI/UX Showcase (Glassmorphism Design)
 
-## Further Improvements 📈
-This was my first big project so there are lot of things to improve upon
+Krishi Mitr features a **Premium Glassmorphism UI** designed for clarity and ease of use.
+- **Dynamic Dashboards**: Real-time visualization of soil health and model confidence.
+- **Mobile First**: Fully responsive design for field use.
+- **Interactive Reports**: Downloadable PDF reports with AI-generated insights.
 
-- 🎨 Frontend Cleanup: CSS is partially inline and scattered. Consolidating styles and improving layout with Bootstrap or modern CSS frameworks will enhance UI/UX.
-- 🌱 Data Enrichment: More region-specific crop and soil data can be collected via web scraping or APIs (e.g., Soil Health Card portal) to improve prediction accuracy.	
-- 🌿 Disease Detection: Current image dataset is limited. Expanding it with diverse, high-quality plant images and augmenting the model with deeper CNNs (e.g., ResNet) will increase robustness.
-- ⚙️ Code Modularization: The project currently uses Jupyter Notebooks. Migrating to a modular Flask structure with routes.py, utils.py, etc., will enhance maintainability and scalability.
-- 🤖 AI Chatbot Upgrade: FarmAI currently gives static replies. It can be powered by OpenAI's GPT API to provide real-time, intelligent agricultural advice.
-- 📊 User Dashboard: A simple analytics dashboard using Chart.js or Plotly can be added to show crop trends, past predictions, and insights.
+*(Screenshots can be added here in the `app/static/images/` directory)*
 
-This project serves as a strong foundation for building a production-ready, AI-powered agricultural platform. 🌾
+---
 
-## Credits 💳
-This project is heavily inspired from **[this GitHub repository](https://github.com/7NNS7/Recommendation-System-for-Farming)** (especially the crop recommendation and fertilizer recommendation part). This project is an extended version of the above mentioned project. Please star the mentioned repo.
+## 📂 Project Structure
 
-## License 📝
-This project is licensed under [GNU (GENERAL PUBLIC LICENSE)](https://github.com/vannu07/Farm-IQ-AI-Powered-Smart-Farming-Assistant/blob/main/LICENSE).
+```text
+Krishi-Mitr/
+├── app/                 # Core Flask Application
+│   ├── agents/          # Multi-agent logic (Crop, Disease, etc.)
+│   ├── static/          # Premium CSS (Glassmorphism) & JS
+│   ├── templates/       # HTML Templates
+│   ├── utils/           # Database & Inference helpers
+│   └── app.py           # Main Entry Point
+├── docs/                # Technical Design & Workflow Docs
+├── models/              # Pre-trained ML/DL Model Artifacts
+├── notebooks/           # Training & Evaluation Notebooks
+├── scripts/             # Audit & Verification Scripts
+└── README.md            # You are here
+```
 
-## Contact 📞
+---
 
-#### If you have any doubt or want to contribute feel free to email me or hit me up on [LinkedIn](https://www.linkedin.com/in/varnit-kumar-0883bb251/)
+## 💻 Installation & Quick Start
+
+1.  **Clone the Repository**:
+    ```bash
+    git clone https://github.com/varnit/Krishi-Mitr.git
+    cd Krishi-Mitr
+    ```
+
+2.  **Environment Setup**:
+    ```bash
+    python -m venv .venv
+    .\.venv\Scripts\Activate.ps1  # Windows
+    pip install -r requirements.txt
+    ```
+
+3.  **API Keys**:
+    Create a `.env` file:
+    ```env
+    OPENAI_API_KEY=your_openai_key
+    WEATHER_API_KEY=your_openweathermap_key
+    GEMINI_API_KEY=your_gemini_key
+    ```
+
+4.  **Launch**:
+    ```bash
+    python app/app.py
+    ```
+
+---
+
+## 🗺️ Future Roadmap
+
+- [ ] **Multilingual Support**: Integration of Bhashini API for regional Indian languages.
+- [ ] **IoT Integration**: Live telemetry from soil moisture and NPK sensors.
+- [ ] **Marketplace**: Direct link to seed and fertilizer vendors based on AI advice.
+- [ ] **Offline Mode**: Lite models for areas with low connectivity.
+
+---
+
+## 🛡️ License & Contribution
+
+- **License**: This project is licensed under the [GNU General Public License v3.0](LICENSE).
+- **Contributing**: Please see [Contributing.md](Contributing.md) for details on our code of conduct.
+
+---
+
+<div align="center">
+  <b>Built with ❤️ for the Indian Farmer</b>
+</div>
