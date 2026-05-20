@@ -1,0 +1,26 @@
+KRISHI MITR: MANDI MARKET DYNAMICS AND POST-HARVEST MANAGEMENT
+==============================================================
+
+Farming profitability depends as much on market execution as it does on crop yields. Farmers must navigate Mandi market pricing fluctuations, select optimal selling windows, and preserve harvested crops from post-harvest decay.
+
+1. UNDERSTANDING MANDI PRICING DYNAMICS
+---------------------------------------
+- Peak Arrival Depressions: During harvest months (Rabi harvest in April-May, Kharif harvest in October-November), supply surges in Mandis, causing seasonal price depressions.
+- Price Arbitrage: Prices for the same crop can vary significantly across Mandis in different districts or states due to local transport constraints.
+- Holding Strategies: If government Minimum Support Price (MSP) centers are crowded, or if current open-market prices are below production cost, storing grains in scientific warehouses can earn higher returns during off-season surges (Jan-Feb).
+
+2. SCIENTIFIC CROP STORAGE STANDARDS
+-------------------------------------
+- Moisture Control: The absolute first step in crop storage is drying.
+  * Grains (Wheat, Rice, Maize) must be dried to under 12% moisture content before storage. Excess moisture triggers fungal rot (Aspergillus flavus, which produces toxic aflatoxins) and insect infestations.
+- Hermetic Storage: Use airtight hermetic bags (like grain-pro bags). These bags deplete oxygen and generate carbon dioxide naturally through seed respiration, suffocation-killing any insects without chemical pesticides.
+- Cold Chain Management: Highly perishable crops (Tomatoes, Potatoes, Onions) require temperature-controlled cold storages:
+  * Potatoes: Store at 4°C - 7°C with high relative humidity (90-95%) to prevent shrinkage and sprouting.
+  * Tomatoes: Green-ripe tomatoes store best at 12°C - 15°C, while fully red tomatoes store at 8°C - 10°C.
+
+3. LOGISTICS AND TRANSPORTATION PRECAUTIONS
+-------------------------------------------
+- Avoid harvesting immediately after a rain shower. Wet crops rot during transport.
+- Pack delicate nightshades (Tomatoes, Peppers) in plastic crates instead of jute bags to prevent mechanical bruising.
+
+Market literacy turns a hard-working farmer into a highly profitable entrepreneur.

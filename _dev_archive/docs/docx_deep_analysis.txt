@@ -1,0 +1,90 @@
+﻿=== TABLES FOUND (IN ORDER) ===
+T01 | Section: FRONT MATTER | Header: Agent | Model Architecture | Task | Core Metric | 7r x 4c | Pos:73
+T02 | Section: FRONT MATTER | Header: S No | Topic | Page No | 24r x 3c | Pos:105
+T03 | Section: FRONT MATTER | Header: Table | Title | Page | 28r x 3c | Pos:110
+T04 | Section: FRONT MATTER | Header: Figure | Title | Page | 16r x 3c | Pos:113
+T05 | Section: 2.5 Comparative Analysis of Existing Systems | Header: Platform | Crop Rec. | Disease Det. | NL Reasoning | Multi-Agent | 6r x 5c | Pos:203
+T06 | Section: 3.1.2 Identified Deficiencies | Header: Deficiency | AgroStar | Plantix | Impact | 6r x 4c | Pos:217
+T07 | Section: 3.3 Non-Functional Requirements | Header: Requirement | ID | Specification | 9r x 3c | Pos:234
+T08 | Section: 3.4 Project Directory Structure | Header: Path | Purpose | 22r x 2c | Pos:238
+T09 | Section: 3.5 Hardware Configuration for Model Training | Header: Training Task | Hardware | Training Duration | 8r x 3c | Pos:240
+T10 | Section: 4.4.1  DFD Level 0 ΓÇö Context Diagram | Header: External Entity | Data Flow Direction | Data Description | 7r x 3c | Pos:351
+T11 | Section: 4.7.1 Logical ERD ΓÇö Chen's Notation | Header: Entity | Primary Key | Key Attributes | 6r x 3c | Pos:441
+T12 | Section: 4.8.2 Use Case Descriptions | Header: ID | Use Case | Actor | Description | 9r x 4c | Pos:457
+T13 | Section: 4.10.1 Crop Recommendation Data Schema | Header: Field | Type | Range | Description | Process | 9r x 5c | Pos:489
+T14 | Section: 4.10.2 Fertilizer Expert System Data Schema | Header: Field | Type | Field | Type | Field | Description | 5r x 6c | Pos:492
+T15 | Section: 4.10.3 Data Element Dictionary | Header: # | Field Name | Type & Size | Description | File / Module | Agent Process | 16r x 6c | Pos:494
+T16 | Section: 5.1 Technology Stack Deep-Dive | Header: Layer | Technology | Justification | 13r x 3c | Pos:501
+T17 | Section: 5.4 Flask Application Structure | Header: Module / File | Purpose | 11r x 2c | Pos:583
+T18 | Section: 6.1.1 Benchmarking Results | Header: Classifier | Accuracy | Precision (macro) | Recall (macro) | F1 (macro) | 6r x 5c | Pos:768
+T19 | Section: 6.1.2 Classification Report (Selected Classes) | Header: Crop Class | Precision | Recall | F1-Score | Support | 9r x 5c | Pos:772
+T20 | Section: 6.2.1 Training Metrics | Header: Epoch | Train Loss | Val Loss | Train Acc. | Val Acc. | 6r x 5c | Pos:775
+T21 | Section: 6.2.2 Disease-Class Performance (Selected Classes) | Header: Disease Class | Precision | Recall | F1 | Support | 9r x 5c | Pos:778
+T22 | Section: 6.3 Hydration Agent ΓÇö Random Forest Performance | Header: Metric | Train | 5-fold CV | Test | Std Dev | 5r x 5c | Pos:783
+T23 | Section: 6.4 Precision Yield Agent ΓÇö RF Regressor Performance | Header: Metric | Train | Test | Benchmark | ╬ö vs. Benchmark | 4r x 5c | Pos:787
+T24 | Section: 6.5 Sustain Master ΓÇö XGBoost Performance | Header: Metric | Train | Test | Benchmark | ╬ö vs. Benchmark | 4r x 5c | Pos:796
+T25 | Section: 6.6 RAG Chatbot Evaluation ΓÇö Sample Q&A Pairs | Header: Question | RAG Chatbot Response (Excerpte | Verdict | 6r x 3c | Pos:800
+T26 | Section: 6.7 Performance Benchmarking ΓÇö Agent Response Times | Header: Agent | Min (ms) | Median (ms) | P95 (ms) | NFR Target | 11r x 5c | Pos:804
+T27 | Section: 6.8 Cross-Model Comparative Analysis | Header: Agent | Model | Task | Primary Metric | Score | 7r x 5c | Pos:811
+T28 | Section: 7.2.1 Crop Agent Unit Tests | Header: TC# | Input | Expected | Actual | Result | 7r x 5c | Pos:859
+T29 | Section: 7.2.2 Pathologist Agent Unit Tests | Header: TC# | Input Image | Expected Class | Actual Class | Result | 7r x 5c | Pos:863
+T30 | Section: 7.2.3 Fertilizer Agent Unit Tests | Header: TC# | Input (NPK + Crop + Soil) | Expected Fertilizer | Actual | Result | 5r x 5c | Pos:866
+T31 | Section: 7.2.4 Hydration, Yield, and Sustain Master Tests | Header: TC# | Input | Expected | Actual | Result | 5r x 5c | Pos:874
+T32 | Section: 7.5 Memory Consumption Analysis ΓÇö Lazy Loading Benefit | Header: Scenario | RAM Usage (MB) | Model Load Time (s) | Notes | 7r x 4c | Pos:888
+T33 | Section: 8.1.1 Resource Requirements | Header: Resource | Specification | 6r x 2c | Pos:909
+T34 | Section: B.1 Sample Crop Recommendation Outputs | Header: # | N | P | K | Temp | Hum% | pH | Rain | Predicted Crop (Confidence) | 5r x 9c | Pos:1008
+T35 | Section: B.2 Sample Disease Detection Outputs | Header: # | Input (Leaf Description) | Predicted Disease | Treatment Recommendation | 6r x 4c | Pos:1010
+T36 | Section: APPENDIX-C | Header: # | Crop | Condition | Class Label | Causal Organism / Notes | 39r x 5c | Pos:1019
+T37 | Section: APPENDIX-C | Header: Req. ID | Requirement Description | Implementing Component | Test Case(s) | Stat | 15r x 5c | Pos:1024
+T38 | Section: APPENDIX-F | Header: Term | Definition | 34r x 2c | Pos:1188
+T39 | Section: APPENDIX-G | Header: Crop | Soil Type | N Status | P Status | K Status | Fertilizer | Dosage | Applic | 11r x 8c | Pos:1195
+
+=== IMAGES/FIGURES FOUND (IN ORDER) ===
+IMG01 | Section: FRONT MATTER | Pos:12
+IMG02 | Section: 4.2.3 Tier 3 ΓÇö Data and Intelligence Layer | Pos:331
+IMG03 | Section: 4.3.4 Phase 4: Reflect | Pos:347
+IMG04 | Section: 4.4.1  DFD Level 0 ΓÇö Context Diagram | Pos:355
+IMG05 | Section: 4.4.2 DFD Level 1 ΓÇö Functional Decomposition | Pos:382
+IMG06 | Section: 4.5 Sequence Diagram: Full Advisory Request Flow | Pos:422
+IMG07 | Section: 4.6 State Diagram: Orchestrator Lifecycle | Pos:433
+IMG08 | Section: 4.7.2 Relationship Definitions | Pos:448
+IMG09 | Section: 4.8.2 Use Case Descriptions | Pos:458
+IMG10 | Section: 4.9.1 Core Class Structure | Pos:486
+IMG11 | Section: UI Segments5.6.1 Master Dashboard & Navigation | Pos:696
+IMG12 | Section: UI Segments5.6.1 Master Dashboard & Navigation | Pos:697
+IMG13 | Section: UI Segments5.6.1 Master Dashboard & Navigation | Pos:697
+IMG14 | Section: UI Segments5.6.1 Master Dashboard & Navigation | Pos:698
+IMG15 | Section: UI Segments5.6.1 Master Dashboard & Navigation | Pos:698
+IMG16 | Section: UI Segments5.6.1 Master Dashboard & Navigation | Pos:698
+IMG17 | Section: UI Segments5.6.1 Master Dashboard & Navigation | Pos:699
+IMG18 | Section: UI Segments5.6.1 Master Dashboard & Navigation | Pos:701
+IMG19 | Section: UI Segments5.6.1 Master Dashboard & Navigation | Pos:702
+IMG20 | Section: -Crop Advisor | Pos:706
+IMG21 | Section: -Fertilizer Advisor | Pos:707
+IMG22 | Section: -Pathologist | Pos:708
+IMG23 | Section: -Yield Forecast | Pos:709
+IMG24 | Section: -Sustain Master | Pos:710
+IMG25 | Section: -Smart Irrigation | Pos:711
+IMG26 | Section: 5.6.3 Intelligent chatbot & RAG HUD | Pos:714
+IMG27 | Section: 5.6.3 Intelligent chatbot & RAG HUD | Pos:717
+IMG28 | Section: 5.6.3 Intelligent chatbot & RAG HUD | Pos:717
+IMG29 | Section: 5.6.4 Advanced Data HUDs (Market & Trends) | Pos:752
+IMG30 | Section: -Market trends | Pos:754
+IMG31 | Section: Farming Teach new | Pos:756
+IMG32 | Section: -Farmer Dashboard | Pos:758
+IMG33 | Section: -Farmer stories | Pos:760
+IMG34 | Section: -Processing | Pos:762
+IMG35 | Section: 6.1.1 Benchmarking Results | Pos:770
+IMG36 | Section: 6.8 Cross-Model Comparative Analysis | Pos:822
+IMG37 | Section: 6.8 Cross-Model Comparative Analysis | Pos:824
+IMG38 | Section: 6.8 Cross-Model Comparative Analysis | Pos:826
+IMG39 | Section: 6.8 Cross-Model Comparative Analysis | Pos:832
+IMG40 | Section: 6.8 Cross-Model Comparative Analysis | Pos:835
+IMG41 | Section: 6.8 Cross-Model Comparative Analysis | Pos:838
+IMG42 | Section: 6.8 Cross-Model Comparative Analysis | Pos:839
+IMG43 | Section: 6.8 Cross-Model Comparative Analysis | Pos:840
+IMG44 | Section: 6.8 Cross-Model Comparative Analysis | Pos:847
+IMG45 | Section: 6.8 Cross-Model Comparative Analysis | Pos:848
+
+TOTAL: 39 tables, 45 images
+Total body elements: 1199

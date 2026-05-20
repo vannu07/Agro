@@ -1,0 +1,29 @@
+KRISHI MITR: SYSTEM INTEGRATION AND API SPECIFICATIONS
+========================================================
+
+The integration of ML tabular classification, CNN visual processing, and LLM text generation is orchestrated through a modern Flask web service and REST API gateway.
+
+1. SYSTEM REQUIREMENTS SPECIFICATION (SRS)
+------------------------------------------
+- Operating System: Windows 10/11 or Linux VPS.
+- Processor: Intel Core i5/i7 (10th Gen or higher) or AMD Ryzen 5/7.
+- Memory: Minimum 8 GB RAM (Lazy model registry ensures the application runs smoothly without system hangs).
+- Graphics Card: Dedicated NVIDIA GPU with 4 GB VRAM (GTX 1650 Ti or higher) is highly recommended to accelerate local Ollama inference.
+- Software Dependencies: Python 3.10+, Flask 3.x, LangChain, PyTorch, Scikit-Learn.
+
+2. CORE PLATFORM REST API GATEWAY
+---------------------------------
+- Route `/chatbot` (GET): Renders the main floating Glassmorphic dashboard widget and fetches initial health status metrics.
+- Route `/api/chatbot/status` (GET): Queries whether local Ollama is responding on port `11434` and fetches the active document count.
+- Route `/api/chatbot/stream` (POST):
+  * Request Body: `{"query": "User question here", "history": [{"human": "...", "ai": "..."}]}`
+  * Response: A server-sent event (SSE) stream (`text/event-stream`) returning word-by-word token chunks.
+- Route `/api/chatbot/feedback` (POST):
+  * Request Body: `{"emoji": "😊", "comment": "Excellent advice!"}`
+  * Response: `{"status": "success"}` (Appends entry to `chatbot_feedback.log` for quality analysis).
+
+3. FRONTEND CONTROLLER INTEGRATION
+----------------------------------
+The frontend user interface in `chatbot.html` uses JavaScript's browser-native `Fetch API` + `ReadableStream` reader to digest raw token packets. This bypasses HTTP response blocking, delivering an immediate, high-fidelity typing effect to the farmer's screen.
+
+Modular APIs ensure loose coupling and flawless cross-platform performance.

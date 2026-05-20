@@ -9,7 +9,7 @@ try:
     from chatbot_logic import stream_chat_response
     print("--- Testing Gemini Chatbot Streaming ---")
     
-    query = "What is Farm-IQ and how does it help with irrigation?"
+    query = "What is Krishi Mitr and how does it help with irrigation?"
     history = []
     
     response_started = False

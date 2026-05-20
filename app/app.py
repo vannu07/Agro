@@ -2,8 +2,14 @@
 print("DEBUG: app.py is starting...")
 
 import sys
+import os
+import re
+import shutil
+import socket
+import subprocess
+import time
 try:
-    import openai
+    import openai  # pyright: ignore[reportMissingImports]
     if not hasattr(openai, 'DefaultHttpxClient'):
         class MockClient: pass
         openai.DefaultHttpxClient = MockClient
@@ -12,8 +18,6 @@ except ImportError:
     pass
 
 from flask import Flask, render_template, request, redirect, jsonify, session, url_for
-import os
-import re
 from markupsafe import Markup
 import numpy as np
 import pandas as pd
@@ -35,9 +39,80 @@ from email.utils import parsedate_to_datetime
 from utils.yield_logic import get_yield_prediction, get_unique_values, get_yield_trends
 from utils.sustainability import get_rotation_advisor, get_crop_list, get_nutrient_spider_data
 from utils.irrigation import get_irrigation_advice, get_harvest_timing, get_hydration_telemetry
+from typing import cast
 
 # Load .env values even when running with `python app/app.py`.
 load_dotenv()
+
+
+OLLAMA_HOST = "http://localhost:11434"
+OLLAMA_PORT = 11434
+_OLLAMA_PROCESS = None
+
+
+def _is_ollama_port_open() -> bool:
+    try:
+        with socket.create_connection(("localhost", OLLAMA_PORT), timeout=1):
+            return True
+    except Exception:
+        return False
+
+
+def _find_ollama_executable() -> str | None:
+    candidate = shutil.which("ollama")
+    if candidate:
+        return candidate
+
+    for path in (
+        os.getenv("OLLAMA_EXE_PATH"),
+        r"C:\Users\Lenovo\AppData\Local\Programs\Ollama\ollama.exe",
+        r"C:\Program Files\Ollama\ollama.exe",
+        r"C:\Program Files (x86)\Ollama\ollama.exe",
+    ):
+        if path and os.path.exists(path):
+            return path
+
+    return None
+
+
+def ensure_ollama_running(timeout_seconds: int = 20) -> bool:
+    """Start the local Ollama service if it is not already running."""
+    global _OLLAMA_PROCESS
+
+    if _is_ollama_port_open():
+        return True
+
+    ollama_executable = _find_ollama_executable()
+    if not ollama_executable:
+        print("[Startup] Ollama CLI not found. Install Ollama or set OLLAMA_EXE_PATH.")
+        return False
+
+    try:
+        popen_kwargs = {
+            "stdout": subprocess.DEVNULL,
+            "stderr": subprocess.DEVNULL,
+            "cwd": os.getcwd(),
+        }
+        if os.name == "nt":
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            popen_kwargs["startupinfo"] = startupinfo
+            popen_kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP | subprocess.DETACHED_PROCESS
+
+        _OLLAMA_PROCESS = subprocess.Popen([ollama_executable, "serve"], **popen_kwargs)
+    except Exception as exc:
+        print(f"[Startup] Failed to launch Ollama: {exc}")
+        return False
+
+    deadline = time.monotonic() + timeout_seconds
+    while time.monotonic() < deadline:
+        if _is_ollama_port_open():
+            print("[Startup] Ollama is ready on localhost:11434")
+            return True
+        time.sleep(0.5)
+
+    print("[Startup] Ollama did not become ready in time. The app will continue anyway.")
+    return False
 
 # ==============================================================================================
 from utils.db import get_db, mongo
@@ -102,6 +177,12 @@ def load_crop_model():
     return registry.get_crop_model()
 
 
+def _require_float(value: Any, label: str) -> float:
+    if value is None or value == "":
+        raise ValueError(f"Missing value for {label}")
+    return float(value)
+
+
 # =========================================================================================
 
 # Custom functions for calculations
@@ -111,35 +192,7 @@ def load_crop_model():
 import requests
 import config
 
-def weather_fetch(city_name):
-    """
-    Fetch temperature and humidity using WeatherAPI with fallback logic.
-    """
-    if not city_name or city_name.lower() == "unknown":
-        return 25.0, 75.0, True # Default values, is_fallback=True
-
-    base_url = "http://api.weatherapi.com/v1/current.json"
-    params = {
-        "key": config.weather_api_key,
-        "q": city_name
-    }
-
-    try:
-        response = requests.get(base_url, params=params, timeout=5)
-        data = response.json()
-        if "error" in data:
-            print(f"[Weather API Error for {city_name}]:", data["error"]["message"])
-            return 25.0, 75.0, True
-        
-        temperature = data["current"]["temp_c"]
-        humidity = data["current"]["humidity"]
-        return temperature, humidity, False
-    except Exception as e:
-        print(f"[Weather API Exception]: {e}")
-        return 25.0, 75.0, True
-
-
-
+from utils.weather import weather_fetch
 
 def predict_image(img, model=None):
     """
@@ -149,20 +202,23 @@ def predict_image(img, model=None):
     """
     if model is None:
         model = load_disease_model()
+    if model is None:
+        raise RuntimeError("Disease model is not available")
     
     transform = transforms.Compose([
         transforms.Resize(256),
         transforms.ToTensor(),
     ])
-    image = Image.open(io.BytesIO(img))
-    img_t = transform(image)
+    image = Image.open(io.BytesIO(img)).convert("RGB")
+    img_t = cast(torch.Tensor, transform(image))
     img_u = torch.unsqueeze(img_t, 0)
 
     # Get predictions from model
     yb = model(img_u)
     # Pick index with highest probability
     _, preds = torch.max(yb, dim=1)
-    prediction = disease_classes[preds[0].item()]
+    prediction_index = int(preds[0].item())
+    prediction = disease_classes[prediction_index]
     # Retrieve the class label
     return prediction
 
@@ -222,7 +278,15 @@ def run_crop_agent(payload: Dict[str, Any]) -> Dict[str, Any]:
         result["message"] = "Missing parameters: " + ", ".join(missing)
         return result
 
-    data = np.array([[float(n), float(phos), float(pot), float(temp), float(hum), float(ph), float(rain)]])
+    n_value = _require_float(n, "N")
+    phos_value = _require_float(phos, "P")
+    pot_value = _require_float(pot, "K")
+    ph_value = _require_float(ph, "ph")
+    rain_value = _require_float(rain, "rainfall")
+    temp_value = _require_float(temp, "temperature")
+    hum_value = _require_float(hum, "humidity")
+
+    data = np.array([[n_value, phos_value, pot_value, temp_value, hum_value, ph_value, rain_value]])
     model = load_crop_model()
     prediction = model.predict(data)[0]
     result["status"] = "ok"
@@ -401,16 +465,17 @@ def _normalize_market_trends_df(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def _fetch_market_trends_from_api() -> pd.DataFrame:
-    """Fetch market trends from data.gov.in API using env-driven config."""
+    """Fetch market trends from data.gov.in API with optimized performance."""
     resource_id = os.getenv("MARKET_API_RESOURCE_ID", "").strip()
     api_key = os.getenv("MARKET_API_KEY", "").strip()
     if not resource_id or not api_key:
         return pd.DataFrame()
 
     base_url = f"https://api.data.gov.in/resource/{resource_id}"
-    limit = int(os.getenv("MARKET_API_LIMIT", "1000"))
-    max_pages = int(os.getenv("MARKET_API_MAX_PAGES", "50"))
-    timeout_sec = int(os.getenv("MARKET_API_TIMEOUT", "20"))
+    limit = int(os.getenv("MARKET_API_LIMIT", "500"))
+    # REDUCED max_pages from 50 to 3 for instant response
+    max_pages = 2 
+    timeout_sec = 5 
     all_records = []
 
     for page in range(max_pages):
@@ -722,7 +787,15 @@ def _format_news_date(pub_date):
         return value[:25]
 
 
+_news_cache = {"data": None, "time": 0}
+
 def _fetch_live_agri_news(limit=7):
+    # SIMPLE CACHE: 15 minutes
+    import time
+    global _news_cache
+    if _news_cache["data"] and (time.time() - _news_cache["time"] < 900):
+        return _news_cache["data"]
+
     image_cycle = ["future_tech.png", "hero_farm.png", "crop.png"]
     benefit_by_category = {
         "Technology": "Adopt practical tech ideas to reduce input cost and increase farm efficiency.",
@@ -775,8 +848,10 @@ def _fetch_live_agri_news(limit=7):
             )
 
             if len(items) >= limit:
+                _news_cache = {"data": items, "time": time.time()}
                 return items
 
+    _news_cache = {"data": items, "time": time.time()}
     return items
 
 
@@ -916,7 +991,7 @@ def market_trends():
         # Normalize casing + repeated internal spaces so CSV text quirks do not break filters.
         return ' '.join(str(value).strip().lower().split())
     
-    df = get_market_trends_data()
+    df = cast(pd.DataFrame, get_market_trends_data())
     
     # Extract unique values for dropdowns (display cleaned values)
     all_states = []
@@ -959,7 +1034,7 @@ def market_trends():
         q66 = float(modal_values.quantile(0.66)) if not modal_values.empty else 0.0
 
         # Get top 21 matches for a nice grid
-        display_df = filtered_df.sort_values('arrival_dt', ascending=False, na_position='last').head(21)
+        display_df = cast(pd.DataFrame, filtered_df).sort_values(by='arrival_dt', ascending=False, na_position='last').head(21)
         for _, row in display_df.iterrows():
             min_price = float(row.get('min_price', 0) or 0)
             max_price = float(row.get('max_price', 0) or 0)
@@ -969,7 +1044,7 @@ def market_trends():
                 (filtered_df['commodity_key'] == row.get('commodity_key', '')) &
                 (filtered_df['state_key'] == row.get('state_key', ''))
             )
-            history_df = filtered_df.loc[history_mask, ['arrival_dt', 'modal_num']].dropna().sort_values('arrival_dt')
+            history_df = filtered_df.loc[history_mask, ['arrival_dt', 'modal_num']].dropna().sort_values(by='arrival_dt')
 
             pct_change = 0.0
             if len(history_df) >= 2:
@@ -1346,7 +1421,7 @@ def dashboard():
     recent_activities = []
     if db is not None:
         try:
-            logs = db.activity_logs.find().sort("timestamp", -1).limit(5)
+            logs = list(db.activity_logs.find().sort("timestamp", -1).limit(5))
             for log in logs:
                 recent_activities.append({
                     "type": log["activity_type"].replace("_", " ").title(),
@@ -1365,11 +1440,15 @@ def dashboard():
                            market_data=_build_dynamic_dashboard_market_data())
 
 
-from google import genai
+try:
+    from google import genai
+except Exception:
+    # Assistant endpoint can still run in fallback mode if SDK import is blocked.
+    genai = None
 
 # Configure AI Engine
 api_key = os.getenv("GEMINI_API_KEY")
-if api_key:
+if api_key and genai is not None:
     client = genai.Client(api_key=api_key)
 else:
     client = None
@@ -1380,10 +1459,10 @@ def api_assistant():
     user_message = str(data.get("message", "")).strip()
     
     if not user_message:
-        return jsonify({"reply": "I'm listening! How can I help with your farming today?"})
+        return jsonify({"reply": "Haan bhai, bol! Kheti mein kya help chahiye? 🌾"})
 
     if not client:
-        return jsonify({"reply": "AI Engine API key missing. Please configure your environment."})
+        return jsonify({"reply": "Arre dost, AI Engine ki API key missing hai. Environment configure karo pehle."})
 
     try:
         # Generate response using new SDK
@@ -1391,7 +1470,7 @@ def api_assistant():
             model="gemini-2.0-flash",
             contents=user_message,
             config={
-                "system_instruction": "You are 'FarmAI Assistant', an expert agricultural AI. Help Indian farmers with crop advice, soil health, weather impacts, and pest control. Keep responses concise, professional, and encouraging. Use simple English or Hinglish if appropriate. Always prioritize sustainable and safe farming practices."
+                "system_instruction": "You are 'Krishi Mitr' — the farmer's best friend. You ONLY answer questions about agriculture, farming, crops, soil, irrigation, diseases, fertilizers, livestock, weather-for-farming, and government farming schemes. If anyone asks about ANY non-agriculture topic (coding, math, politics, history, celebrities, general knowledge, etc.) you MUST politely refuse in Hinglish: 'Arre bhai, main toh sirf kheti-baadi ka expert hoon! Ye topic meri samajh se bahar hai.' Talk warmly like a farmer elder — use Hinglish naturally, be encouraging, use 'bhai'/'dost'. Keep answers practical and actionable. Do NOT use markdown formatting. Use plain text only."
             }
         )
         reply = response.text.strip()
@@ -1407,7 +1486,7 @@ def api_assistant():
         return jsonify({"reply": reply})
     except Exception as e:
         print(f"AI Engine Error: {e}")
-        return jsonify({"reply": "I'm having a bit of trouble connecting to my brain right now. Please try again in a moment!"})
+        return jsonify({"reply": "Arre dost, connection mein thodi gadbad ho gayi! Ek minute mein phir try karo. 🌾"})
 
 
 # ===============================================================================================
@@ -1466,7 +1545,8 @@ def yield_prediction_result():
                                     title=title, 
                                     trends=trends)
         return render_template('try_again.html', title=title, error="Insufficient data for yield prediction. The agent was unable to formulate a reliable estimate.")
-        return render_template('try_again.html', title=title, error="Insufficient data for yield prediction in this region/crop combination.")
+
+    return render_template('try_again.html', title=title, error="Invalid request method for yield prediction.")
 
 
 @app.route('/sustainability-predict', methods=['POST'])
@@ -1475,6 +1555,7 @@ def sustainability_result():
     title = 'Krishi Mitr - Sustainability Advisor'
     if request.method == 'POST':
         crop = request.form.get('crop')
+        advice = "Maintain soil health with balanced crop rotation and organic matter."
         try:
             n = int(request.form.get('n', 0))
             p = int(request.form.get('p', 0))
@@ -1525,6 +1606,8 @@ def sustainability_result():
             return render_template('sustainability-result.html', advice=legacy_advice, orchestration=res, crop=crop, title=title, spider_data=spider_data)
         return render_template('try_again.html', title=title, error="Sustainability Agent was unable to formulate a strategy for this soil profile.")
 
+    return render_template('try_again.html', title=title, error="Invalid request method for sustainability advice.")
+
 
 @app.route('/irrigation-predict', methods=['POST'])
 @requires_auth
@@ -1532,11 +1615,14 @@ def irrigation_result():
     title = 'Krishi Mitr - Smart Irrigation'
     if request.method == 'POST':
         crop = request.form.get('crop')
-        city = request.form.get('city', "").strip()
+        city_value = request.form.get('city')
+        city = city_value.strip() if isinstance(city_value, str) else ""
         sowing_date = request.form.get('sowing_date')
         soil_type = request.form.get('soil_type')
         growth_stage = request.form.get('growth_stage')
         moi = float(request.form.get('moi', 25.0))
+        area = float(request.form.get('area', 1.0))
+        agent_result: Dict[str, Any] = {}
         
         weather_data = weather_fetch(city)
         if weather_data:
@@ -1546,6 +1632,7 @@ def irrigation_result():
             payload = {
                 "crop": crop, "city": city, "sowing_date": sowing_date,
                 "soil_type": soil_type, "growth_stage": growth_stage, "moi": moi,
+                "area": area,
                 "temperature": temperature, "humidity": humidity
             }
             
@@ -1554,9 +1641,34 @@ def irrigation_result():
             if res.get("status") == "ok":
                 # Legacy compatibility for templates
                 try:
-                    refl = res["result"]["agentic_loop"]["reflection"]
-                    prediction = res["result"]["agentic_loop"]["prediction"]
-                    status_str = res["result"].get("status", "MODERATE IRRIGATION RECOMMENDED")
+                    agent_result = res["result"]
+                    refl = agent_result["agentic_loop"]["reflection"]
+                    prediction = agent_result["agentic_loop"]["prediction"]
+                    status_str = agent_result.get("status", "MODERATE IRRIGATION RECOMMENDED")
+                    water_depth_mm = float(agent_result.get("water_depth_mm", 0.0) or 0.0)
+                    water_total_liters = float(agent_result.get("water_required_liters", 0.0) or 0.0)
+                    field_area_hectares = float(agent_result.get("field_area_hectares", area) or area)
+
+                    # Fallback: parse the displayed top_result if structured fields are missing.
+                    top_result_text = str(
+                        agent_result.get("top_result")
+                        or prediction.get("top_result")
+                        or agent_result.get("summary", {}).get("top_result", "")
+                        or ""
+                    )
+                    parsed_total = None
+                    match = re.search(r"([\d,]+(?:\.\d+)?)", top_result_text)
+                    if match:
+                        try:
+                            parsed_total = float(match.group(1).replace(",", ""))
+                        except Exception:
+                            parsed_total = None
+
+                    if water_total_liters <= 0 and parsed_total is not None:
+                        water_total_liters = parsed_total
+
+                    if water_depth_mm <= 0 and water_total_liters > 0 and field_area_hectares > 0:
+                        water_depth_mm = round(water_total_liters / (field_area_hectares * 10000.0), 2)
                     
                     if "NO IRRIGATION" in status_str:
                         color = "success"
@@ -1573,17 +1685,25 @@ def irrigation_result():
                         "weather": {"temp": temperature, "humidity": humidity},
                         "soil": soil_type,
                         "moi": moi,
+                        "area": area,
                         "color": color,
-                        "water_need": prediction.get("top_result", "0 Liters/Day"),
+                        "water_need": (
+                            f"{water_depth_mm:.2f} mm/day "
+                            f"(~{water_total_liters:,.0f} L total for {field_area_hectares:.2f} ha)"
+                        ),
+                        "water_depth_mm": water_depth_mm,
+                        "water_total_liters": water_total_liters,
+                        "field_area_hectares": field_area_hectares,
                         "status": status_text,
                         "message": refl.get("explanation", ""),
                         "simple_title": "Easy Water Guide",
                         "simple_summary": (
-                            f"Water {crop} with about {prediction.get('top_result', '0 Liters/Day')} today. "
+                            f"Water {crop} with about {water_depth_mm:.2f} mm/day "
+                            f"(~{water_total_liters:,.0f} L total for {field_area_hectares:.2f} ha) today. "
                             f"Best time: {prediction.get('best_irrigation_time', 'Early morning')}."
                         ),
                         "simple_action": (
-                            "If the field is dry and hot, water now. If the soil feels moist, wait and check again later."
+                            "If the field is dry and hot, irrigate now. If the soil feels moist, wait and check again later."
                         )
                     }
                 except (KeyError, TypeError) as e:
@@ -1592,8 +1712,11 @@ def irrigation_result():
                         "weather": {"temp": temperature, "humidity": humidity},
                         "soil": soil_type,
                         "moi": moi,
+                        "area": area,
                         "color": "info",
                         "water_need": "Moderate",
+                        "water_depth_mm": 0.0,
+                        "water_total_liters": 0.0,
                         "status": "Stable",
                         "message": "Proceed with standard cycle. AI engine encountered temporary issue.",
                         "simple_title": "Easy Water Guide",
@@ -1610,12 +1733,18 @@ def irrigation_result():
                     result=irr_legacy,
                     metadata={}
                 )
-                base_need_numeric = res.get("result", {}).get("water_required_liters", 10.0)
-                hydration_data = get_hydration_telemetry(crop, base_need_numeric)
+                base_need_mm = agent_result.get("water_depth_mm")
+                if base_need_mm is None:
+                    area_for_calc = float(payload.get("area", 1.0) or 1.0)
+                    liters_total = agent_result.get("water_required_liters", 0.0)
+                    base_need_mm = (float(liters_total) / (area_for_calc * 10000.0)) if area_for_calc > 0 else 0.0
+                hydration_data = get_hydration_telemetry(crop, base_need_mm)
                 
                 return render_template('irrigation-result.html', irr=irr_legacy, orchestration=res, harvest=harvest, city=city, title=title, hydration_data=hydration_data)
             return render_template('try_again.html', title=title, error="Irrigation Agent telemetry timeout. Please verify sensor connectivity.")
         return render_template('try_again.html', title=title, error="Weather telemetry for this city is temporarily unavailable. Irrigation schedule cannot be safely generated.")
+
+    return render_template('try_again.html', title=title, error="Invalid request method for irrigation advice.")
 
 from flask_cors import CORS
 CORS(app) # Enable CORS for all routes
@@ -1670,7 +1799,7 @@ from chatbot_logic import stream_chat_response, get_chatbot_status
 
 @app.route('/chatbot', methods=['GET'])
 def chatbot_page():
-    return render_template('chatbot.html', chatbot_status=get_chatbot_status())
+    return render_template('chatbot.html', chatbot_status=get_chatbot_status(), hide_chat=True)
 
 
 @app.route('/api/chatbot/status', methods=['GET'])
@@ -1707,4 +1836,5 @@ def chatbot_feedback():
 
 if __name__ == '__main__':
     # Disable reloader by default to prevent slow startup/memory issues on Windows
+    ensure_ollama_running()
     app.run(debug=True, use_reloader=False)

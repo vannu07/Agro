@@ -2,7 +2,12 @@ import os
 import json
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional
-from google import genai
+
+try:
+    from google import genai
+except Exception:
+    # Keep agents usable when enterprise policy blocks native deps of google-genai.
+    genai = None
 
 class AgentMemory:
     """
@@ -41,7 +46,7 @@ class BaseAgent(ABC):
         
         # Configure Advanced AI
         api_key = os.getenv("GEMINI_API_KEY")
-        if api_key:
+        if api_key and genai is not None:
             self.gemini = genai.Client(api_key=api_key)
         else:
             self.gemini = None

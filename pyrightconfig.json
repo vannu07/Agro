@@ -1,0 +1,8 @@
+{
+  "extraPaths": [
+    "./app",
+    "."
+  ],
+  "reportMissingModuleSource": false,
+  "reportMissingImports": "warning"
+}

@@ -1,0 +1,31 @@
+KRISHI MITR: FARMING ULTIMATE ENCYCLOPEDIA AND SAFETY GUARDRAILS
+==================================================================
+
+To ensure high-fidelity support, this document compiles standard farmer queries, Hindi/Hinglish translations, and agricultural domain safety boundaries.
+
+1. THE KRISHI MITR DICTIONARY (HINGLISH/HINDI TO ENGLISH)
+---------------------------------------------------------
+- Mitti (soil) / Mitti ki Sehat (soil health)
+- Khad (fertilizer) / Gobar Khad (cow manure)
+- Beej (seed) / Fasal (crop)
+- Paani (water) / Sinchai (irrigation)
+- Keet (insect/pest) / Keetnashak (pesticide/remedy)
+- Rog (disease) / Pattiyan (leaves)
+- Mandi (crop market) / Bhav (current price)
+
+2. CORE FAQS AND AGRI-GUIDELINES
+--------------------------------
+- Question: "Mitti ka pH kaise theek karein?"
+  * Answer: If soil is too acidic (pH < 5.5), apply lime (Chuna) or agricultural limestone. If soil is too alkaline (pH > 7.5), apply gypsum (Gypsum/Calcium Sulfate) or organic compost to lower the pH naturally.
+- Question: "Organic farming kaise start karein?"
+  * Answer: Stop chemical pesticides. Begin vermicomposting, plant cover-crops (Dhaincha), and spray Neem oil (NSKE) regularly to repel insects. Crop rotation is mandatory.
+- Question: "Tomato leaves par black spots hain, kya karein?"
+  * Answer: This is Early Blight. Immediately prune lower infected leaves to prevent ground splash. Spray copper oxychloride fungicide or Neem extract. Keep crop spacing wide to allow air circulation.
+
+3. SAFETY GUARDRAILS AND NON-AGRICULTURAL RESTRICTIONS
+-------------------------------------------------------
+- STRICT DOMAIN BOUNDARY: Krishi Mitr is strictly programmed to operate as an agricultural assistant.
+  * If a user asks about coding, mathematics, sports, general history, or requests generic recipes, the chatbot MUST politely decline the request in a warm Hinglish farmer persona.
+  * Rejection Response Protocol: "Arre dost, main ek kisan ka saathi hoon. Main sirf kheti-baari, mitti, fasal, aur mausam ke baare mein baatein kar sakta hoon. Apne khet ya fasal se juda koi sawal puchiye, main turant madad karunga! 🌾"
+
+Domain constraints safeguard farmers from dangerous advice and maintain system focus.

@@ -1,0 +1,25 @@
+KRISHI MITR: SUSTAINABLE FARMING AND SOIL RESTORATION GUIDE
+============================================================
+
+Monoculture (planting the same crop repeatedly) exhausts soil nutrients, increases pest resistance, and degrades soil microbes. Sustainable farming utilizes natural ecosystems to increase long-term soil health and productivity.
+
+1. THE CROP ROTATION MATRIX
+---------------------------
+- Never plant the same crop type back-to-back.
+- Implement the "Legume Intermediary" rule: Rotate nutrient-exhaustive crops (like Wheat, Rice, or Maize) with nitrogen-fixing legume crops (such as Chickpeas, Lentils, or Mung Bean).
+  * Legumes form symbiotic relationships with Rhizobium bacteria, converting atmospheric nitrogen into plant-accessible nitrates, naturally replenishing soil fertility.
+- Multi-Cropping: Grow multiple crops together (e.g., planting Mustard alongside Wheat, or Marigold around Tomato plants to act as a natural pest trap).
+
+2. ORGANIC SOIL ENHANCEMENTS
+----------------------------
+- Vermicomposting: Converts organic waste into nutrient-rich humus using earthworms (Eisenia fetida). Vermicompost contains high levels of humic acids, boosting water retention and soil aeration.
+- Farmyard Manure (FYM): Decomposed mix of cattle dung and urine. Increases organic carbon content, vital for beneficial soil bacteria.
+- Green Manuring: Planting fast-growing cover crops (like Dhaincha or Sunn hemp) and plowing them directly back into the soil while still green to enrich organic carbon.
+
+3. INTEGRATED PEST MANAGEMENT (IPM)
+------------------------------------
+- Biological Control: Introduce natural predators (like Ladybird Beetles to control aphids, or Trichogramma wasps to control stem borers).
+- Cultural Control: Deep summer plowing to expose pest larvae and pathogen spores to direct sunlight.
+- Botanical Sprays: Use fermented Neem kernel extract (NSKE) or garlic-chili sprays as a natural repellent before resorting to chemical controls.
+
+Organic restoration reduces chemical input costs, improving farm sustainability.

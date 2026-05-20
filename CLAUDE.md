@@ -1,4 +1,4 @@
-# Farm-IQ Project Context
+# Krishi Mitr Project Context
 
 ## Integrated Build Stack (2026 Edition)
 - **IDE**: Google Antigravity

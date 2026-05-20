@@ -1,0 +1,28 @@
+KRISHI MITR: DISSERTATION SYNOPSIS AND EXECUTIVE ACADEMIC SUMMARY
+==================================================================
+
+Developed by Varnit Kumar (MCA Session 2024-2026) under Banarsidas Chandiwala Institute of Information Technology, the "Krishi Mitr" dissertation demonstrates the application of Agentic AI loops and local Retrieval-Augmented Generation (RAG) to solve precision agriculture challenges.
+
+1. CORE SYSTEM OBJECTIVES
+-------------------------
+- Objective 1 (Precision Recommendation): Develop a high-accuracy Crop Recommendation agent that removes NPK selection uncertainty.
+- Objective 2 (Leaf Pathology): Construct a deep-learning ResNet9 leaf pathologist to diagnose foliage pathogens instantly.
+- Objective 3 (Local Knowledge Retrieval): Build a localized RAG conversational chatbot to deliver authenticated agricultural advice without cloud key dependencies.
+- Objective 4 (Logistical Awareness): Implement a Market Hub agent integrating live Mandi prices to maximize farmer profitability.
+
+2. METHODOLOGY: THE SDLC PROTOTYPE APPROACH
+-------------------------------------------
+The development followed a prototype lifecycle model to manage AI model iterations based on real-world test sets:
+1. Requirements Analysis: Competitive analysis of standard commercial apps identified a lack of conversational reasoning.
+2. Data Sourcing: Aggregated 3,000+ tabular records for crop metrics and 38,000+ leaf images for disease training.
+3. Modeling Phase: Hyperparameter-tuned Random Forest and CNN networks were trained to establish core logic.
+4. Orchestration: Created Python middleware layers (`app.py`, `chatbot_logic.py`) to connect ML outputs to LLM reasoning chains.
+5. Testing: Subjected models to rigorous validation against historical soil samples and live edge queries.
+
+3. STRATEGIC OUTCOMES AND SOCIAL IMPACT
+----------------------------------------
+- Cost-Reduction: Precision fertilizer balances prevent toxic, costly over-fertilization, saving up to 25% on input chemical overheads.
+- Yield Maximization: Early plant pathogen identification reduces crop failure risk by 40%.
+- Accessibility: natural language Hinglish support lowers agricultural technology adoption barriers for rural marginal farmers.
+
+Integrating Machine Learning and LLMs bridges the digital divide for sustainable precision farming.

@@ -1,0 +1,340 @@
+/*
+ * Harvesta Agent Design System — Shared Styles
+ * ==============================================
+ * Used by all 12 agent pages (6 forms + 6 results).
+ * Each page sets its theme via a class on .h-viewport:
+ *   .theme-crop         → lime
+ *   .theme-fertilizer   → orange
+ *   .theme-disease      → red
+ *   .theme-irrigation   → cyan
+ *   .theme-yield        → orange
+ *   .theme-sustainability → green
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ========================
+   Theme Token Definitions
+   ======================== */
+.h-viewport {
+    --h-accent: #E1F12E;
+    --h-accent-rgb: 225, 241, 46;
+    --h-dark: #020617;
+    --h-glass: rgba(15, 23, 42, 0.6);
+    --h-border: rgba(255, 255, 255, 0.1);
+}
+
+.h-viewport.theme-crop {
+    --h-accent: #E1F12E;
+    --h-accent-rgb: 225, 241, 46;
+}
+
+.h-viewport.theme-fertilizer {
+    --h-accent: #FFB555;
+    --h-accent-rgb: 255, 181, 85;
+}
+
+.h-viewport.theme-disease {
+    --h-accent: #ef4444;
+    --h-accent-rgb: 239, 68, 68;
+}
+
+.h-viewport.theme-irrigation {
+    --h-accent: #22d3ee;
+    --h-accent-rgb: 34, 211, 238;
+    --h-glass: rgba(15, 23, 42, 0.92);
+    --h-border: rgba(255, 255, 255, 0.15);
+}
+
+.h-viewport.theme-yield {
+    --h-accent: #FFB555;
+    --h-accent-rgb: 255, 181, 85;
+}
+
+.h-viewport.theme-sustainability {
+    --h-accent: #10b981;
+    --h-accent-rgb: 16, 185, 129;
+    --h-glass: rgba(15, 23, 42, 0.92);
+    --h-border: rgba(255, 255, 255, 0.15);
+}
+
+/* ========================
+   Base Layout
+   ======================== */
+.h-viewport {
+    min-height: 100vh;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    padding: 120px 20px 60px;
+    position: relative;
+    z-index: 1;
+}
+
+.h-viewport::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(2, 6, 23, 0.7), rgba(2, 6, 23, 0.8));
+    filter: blur(6px) brightness(0.6);
+    z-index: -1;
+}
+
+.h-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 30px;
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* ========================
+   Typography
+   ======================== */
+.h-title {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: -3px;
+    line-height: 0.9;
+    margin-bottom: 20px;
+    background: linear-gradient(to bottom, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ========================
+   Glass Card
+   ======================== */
+.h-glass-card {
+    background: var(--h-glass);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid var(--h-border);
+    border-radius: 40px;
+    padding: 40px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.h-glass-card:hover {
+    border-color: rgba(var(--h-accent-rgb), 0.3);
+    transform: translateY(-5px);
+}
+
+/* ========================
+   Badge
+   ======================== */
+.h-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(var(--h-accent-rgb), 0.1);
+    color: var(--h-accent);
+    padding: 8px 16px;
+    border-radius: 99px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(var(--h-accent-rgb), 0.2);
+}
+
+/* ========================
+   Form Elements
+   ======================== */
+.h-label {
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    display: block;
+    color: var(--h-accent);
+}
+
+.h-input, .h-select {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--h-border);
+    border-radius: 20px;
+    padding: 18px 24px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+    transition: all 0.3s ease;
+    font-family: 'Urbanist', sans-serif;
+}
+
+.h-input:focus, .h-select:focus {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--h-accent);
+    outline: none;
+    box-shadow: 0 0 0 5px rgba(var(--h-accent-rgb), 0.1);
+}
+
+.h-select option {
+    background: #0f172a;
+    color: white;
+}
+
+/* ========================
+   Primary Button
+   ======================== */
+.btn-harvest {
+    background: var(--h-accent);
+    color: var(--h-dark);
+    font-weight: 900;
+    text-transform: uppercase;
+    border-radius: 24px;
+    padding: 24px 40px;
+    border: none;
+    letter-spacing: 2px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 1.1rem;
+    font-family: 'Urbanist', sans-serif;
+    cursor: pointer;
+}
+
+.btn-harvest:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(var(--h-accent-rgb), 0.3);
+}
+
+/* ========================
+   Utility Elements
+   ======================== */
+.icon-box {
+    width: 60px;
+    height: 60px;
+    background: rgba(var(--h-accent-rgb), 0.1);
+    border: 1px solid rgba(var(--h-accent-rgb), 0.2);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    color: var(--h-accent);
+}
+
+.helper-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ========================
+   Result Page Elements
+   ======================== */
+.stat-ring {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--h-border);
+    border-radius: 32px;
+    padding: 35px;
+    text-align: center;
+    transition: all 0.4s ease;
+}
+
+.stat-ring:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.stat-val {
+    font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+    font-weight: 950;
+    letter-spacing: -1px;
+    word-wrap: break-word;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+.btn-action {
+    padding: 24px 48px;
+    border-radius: 24px;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.btn-action:hover {
+    transform: translateY(-8px);
+}
+
+.btn-lime {
+    background: var(--h-accent);
+    color: var(--h-dark);
+}
+
+.btn-lime:hover {
+    box-shadow: 0 25px 60px rgba(var(--h-accent-rgb), 0.4);
+}
+
+.btn-outline {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border: 1px solid var(--h-border);
+}
+
+.insight-pill {
+    background: rgba(30, 41, 59, 0.5);
+    border-radius: 32px;
+    padding: 35px;
+    margin-top: 40px;
+    border: 1px solid rgba(var(--h-accent-rgb), 0.2);
+}
+
+/* ========================
+   Responsive
+   ======================== */
+@media (max-width: 991px) {
+    .h-grid {
+        grid-template-columns: 1fr;
+    }
+    .h-glass-card {
+        padding: 30px;
+        border-radius: 28px;
+    }
+    .h-title {
+        font-size: 2rem;
+        letter-spacing: -1px;
+    }
+}
+
+@media (max-width: 767px) {
+    .h-viewport {
+        padding: 100px 15px 40px;
+    }
+    .btn-harvest {
+        padding: 18px 30px;
+        font-size: 0.95rem;
+    }
+    .btn-action {
+        padding: 16px 30px;
+        font-size: 0.85rem;
+    }
+}

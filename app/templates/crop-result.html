@@ -1,91 +1,31 @@
 {% extends 'layout.html' %} {% block body %}
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&display=swap');
-
-    :root {
-        --h-lime: #E1F12E;
-        --h-orange: #FFB555;
-        --h-dark: #020617;
-        --h-glass: rgba(15, 23, 42, 0.7);
-        --h-border: rgba(255, 255, 255, 0.1);
-    }
-
-    body {
-        font-family: 'Urbanist', sans-serif;
-        background: var(--h-dark) !important;
-        color: #f8fafc;
-    }
-
-    .h-viewport {
-        min-height: 100vh;
-        background: transparent;
-        display: flex;
-        flex-direction: column;
-        padding: 120px 20px 60px;
-        position: relative;
-        z-index: 1;
-    }
-
-    .h-viewport::before {
-        content: "";
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
+    .h-viewport.theme-crop::before {
         background: linear-gradient(rgba(2, 6, 23, 0.7), rgba(2, 6, 23, 0.8)), url('/static/images/harvesta_crop_bg.png') center/cover no-repeat;
-        filter: blur(6px) brightness(0.6);
-        z-index: -1;
     }
 
-    .h-grid {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        gap: 30px;
-        max-width: 1300px;
-        margin: 0 auto;
-        width: 100%;
-    }
-
-    .h-glass-card {
-        background: var(--h-glass);
+    /* Result page overrides */
+    .h-viewport.theme-crop .h-glass-card {
         backdrop-filter: blur(50px);
         -webkit-backdrop-filter: blur(50px);
-        border: 1px solid var(--h-border);
         border-radius: 48px;
         padding: 60px;
         box-shadow: 0 40px 120px rgba(0, 0, 0, 0.7);
     }
 
-    .h-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        background: rgba(225, 241, 46, 0.1);
-        border: 1px solid rgba(225, 241, 46, 0.3);
-        color: var(--h-lime);
-        padding: 10px 24px;
-        border-radius: 99px;
-        font-size: 0.8rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 32px;
-    }
-
-    .h-title {
+    .h-viewport.theme-crop .h-title {
         font-size: clamp(3rem, 8vw, 4.5rem);
         font-weight: 950;
         letter-spacing: -4px;
         line-height: 0.85;
         margin-bottom: 40px;
-        background: linear-gradient(to bottom, #ffffff, #94a3b8);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
     }
 
     .crop-badge {
         display: inline-block;
-        background: linear-gradient(135deg, var(--h-lime), #84cc16);
-        color: var(--h-dark);
+        background: linear-gradient(135deg, var(--h-accent), #84cc16);
+        color: var(--h-dark, #020617);
         padding: 24px 60px;
         border-radius: 32px;
         font-size: clamp(2rem, 5vw, 3.5rem);
@@ -93,86 +33,18 @@
         text-transform: uppercase;
         letter-spacing: -2px;
         word-break: break-word;
-        box-shadow: 0 25px 60px rgba(225, 241, 46, 0.4);
+        box-shadow: 0 25px 60px rgba(var(--h-accent-rgb), 0.4);
         margin-bottom: 60px;
         border: 1px solid rgba(255,255,255,0.3);
-    }
-
-    .stat-ring {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid var(--h-border);
-        border-radius: 32px;
-        padding: 35px;
-        text-align: center;
-        transition: all 0.4s ease;
-    }
-
-    .stat-ring:hover {
-        background: rgba(255, 255, 255, 0.07);
-        border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .stat-val {
-        font-size: clamp(1.4rem, 2.5vw, 2.2rem);
-        font-weight: 950;
-        letter-spacing: -1px;
-        word-wrap: break-word;
-        line-height: 1.2;
-    }
-
-    .stat-label {
-        font-weight: 800;
-        font-size: 0.8rem;
-        color: #64748b;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-top: 5px;
-    }
-
-    .btn-action {
-        padding: 24px 48px;
-        border-radius: 24px;
-        font-weight: 950;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        display: inline-flex;
-        align-items: center;
-        gap: 15px;
-        text-decoration: none;
-        font-size: 1rem;
-    }
-
-    .btn-lime { background: var(--h-lime); color: var(--h-dark); }
-    .btn-outline { 
-        background: rgba(255, 255, 255, 0.05); 
-        color: white; 
-        border: 1px solid var(--h-border); 
-    }
-
-    .btn-action:hover {
-        transform: translateY(-8px);
-    }
-
-    .btn-lime:hover {
-        box-shadow: 0 25px 60px rgba(225, 241, 46, 0.4);
     }
 
     #npkChart {
         width: 100%;
         height: 450px;
     }
-
-    .insight-pill {
-        background: rgba(30, 41, 59, 0.5);
-        border-radius: 32px;
-        padding: 35px;
-        margin-top: 40px;
-        border: 1px solid rgba(225, 241, 46, 0.2);
-    }
 </style>
 
-<div class="h-viewport">
+<div class="h-viewport theme-crop">
     <div class="h-grid">
         <!-- Main Result Card -->
         <div class="h-glass-card" style="grid-column: span 8; text-align: center;" data-aos="fade-right">

@@ -1,0 +1,30 @@
+KRISHI MITR: SYSTEM ARCHITECTURE AND AGENTIC DESIGN SPECIFICATIONS
+==================================================================
+
+The platform represents a paradigm shift from traditional static agricultural web forms to a state-of-the-art Decoupled Agentic Smart Ecosystem. The architecture coordinates specialized, isolated AI agents through a central Orchestrator.
+
+1. THE DECOUPLED AGENTIC PATTERN
+--------------------------------
+The system is divided into functional components, ensuring high modularity and low system coupling:
+- The Orchestrator (`app.py` / `orchestrator.py`): Acts as the unified API layer and "brain," coordinating inputs, holding session state, and dispatching execution tokens.
+- Specialized Agents:
+  * Crop Recommendation Agent: Predicts optimal crop labels based on soil nutrients.
+  * Fertilizer Expert Agent: Computes precise organic/chemical balancing equations.
+  * Perception leaf-pathologist: Runs heavy CNN image classifiers to diagnose foliage disease.
+  * Hydration Scheduler: Estimates water intervals based on active evapotranspiration.
+  * Market Hub Agent: Aggregates real-time price sheets from Mandi APIs.
+  * Sustainability Consultant: Outlines green cover-cropping and rotation plans.
+
+2. THE P.A.O.R (PLAN-ACT-OBSERVE-REFLECT) REASONING LOOP
+--------------------------------------------------------
+To ensure safety and domain-focused output, every multi-agent query executes through the four-stage P.A.O.R loop:
+1. PLAN: The Orchestrator receives the farmer's raw query and plans which active agent or ML model is required.
+2. ACT: The target agent executes its logic (e.g., calling the Random Forest classifier or querying the SQLite weather index).
+3. OBSERVE: The raw prediction outputs and calculation metrics are captured in a structured state.
+4. REFLECT: The RAG engine and ChatOllama LLM analyze the raw data against safety guardrails (e.g., verifying chemical toxicity levels) and translate the metrics into a warm, supportive Hinglish response for the farmer.
+
+3. CONTEXT RESILIENCY AND DYNAMIC SCOPE CONTROL
+----------------------------------------------
+The vector database dynamically parses your Flask route files (`app.py`) and active agent modules to compile a project-wide navigation map (`generated_project_knowledge.txt`). This allows the chatbot to guide users dynamically to other platform pages (e.g., pointing a user to the Disease Scanner page if they ask about identifying a leaf spot in the chat).
+
+Decoupled execution ensures high computational reliability and clean codebase scalability.

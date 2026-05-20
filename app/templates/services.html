@@ -31,64 +31,64 @@
         </div>
 
         <div class="services-grid">
-            <article class="service-card service-crop">
+            <article class="service-card service-crop" onclick="location.href='{{ url_for('crop_recommendation') }}'">
                 <div class="service-top">
                     <span class="service-pill">Crop Advisor</span>
                     <span class="service-dot"></span>
                 </div>
                 <h3>Smart Crop Recommendation</h3>
                 <p>Soil NPK, pH, humidity, rainfall aur local weather ke basis par best crop suggest karta hai.</p>
-                <a href="{{ url_for('crop_recommendation') }}" class="service-link">Launch Crop Agent</a>
+                <a href="{{ url_for('crop_recommendation') }}" class="service-link" onclick="event.stopPropagation()">Launch Crop Agent</a>
             </article>
 
-            <article class="service-card service-fertilizer">
+            <article class="service-card service-fertilizer" onclick="location.href='{{ url_for('fertilizer_recommendation') }}'">
                 <div class="service-top">
                     <span class="service-pill">Nutrient Lab</span>
                     <span class="service-dot"></span>
                 </div>
                 <h3>Precision Fertilizer Plan</h3>
                 <p>Farm ke nutrient gaps ko identify karke exact fertilizer ratio aur usage guidance deta hai.</p>
-                <a href="{{ url_for('fertilizer_recommendation') }}" class="service-link">Launch Fertilizer Agent</a>
+                <a href="{{ url_for('fertilizer_recommendation') }}" class="service-link" onclick="event.stopPropagation()">Launch Fertilizer Agent</a>
             </article>
 
-            <article class="service-card service-disease">
+            <article class="service-card service-disease" onclick="location.href='{{ url_for('disease_prediction') }}'">
                 <div class="service-top">
                     <span class="service-pill">Plant Pathologist</span>
                     <span class="service-dot"></span>
                 </div>
                 <h3>Leaf Disease Detection</h3>
                 <p>Leaf image upload karo, AI disease detect karega aur treatment recommendation dega.</p>
-                <a href="{{ url_for('disease_prediction') }}" class="service-link">Launch Disease Agent</a>
+                <a href="{{ url_for('disease_prediction') }}" class="service-link" onclick="event.stopPropagation()">Launch Disease Agent</a>
             </article>
 
-            <article class="service-card service-yield">
+            <article class="service-card service-yield" onclick="location.href='{{ url_for('yield_prediction_form') }}'">
                 <div class="service-top">
                     <span class="service-pill">Precision Yield</span>
                     <span class="service-dot"></span>
                 </div>
                 <h3>Yield Prediction</h3>
                 <p>Historical data aur current farm context se season-wise production estimate karta hai.</p>
-                <a href="{{ url_for('yield_prediction_form') }}" class="service-link">Launch Yield Agent</a>
+                <a href="{{ url_for('yield_prediction_form') }}" class="service-link" onclick="event.stopPropagation()">Launch Yield Agent</a>
             </article>
 
-            <article class="service-card service-sustain">
+            <article class="service-card service-sustain" onclick="location.href='{{ url_for('sustainability_advisor') }}'">
                 <div class="service-top">
                     <span class="service-pill">Sustain Master</span>
                     <span class="service-dot"></span>
                 </div>
                 <h3>Sustainability Advisor</h3>
                 <p>Long-term soil health, crop rotation aur sustainable farming strategy ready karta hai.</p>
-                <a href="{{ url_for('sustainability_advisor') }}" class="service-link">Launch Sustainability Agent</a>
+                <a href="{{ url_for('sustainability_advisor') }}" class="service-link" onclick="event.stopPropagation()">Launch Sustainability Agent</a>
             </article>
 
-            <article class="service-card service-irrigation">
+            <article class="service-card service-irrigation" onclick="location.href='{{ url_for('irrigation_form') }}'">
                 <div class="service-top">
                     <span class="service-pill">Hydration Agent</span>
                     <span class="service-dot"></span>
                 </div>
                 <h3>Smart Irrigation Planner</h3>
                 <p>Crop stage aur climate signals ke hisaab se optimized irrigation schedule banata hai.</p>
-                <a href="{{ url_for('irrigation_form') }}" class="service-link">Launch Irrigation Agent</a>
+                <a href="{{ url_for('irrigation_form') }}" class="service-link" onclick="event.stopPropagation()">Launch Irrigation Agent</a>
             </article>
         </div>
     </div>
@@ -224,6 +224,7 @@
         background: #ffffff;
         box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
         transition: transform 0.25s ease, box-shadow 0.25s ease;
+        cursor: pointer;
     }
 
     .service-card:hover {

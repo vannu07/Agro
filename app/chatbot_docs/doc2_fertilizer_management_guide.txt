@@ -1,0 +1,42 @@
+KRISHI MITR: PRECISION FERTILIZER MANAGEMENT GUIDE
+===================================================
+
+To prevent soil salinization and minimize chemical overheads, the Fertilizer Agent applies precise, rule-based mathematical balancing. Chemical fertilizers should only be added to offset the specific deficits between the target crop requirements and the current soil NPK test values.
+
+1. THE PRECISION NUTRIENT DEFICIT EQUATION
+------------------------------------------
+For each nutrient element, the deficit (D) is calculated as:
+  Deficit = Target_Nutrient_Requirement - Current_Soil_Test_Value
+
+If Deficit <= 0, no synthetic fertilizer for that element should be applied. If Deficit > 0, the target dosage must be converted into bags or weights of standard commercial fertilizers:
+- Urea (Contains 46% active Nitrogen, N)
+- Diammonium Phosphate (DAP) (Contains 18% Nitrogen and 46% Phosphorus, P)
+- Muriate of Potash (MOP) (Contains 60% Potassium, K)
+
+2. BALANCING CALCULATIONS
+-------------------------
+Because DAP contains both Nitrogen and Phosphorus, we calculate Phosphorus first to prevent Nitrogen overdosage.
+
+Step 1: Phosphorus (P) Deficiency Calibration:
+- Deficit_P = Target_P - Current_P
+- Required_DAP = Deficit_P / 0.46 (since DAP contains 46% P2O5)
+- This DAP application will automatically supply some Nitrogen:
+  * Contributed_N = Required_DAP * 0.18 (since DAP contains 18% N)
+
+Step 2: Nitrogen (N) Deficiency Calibration:
+- Deficit_N = Target_N - Current_N
+- Adjusted_Deficit_N = Deficit_N - Contributed_N
+- If Adjusted_Deficit_N > 0:
+  * Required_Urea = Adjusted_Deficit_N / 0.46 (since Urea contains 46% N)
+- If Adjusted_Deficit_N <= 0:
+  * Required_Urea = 0 (the DAP application fully satisfies the nitrogen deficit)
+
+Step 3: Potassium (K) Deficiency Calibration:
+- Deficit_K = Target_K - Current_K
+- Required_MOP = Deficit_K / 0.60 (since MOP contains 60% K2O)
+
+3. BEST PRACTICES FOR CHEMICAL APPLICATION
+------------------------------------------
+- Basal Application: Apply full DAP and MOP dosages during soil preparation before sowing.
+- Split-Dose Urea: Apply Urea in 2 or 3 split split-doses during the vegetative and flowering growth phases to prevent nitrogen leaching through watering.
+- Fertigation: In drip systems, dissolve highly soluble grades directly in water to ensure high absorption efficiency.

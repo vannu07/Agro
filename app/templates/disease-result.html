@@ -1,21 +1,8 @@
 {% extends 'layout.html' %} {% block body %}
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&display=swap');
-
     :root {
         --h-red: #ef4444;
-        --h-orange: #FFB555;
-        --h-lime: #E1F12E;
-        --h-dark: #020617;
-        --h-glass: rgba(15, 23, 42, 0.7);
-        --h-border: rgba(255, 255, 255, 0.1);
-    }
-
-    body {
-        font-family: 'Urbanist', sans-serif;
-        background: var(--h-dark) !important;
-        color: #f8fafc;
     }
 
     .h-viewport {
@@ -67,6 +54,7 @@
         margin-bottom: 40px;
         background: linear-gradient(to bottom, #ffffff, #94a3b8);
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 
@@ -210,7 +198,7 @@
     }
 </style>
 
-<div class="h-viewport">
+<div class="h-viewport theme-disease">
     <div class="container" data-aos="zoom-out-up">
         <div class="h-result-card text-center">
             <div class="h-badge-status">

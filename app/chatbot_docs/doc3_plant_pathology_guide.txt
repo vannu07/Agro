@@ -1,0 +1,36 @@
+KRISHI MITR: PLANT PATHOLOGY AND INTEGRATED DISEASE CONTROL GUIDE
+==================================================================
+
+The Plant Pathologist Agent integrates deep-learning computer vision models (CNN - ResNet9) to detect crop leaf diseases instantly. Upon classification, the RAG agent retrieves biological, chemical, and cultural treatments to intercept crop failure.
+
+1. MAJOR POTATO AND TOMATO DISEASE SYMPTOMS & TREATMENT
+-------------------------------------------------------
+- Tomato Early Blight (Alternaria solani):
+  * Symptoms: Small brown spots appearing first on older foliage, developing concentric rings resembling a target board. Margins turn yellow, eventually leading to leaf drop.
+  * Organic Treatment: Spray Neem oil or copper octanoate soap. Ensure wide crop spacing to decrease humidity.
+  * Chemical Treatment: Apply chlorothalonil or azoxystrobin fungicides.
+
+- Tomato Late Blight (Phytophthora infestans):
+  * Symptoms: Large, irregular water-soaked dark lesions appearing on leaves and stems. Under high humidity, white velvety fungal growth forms on the underside of the leaves. Can destroy entire fields in days.
+  * Organic Treatment: Spray copper-based fungicides. Practice strict crop rotation (no nightshades consecutively).
+  * Chemical Treatment: Apply metalaxyl or mancozeb immediately.
+
+- Potato Early Blight:
+  * Symptoms: Similar target-board concentric spots on lower leaves, causing premature defoliation and reducing tuber size.
+  * Treatment: Ensure crop rotation, balanced nitrogen levels (over-stressed crops are more susceptible), and biological spray of Bacillus subtilis.
+
+- Potato Late Blight:
+  * Symptoms: Severe dark water-soaked leaf decay. Tubers rot with dark brown skin lesions and reddish-brown dry rot inside.
+  * Treatment: Remove and destroy infected foliage before harvest. Avoid overhead sprinkler watering. Use certified disease-free seed tubers.
+
+2. CROP LEAF SPOT AND RUST DIAGNOSTIC FRAMEWORK
+-----------------------------------------------
+- Corn Common Rust (Puccinia sorghi):
+  * Symptoms: Golden-brown to dark cinnamon-colored elongated pustules on both upper and lower leaf surfaces. Pustules rupture to release powdery spores.
+  * Control: Plant resistant hybrids. Apply systemic triazole fungicides if pustules appear before silking.
+
+- Pepper Bell Bacterial Spot (Xanthomonas campestris):
+  * Symptoms: Small, angular, water-soaked spots on leaves that turn dark brown with dry, raised centers.
+  * Control: Spray copper fungicides mixed with mancozeb. Avoid working in fields when foliage is wet to prevent pathogen spread.
+
+Crop scouting and early visual classification are the first lines of defense.

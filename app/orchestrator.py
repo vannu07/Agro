@@ -1,8 +1,13 @@
 import os
 import json
 import threading
-from google import genai
 from typing import Any, Dict, Optional, List
+
+try:
+    from google import genai
+except Exception:
+    # Keep core routing available when native deps are blocked by policy.
+    genai = None
 from agents import (
     CropAgent, FertilizerAgent, DiseaseAgent, 
     YieldAgent, SustainabilityAgent, IrrigationAgent
@@ -28,7 +33,7 @@ class Orchestrator:
         
         # Configure AI Engine for Routing
         api_key = os.getenv("GEMINI_API_KEY")
-        if api_key:
+        if api_key and genai is not None:
             self.gemini = genai.Client(api_key=api_key)
         else:
             self.gemini = None

@@ -1,0 +1,27 @@
+KRISHI MITR: WATER IRRIGATION AND PRECISION HYDRATION GUIDE
+===========================================================
+
+Water management is the key to maintaining optimal soil chemistry and plant health. Under-watering induces moisture stress, reducing photosynthetic output. Over-watering results in waterlogging, inducing root asphyxiation (lack of oxygen) and root rot pathogens.
+
+1. CROP-SPECIFIC WATER REQUIREMENTS
+-----------------------------------
+- High-Water Crops (Rice, Sugarcane):
+  * Rice requires standing water (2-5 cm) during early growth phases. Continuous flooding, however, is being replaced by AWD (Alternate Wetting and Drying) to save water and reduce methane emissions.
+- Moderate-Water Crops (Wheat, Maize, Cotton):
+  * Maize requires precise watering during the critical silking and tasseling phases. Drought stress during these windows can slash grain yields by up to 50%.
+  * Wheat requires watering at critical stages: Crown Root Initiation (CRI - 21 days post-sowing), Tillering, Jointing, Flowering, and Milking.
+- Low-Water Crops (Pulses, Millets, Oilseeds):
+  * Extremely drought-resistant, requiring minimal watering. Over-watering causes root damage.
+
+2. PRECISION IRRIGATION SYSTEMS
+--------------------------------
+- Drip Irrigation:
+  * Delivers water directly to the plant's root zone through an emitter network. Reduces water loss from evaporation by up to 60% compared to flood irrigation.
+  * Facilitates "Fertigation" (injecting water-soluble fertilizers directly into water lines).
+- Sprinkler Irrigation:
+  * Simulates natural rainfall. Highly suitable for sandy soils and undulating landscapes where leveling is not feasible. Not recommended for tall crops or pathogen-prone nightshades (due to leaf wetting).
+
+3. MANAGING WATERLOGGING AND DRAINAGE
+-------------------------------------
+- Heavy clay soils retain excessive water. Drainage trenches must be constructed around fields to channel off excess water.
+- Implement organic mulching to retain soil moisture during peak summer, reducing overall irrigation frequency by 35%.

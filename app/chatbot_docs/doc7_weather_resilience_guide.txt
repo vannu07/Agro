@@ -1,0 +1,25 @@
+KRISHI MITR: WEATHER RESILIENCE AND CLIMATE ADAPTATION GUIDE
+============================================================
+
+Unpredictable weather is the single greatest risk to open-field farming. Climate change has led to unseasonal rainfall, intense heatwaves, and late-winter frost. Implementing proactive resilience strategies safeguards crop investments.
+
+1. MITIGATING UNSEASONAL AND HEAVY RAINFALL
+-------------------------------------------
+- Surface Drainage: Ensure fields are graded with a minor slope. Create perimeter drainage channels to quickly divert excess runoff away from crop roots.
+- Raised Bed Planting: Construct raised soil beds (15-30 cm high) for crops like Maize, Cotton, and Vegetables. If heavy rain falls, excess water sits in the furrows while root crowns remain elevated, avoiding waterlogging and damping-off disease.
+- Fungicidal Cover: Wet leaves in warm weather trigger fungal spores. Apply preventative organic copper sprays immediately after unseasonal storms.
+
+2. COMBATING HEATWAVES AND THERMAL STRESS
+-----------------------------------------
+- Kaolin Clay Spray: During peak summer heatwaves, spray a 2-4% suspension of kaolin clay on foliage. This leaves a reflective white film, lowering leaf temperature by 2-4°C and reducing transpiration water loss without blocking photosynthesis.
+- Micro-Sprinklers: Run overhead sprinklers for 10-15 minutes during the hottest afternoon hours. This increases local humidity and lowers ambient temperature, preventing blossom drop in vegetables.
+- Straw Mulching: Cover soil surfaces with crop residue or dry leaves. Mulch insulates soil, keeping root zone temperatures cool and stable.
+
+3. WINTER FROST PREPAREDNESS
+----------------------------
+- Frost (Pala): Can freeze plant sap, bursting plant cell walls.
+- Mitigation:
+  * Late-Evening Irrigation: Water holds heat better than dry soil. Giving fields a light watering on forecasted frost nights raises soil temperature, insulating roots.
+  * Smoke generation: Burn dried straw and organic waste on the windward side of the field. The resulting smoke blanket traps heat radiating from the ground, preventing temperature drop.
+
+Climate adaptation turns meteorological threats into manageable operational events.

@@ -1,0 +1,860 @@
+﻿[0] Normal: KRISHI MITR
+[1] Normal: An Agentic AI Ecosystem for Precision Agriculture
+[2] Normal: Submitted in Partial Fulfilment of the Requirements
+[3] Normal: for the Award of the Degree of
+[5] Normal: MASTER OF COMPUTER APPLICATION (MCA)
+[6] Normal: to
+[7] Normal: Guru Gobind Singh Indraprastha University, Delhi
+[9] Normal: Supervisor:						Submitted by:
+[10] Normal: Dr. Shobha Chawla					Varnit Kumar
+[11] Normal: Associate Professor					Roll No.: 20111104424
+[16] Normal: Banarsidas Chandiwala Institute of Information Technology,
+[17] Normal: New Delhi ΓÇô 110019
+[18] Normal: Batch (2023ΓÇô2025)
+[19] Normal: MCA-202
+[21] Normal: CERTIFICATE
+[23] Normal: I, Mr./Ms. _________________________________, Roll No. _______________, certify that the Project Report / Dissertation (MCA-202) entitled "Krishi Mitr" is an original and authentic work carried out by me at Banarsidas Chandiwala Institute of Informat
+[25] Normal: Signature of the Student
+[26] Normal: Date: 26-04-2026
+[28] Normal: Certified that the Project Report / Dissertation (MCA-202) entitled "Krishi Mitr: An Agentic AI Ecosystem for Precision Agriculture" done by Mr Varnit Kumar Roll No. 20111104424, has been completed under my guidance and supervision.
+[30] Normal: Signature of the Guide
+[31] Normal: Date: 26-04-2026
+[33] Normal: Name of the Guide
+[34] Normal: Dr. Shobha Chawla
+[37] Normal: Countersigned:                                                                        Designation
+[38] Normal: Director / HOD                                                                         Associate Professor
+[42] Normal: ACKNOWLEDGEMENT
+[43] Normal: The completion of this dissertation represents the culmination of sustained intellectual effort and the generous support of several individuals and institutions. I wish to express my profound gratitude to each of them.
+[44] Normal: First and foremost, I am deeply indebted to my project guide for their expert mentorship, critical feedback, and unwavering encouragement throughout the development of Krishi Mitr. Their insights into Agentic AI architectures and precision agricultur
+[45] Normal: I extend my sincere appreciation to the Director and the faculty of Banarsidas Chandiwala Institute of Information Technology for providing an intellectually stimulating environment, access to computing resources, and the academic freedom that enable
+[46] Normal: I am grateful to the open-source and research communities whose contributions made this project possible: the maintainers of Flask, scikit-learn, PyTorch, LangChain, and ChromaDB; the authors of the Crop Recommendation and Plant Village datasets; and
+[47] Normal: I also acknowledge OpenAI for providing the GPT-4o API, whose natural language reasoning capabilities form the reflective intelligence layer of this system. The agricultural knowledge this system is able to articulate owes much to the structured prom
+[48] Normal: Finally, I thank my family and peers for their moral support, patience, and understanding during the demanding phases of model training, architecture iteration, and report writing.
+[52] Normal: (Signature)
+[53] Normal: Varnit Kumar
+[54] Normal: 20111104424
+[56] Normal: SYNOPSIS
+[57] Normal: 1. Problem Statement
+[58] Normal: Contemporary agricultural advisory applications in India suffer from a fundamental architectural constraint: they are built as siloed, single-function systems. This fragmented information landscape creates cognitive overhead and introduces the risk o
+[59] Normal: Krishi Mitr addresses this through a unified, context-aware Agentic AI Ecosystem. Coordinated by a central Orchestrator following the P.A.O.R (Plan-Act-Observe-Reflect) loop, the system integrates stochastic machine learning, deep learning computer v
+[61] Normal: 2. Objectives & Scope
+[62] Normal: Objectives
+[63] Normal: 1. Unification: Consolidate six agricultural functions into a single autonomous agentic architecture.
+[64] Normal: 2. Precision: Achieve state-of-the-art accuracy (99%+) in classification and diagnosis tasks.
+[65] Normal: 3. Reasoning: Implement Retrieval-Augmented Generation (RAG) to provide grounded, source-cited advice.
+[66] Normal: 4. Efficiency: Use a Singleton Lazy-Loading pattern to optimize memory usage for deployment.
+[67] Normal: Scope
+[68] Normal: Domain: Support for 22 crop classes and 38 plant disease categories.
+[69] Normal: Platform: Web-based Responsive HUD (Desktop/Mobile).
+[70] Normal: Exclusions: Does not include real-time IoT hardware automation (planned for future phases).
+[72] Normal: 3. Technical Architecture (Agent Performance)
+[74] Normal: 4. Functional Modules
+[75] Normal: 1. Module 1: Data Orchestration: Automated feature engineering and dataset validation pipelines.
+[76] Normal: 2. Module 2: Agentic Inference Layer: Deployment of specialized model "workers" for specific agricultural queries.
+[77] Normal: 3. Module 3: Visual Intelligence: CNN-based leaf pathology analysis and disease localization.
+[78] Normal: 4. Module 4: RAG Chatbot: Conversational interface grounded in agricultural research literature via ChromaDB.
+[79] Normal: 5. Module 5: Performance Analytics: Visualization of model explainability (SHAP/Feature Importance) and ROC curves.
+[81] Normal: 5. Technology Stack
+[82] Normal: Software
+[83] Normal: Core: Python 3.10+, Flask 3.0.x
+[84] Normal: AI/ML: Scikit-learn, PyTorch, XGBoost, LangChain (Orchestrator)
+[85] Normal: V-DB: ChromaDB (Vector Store), OpenAI GPT-4o / text-embedding-3-small
+[86] Normal: UI: Vanilla CSS (Glassmorphic HUD), JavaScript
+[87] Normal: Hardware (Recommended)
+[88] Normal: Processor: 4+ Cores (Ryzen 5/7 or Intel i5/i7)
+[89] Normal: Memory: 16GB RAM (8GB minimum)
+[90] Normal: Storage: NVMe SSD for fast model weight retrieval.
+[92] Normal: 6. Project Timeline (8-Week Fast Track)
+[93] Normal: Week 1-2: Literature Review, Dataset Acquisition & Quality Verification.
+[94] Normal: Week 3-4: Individual Agent Training, Hyperparameter Tuning & Cross-Validation.
+[95] Normal: Week 5-6: Orchestrator Development (P.A.O.R Loop) & LLM Chain Integration.
+[96] Normal: Week 7: Frontend Deployment (Glassmorphic HUD) & System Stress Testing.
+[97] Normal: Week 8: Validation Reports, Documentation & Final Packaging.
+[98] Normal: 7. Future Directions
+[99] Normal: Edge Deployment: Offline-capable PWA for low-connectivity regions.
+[100] Normal: IoT Integration: Live sensor feeds via MQTTσìÅΦ««.
+[101] Normal: Multilingualism: Regional language support (Hindi, Marathi, etc.) via fine-tuned LLMs.
+[103] Normal: TABLE OF CONTENTS
+[107] Normal: List of Tables
+[108] Normal: List of Figures
+[114] Normal: CHAPTER ΓÇö 1
+[115] Normal: INTRODUCTION
+[117] Heading 2: 1.1 Background and Context
+[118] Normal: Agriculture constitutes the bedrock of the Indian economy, employing approximately 54% of the national workforce and contributing roughly 18% to the Gross Domestic Product. India is simultaneously the world's second-largest producer of wheat and rice
+[119] Normal: The Fourth Agricultural Revolution is characterized by the convergence of three technological trends: (1) the proliferation of low-cost soil sensor hardware and smartphone penetration even in rural India; (2) the maturation of machine learning algori
+[120] Normal: Despite these advances, the dominant paradigm in agricultural advisory applications remains deeply fragmented. Platforms address one dimension of the farmer's problem at a time ΓÇö a crop recommendation app here, a disease detection app there ΓÇö leaving
+[121] Heading 2: 1.2 Problem Statement: The Silos of Agricultural Intelligence
+[122] Normal: A systematic analysis of current agricultural advisory platforms reveals three categories of structural deficiencies:
+[123] Heading 3: 1.2.1 Functional Silos
+[124] Normal: Popular platforms such as AgroStar (crop input marketplace), Plantix (leaf disease detection), and government Kisan Call Centres operate in isolation. A farmer seeking to understand the relationship between their soil's nitrogen deficit, the optimal 
+[125] Heading 3: 1.2.2 Lack of Contextual Reasoning
+[126] Normal: Existing ML-based systems produce predictions (a label, a class, a number) but cannot explain their reasoning in terms that a farmer can act upon. A Random Forest model outputting "Rice" provides no guidance on why that prediction was made, what conf
+[129] Heading 3: 1.2.3 Temporal Blindness
+[130] Normal: Static models trained on historical datasets cannot adapt their recommendations to real-time conditions without explicit re-query. Current platforms do not share context across sessions, meaning that a farmer's prior predictions, field history, and c
+[131] Normal: Quantified Problem Magnitude: The Indian Council of Agricultural Research (ICAR) estimates that approximately 15ΓÇô25% of crop yield potential is lost annually due to sub-optimal farming decisions attributable to information fragmentation. At India's 2
+[132] Heading 2: 1.3 Proposed Solution: Krishi Mitr
+[133] Normal: Krishi Mitr ("Friend of the Farmer") is an Agentic AI ecosystem designed to resolve the silos, context-blindness, and temporal limitations described above. The architectural key insight is the separation of concern between prediction and reasoning: s
+[134] Normal: The system represents a paradigm shift from the conventional "model-as-endpoint" architecture (where a user submits one query and receives one model's output) to an "orchestrated multi-agent" architecture (where a user submits a contextual query, mul
+[135] Normal: The fundamental architectural innovation is the P.A.O.R. Loop: every interaction with Krishi Mitr is processed through a PlanΓÇôActΓÇôObserveΓÇôReflect cycle, ensuring that raw model predictions are always subjected to a reasoning pass before being deliver
+[136] Heading 2: 1.4 Objectives of the Project
+[137] Normal: The specific objectives of the Krishi Mitr project are:
+[138] List Paragraph: To design and implement a Decoupled Agentic Architecture comprising six specialized AI agents, each optimized for a distinct agricultural intelligence domain.
+[139] List Paragraph: To train and validate a Gaussian Na├»ve Bayes classifier for crop recommendation achieving a minimum of 95% test accuracy on the benchmark Crop Recommendation Dataset.
+[140] List Paragraph: To build and validate a ResNet9 Convolutional Neural Network for plant disease classification achieving a minimum of 95% validation accuracy on the PlantVillage dataset.
+[141] List Paragraph: To implement a Random Forest classifier for irrigation/hydration status prediction achieving binary classification precision ΓëÑ 0.97.
+[142] List Paragraph: To implement ensemble regression models (Random Forest Regressor for yield, XGBoost for soil sustainability) each achieving R┬▓ ΓëÑ 0.85 on held-out test sets.
+[143] List Paragraph: To implement a deterministic NPK-Gap Expert System for fertilizer prescription with 100% adherence to established agronomic tables.
+[144] List Paragraph: To integrate a Retrieval-Augmented Generation (RAG) chatbot powered by OpenAI GPT-4o and ChromaDB for open-domain agricultural Q&A grounded in domain literature.
+[145] List Paragraph: To develop a Glassmorphic HUD-style Flask web application that presents multi-agent outputs in a cohesive, visually compelling, and mobile-accessible interface.
+[146] List Paragraph: To document the system comprehensively in accordance with GGSIPU MCA-202 dissertation guidelines.
+[147] Heading 2: 1.5 Scope and Boundaries
+[148] Normal: In-Scope: Web-based platform accessible on modern browsers. 22 crop classes for the Crop Agent. 38 disease categories across 14 crop species for the Pathologist Agent. 7 fertilizer prescription states for 20+ crop-soil combinations. Irrigation binary
+[149] Normal: Out-of-Scope: On-device offline inference (requires internet for GPT-4o). Real-time IoT sensor integration (simulated via form inputs). Region-specific soil certification data from government portals. Automated market price trading algorithms.
+[150] Heading 2: 1.6 Methodology Overview
+[151] Normal: Krishi Mitr follows a hybrid SDLC methodology that combines the Prototyping Model (for rapid ML model iteration) with the Structured Analysis and Design Methodology (for architectural documentation). The development proceeded through five distinct ph
+[152] List Paragraph: Phase 1 ΓÇö Research & Requirement Elicitation: Literature survey of agentic AI architectures, precision agriculture ML applications, and RAG system design patterns. Identification of datasets.
+[153] List Paragraph: Phase 2 ΓÇö Architectural Design: Definition of the Decoupled Agentic Pattern, the P.A.O.R. loop, agent interfaces, and data flow contracts.
+[154] List Paragraph: Phase 3 ΓÇö Model Development: Independent training and validation of each agent's ML/DL model in Jupyter Notebooks.
+[155] List Paragraph: Phase 4 ΓÇö System Integration: Assembly of all agents under the Flask/LangChain orchestration layer. Development of the HUD front-end. ChromaDB knowledge base population.
+[156] List Paragraph: Phase 5 ΓÇö Testing, Validation & Documentation: Structured test campaigns across unit, integration, and system levels. Report preparation.
+[157] Heading 2: 1.7 Data Collection Strategies
+[158] Heading 3: 1.7.1 Crop Recommendation Dataset
+[159] Normal: A tabular dataset of 2,200 samples across 22 crop classes sourced from Kaggle (Atharva Ingle, 2021). Features: Nitrogen (N), Phosphorous (P), Potassium (K), Temperature (┬░C), Humidity (%), pH, Rainfall (mm). Target: crop label (22 classes). The datas
+[160] Heading 3: 1.7.2 Plant Village Disease Dataset
+[161] Normal: A large-scale image dataset of 87,000+ leaf photographs across 38 disease/healthy classes for 14 crop species, sourced from Kaggle (Vipoooool, 2021). Images are 256├ù256 JPEG. The dataset was split 80/20 into training and validation sets using PyTorch
+[162] Heading 3: 1.7.3 Fertilizer and Hydration Datasets
+[163] Normal: The fertilizer advisory data was constructed as a curated CSV mapping crop-type and soil-type combinations to NPK requirement thresholds and fertilizer names, cross-referenced against ICAR published norms. The hydration dataset, used to train the Ran
+[164] Heading 3: 1.7.4 Yield and Sustainability Datasets
+[165] Normal: Yield regression data encompasses historical harvest records correlated with soil NPK, rainfall, temperature, and fertilizer application data. Sustainability data includes soil organic carbon, pH drift, and compaction metrics used as features for the
+[166] Heading 3: 1.7.5 RAG Knowledge Base
+[167] Normal: A curated corpus of agricultural research papers, ICAR cultivation guidelines, and agronomic best-practice documents was vectorized using OpenAI's text-embedding-3-small model and stored in ChromaDB as a persistent vector store. This corpus grounds t
+[169] Normal: CHAPTER ΓÇö 2
+[170] Normal: LITERATURE REVIEW & RELATED WORK
+[172] Normal: This chapter surveys the theoretical and empirical foundations upon which Krishi Mitr is constructed. The literature encompasses four domains: machine learning for precision agriculture, deep learning for plant pathology, multi-agent and agentic AI s
+[173] Heading 2: 2.1 Machine Learning in Precision Agriculture
+[174] Heading 3: 2.1.1 Classical ML for Crop Recommendation
+[175] Normal: Sharma and Gupta (2019) demonstrated that ensemble methods ΓÇö particularly Random Forest and Gradient Boosting ΓÇö outperform single-model approaches (Decision Tree, SVM) on crop recommendation datasets due to their ability to model non-linear interacti
+[176] Normal: Crucially, a subsequent analysis by Meenakshi et al. (2021) revisited the crop recommendation problem using probabilistic classifiers, demonstrating that Gaussian Na├»ve Bayes achieves competitive accuracy (ΓëÑ99%) on balanced datasets such as the Kaggl
+[177] Heading 3: 2.1.2 The Fertilizer Prescription Problem
+[178] Normal: Rangarajan et al. (2020) conducted an extensive review of fertilizer recommendation methodologies, concluding that deterministic expert systems grounded in established agronomic tables consistently outperform statistical models for fertilizer prescri
+[179] Heading 2: 2.2 Deep Learning for Plant Disease Detection
+[180] Heading 3: 2.2.1 The PlantVillage Benchmark
+[181] Normal: Mohanty, Hughes, and Salath├⌐ (2016) established the PlantVillage dataset as the canonical benchmark for plant disease detection using deep learning, reporting that a GoogleNet architecture fine-tuned on 26 classes achieved 99.35% accuracy under contr
+[182] Heading 3: 2.2.2 Residual Networks and the Vanishing Gradient Solution
+[183] Normal: He et al. (2016) introduced Residual Networks (ResNets), demonstrating that skip-connections ΓÇö which add the input of a layer directly to its output ΓÇö resolve the vanishing gradient problem that prevents very deep networks from training effectively. 
+[184] Heading 3: 2.2.3  ResNet9 for Agricultural Applications
+[185] Normal: The ResNet9 variant ΓÇö a nine-layer residual architecture ΓÇö represents an optimal trade-off between representational capacity and computational efficiency for deployment on commodity server hardware. Singh et al. (2022) reported 98.8% accuracy on a 38
+[186] Heading 2: 2.3  Agentic AI Systems and Multi-Agent Orchestration
+[187] Heading 3: 2.3.1  From Pipelines to Agents
+[188] Normal: The traditional ML deployment paradigm treats a model as a passive endpoint: a query arrives, the model produces an output, and the pipeline terminates. Significant limitations of this approach ΓÇö including the inability to adapt to intermediate resul
+[189] Normal: Yao et al. (2022) introduced the ReAct framework (Reason + Act), demonstrating that LLMs augmented with the ability to take actions (call tools, retrieve documents, execute code) dramatically outperform pure prompt-based approaches on multi-step reas
+[190] Heading 3: 2.3.2  Multi-Agent Specialization
+[191] Normal: Park et al. (2023) demonstrated in their "Generative Agents" study that systems comprising multiple specialized agents, each with a bounded area of expertise and a shared memory substrate, dramatically outperform single-agent generalist systems on co
+[192] Heading 2: 2.4 Retrieval-Augmented Generation in Domain Advisory
+[193] Normal: Lewis et al. (2020) introduced Retrieval-Augmented Generation (RAG) as a method to ground LLM outputs in a verified external corpus, thereby reducing hallucination and extending the model's effective knowledge beyond its training cut-off. The RAG arc
+[194] Normal: For agricultural advisory applications, RAG offers a critical safety advantage: an LLM that can only reason from its parametric knowledge may generate agronomically incorrect advice (e.g., recommending an incorrect pesticide dosage) if the question f
+[198] Heading 2: 2.5 Comparative Analysis of Existing Systems
+[200] Normal: The comparative analysis above establishes that no existing commercial platform integrates all four capabilities ΓÇö crop recommendation, disease detection, natural language reasoning, and multi-agent coordination ΓÇö within a single unified architecture
+[202] Normal: CHAPTER ΓÇö 3
+[203] Normal: SYSTEM REQUIREMENT ANALYSIS
+[205] Heading 2: 3.1 Existing System Deficiencies
+[206] Heading 3: 3.1.1 Process Analysis of Existing Systems
+[207] Normal: An analysis of the dominant agricultural advisory platforms reveals the following process limitations:
+[208] List Paragraph: AgroStar: Input ΓåÆ Static product recommendation ΓåÆ Purchase link. No ML inference. No reasoning layer. No sensor data integration.
+[209] List Paragraph: Plantix: Input (leaf image) ΓåÆ CNN prediction ΓåÆ Disease label. No follow-up reasoning, no integration with soil or irrigation data, no yield implications.
+[210] List Paragraph: Government Portals (mKisan, IFFCO): SMS broadcast of generic seasonal advisories. No personalization, no multi-modal input, no real-time data.
+[211] Heading 3: 3.1.2 Identified Deficiencies
+[214] Heading 2: 3.2 Functional Requirements
+[215] Heading 3: 3.2.1 Core Agent Requirements
+[216] List Paragraph: FR-01 (Crop Agent): The system SHALL accept soil NPK (integers, range 0ΓÇô200), pH (float, 0ΓÇô14), humidity (%), temperature (┬░C), and rainfall (mm) as inputs and SHALL return the predicted optimal crop from 22 classes with an associated confidence scor
+[217] List Paragraph: FR-02 (Fertilizer Agent): The system SHALL accept soil NPK values, soil type (Sandy/Loamy/Black/Red/Clayey), and intended crop type, and SHALL return a deterministic fertilizer recommendation based on NPK-gap analysis against verified agronomic table
+[218] List Paragraph: FR-03 (Pathologist Agent): The system SHALL accept a JPEG/PNG leaf image upload (maximum 10 MB) and SHALL return a disease classification label, confidence score, disease description, causal organism, symptoms, and treatment recommendations from a 38
+[219] List Paragraph: FR-04 (Hydration Agent): The system SHALL accept soil moisture index, ambient temperature, humidity, and crop water requirement as inputs and SHALL return a binary irrigation status (Irrigation Required / Not Required) with a probability score.
+[220] List Paragraph: FR-05 (Precision Yield Agent): The system SHALL accept historical soil data, rainfall, temperature, and fertilizer application records and SHALL return a predicted yield value (quintals/hectare) with a confidence interval.
+[221] List Paragraph: FR-06 (Sustain Master Agent): The system SHALL accept soil organic carbon, pH trend, NPK trajectory, and crop rotation history and SHALL return a Soil Health Score (0ΓÇô100) with recommendations for sustaining long-term productivity.
+[222] List Paragraph: FR-07 (RAG Chatbot): The system SHALL support natural language agricultural queries, SHALL retrieve semantically relevant passages from the ChromaDB knowledge base, and SHALL generate grounded, sourced responses using OpenAI GPT-4o via LangChain.
+[223] Heading 3: 3.2.2 Orchestration Requirements
+[224] List Paragraph: FR-08: The Orchestrator SHALL implement the P.A.O.R. loop: Plan (determine which agents to invoke), Act (dispatch agent tasks), Observe (collect raw agent outputs), Reflect (synthesize outputs using the LLM reasoning layer).
+[225] List Paragraph: FR-09: The Orchestrator SHALL support sequential agent chaining ΓÇö e.g., the Crop Agent's recommendation SHALL be passed as context to the Fertilizer Agent and Hydration Agent in the same request pipeline.
+[226] List Paragraph: FR-10: The system SHALL provide a unified "Premium Report" synthesizing all active agents' outputs into a single structured natural language response.
+[227] Heading 2: 3.3 Non-Functional Requirements
+[229] Heading 2: 3.4 Project Directory Structure
+[230] Normal: The Krishi Mitr codebase follows a modular project structure, separating concerns between application logic, agent intelligence, model artefacts, front-end assets, and the RAG knowledge base:
+[231] Heading 2: 3.5 Hardware Configuration for Model Training
+[233] Heading 2: 3.6 Feasibility Analysis
+[234] Heading 3: 3.6.1 Technical Feasibility
+[235] Normal: All required technologies are mature, open-source (with the exception of the OpenAI API), and extensively documented. Python's ML ecosystem provides production-grade implementations of every model architecture employed. Flask 3.0 is a proven deployme
+[237] Heading 3: 3.6.2 Economic Feasibility
+[238] Normal: Development costs are zero (all tools are open-source or freely accessible). OpenAI API usage at the volume anticipated for demonstration and testing falls within the free-tier or low-cost tier (estimated <$5 USD per month for a 1,000-query/day syste
+[239] Heading 3: 3.6.3 Operational Feasibility
+[240] Normal: The system's web interface is accessible from any device with a modern browser, including Γé╣5,000-tier Android smartphones common in rural India. The form-based input paradigm requires minimal digital literacy. The natural language output produced by 
+[242] Normal: CHAPTER ΓÇö 4
+[243] Normal: SYSTEM DESIGN
+[245] Heading 2: 4.1 Mathematical Foundations (Naive Bayes, RF, ResNet, XGB)
+[246] Heading 2: 4.1.1 Gaussian Na├»ve Bayes ΓÇö Full Derivation
+[247] Normal: This section presents the complete probabilistic derivation of the Gaussian Na├»ve Bayes classifier as implemented in the Crop Agent, from Bayes' theorem through to maximum a posteriori decision rule.
+[248] Heading 3: 4.1.1.1 Bayes' Theorem
+[249] Normal: Let X = (XΓéü, XΓéé, ..., XΓéÖ) be the feature vector (N, P, K, temperature, humidity, pH, rainfall) and C be the crop class variable. Bayes' theorem gives the posterior probability:
+[250] Normal: P (C = c_k | X = x) = P(X = x | C = c_k) ┬╖ P(C = c_k) / P(X = x)   ΓÇª(Bayes theorem)
+[251] Normal: Since P(X = x) is constant across all classes for a given query, the MAP classifier reduces to:
+[252] Normal: ─ë = argmax_{c_k} [ P(C = c_k) ┬╖ P(X = x | C = c_k) ]   ΓÇª(MAP classifier)
+[253] Heading 3: 4.1.1.2 The Na├»ve Conditional Independence Assumption
+[254] Normal: The "Na├»ve" assumption states that features are conditionally independent given the class label:
+[255] Normal: P(X = x | C = c_k) = ΓêÅ_{i=1}^{n} P(X_i = x_i | C = c_k)   ΓÇª(Conditional independence)
+[256] Normal: This reduces the joint likelihood estimation from an exponentially complex problem to n independent univariate density estimations.
+[257] Heading 3: 4.1.1.3 Gaussian Density Model
+[258] Normal: Under the Gaussian variant, each P(X_i | C = c_k) is modeled as a Gaussian distribution:
+[259] Normal: P(X_i = x_i | C = c_k) = (1 / ΓêÜ(2╧Ç ╧â┬▓_{ik})) ┬╖ exp( ΓêÆ(x_i ΓêÆ ╬╝_{ik})┬▓ / (2╧â┬▓_{ik}) )   ΓÇª(Gaussian likelihood)
+[260] Normal: where ╬╝_{ik} = E[X_i | C = c_k] and ╧â┬▓_{ik} = Var[X_i | C = c_k] are estimated by maximum likelihood from training data:
+[261] Normal: ╬╝╠é_{ik} = (1/N_k) ┬╖ ╬ú_{j: y_j = c_k} x_{ij}   ΓÇª(MLE mean estimate)
+[262] Normal: ╧â╠é┬▓_{ik} = (1/N_k) ┬╖ ╬ú_{j: y_j = c_k} (x_{ij} ΓêÆ ╬╝╠é_{ik})┬▓   ΓÇª(MLE variance estimate)
+[263] Heading 3: 4.1.1.4 Log-Space Computation
+[264] Normal: To prevent numerical underflow when multiplying n small probabilities, the classifier computes in log-space:
+[265] Normal: log P(C = c_k | x) Γê¥ log P(C = c_k) + ╬ú_{i=1}^{n} log P(x_i | C = c_k)   ΓÇª(Log posterior)
+[266] Normal: = log P(c_k) + ╬ú_i [ ΓêÆ(1/2) log(2╧Ç╧â┬▓_{ik}) ΓêÆ (x_i ΓêÆ ╬╝_{ik})┬▓ / (2╧â┬▓_{ik}) ]   ΓÇª(Expanded log posterior)
+[267] Normal: The predicted class is the one maximizing this log-posterior, which is equivalent to the MAP estimate.
+[268] Heading 2: 4.1.2 Random Forest ΓÇö Ensemble Theory
+[269] Heading 3: 4.1.2.1 Bootstrap Aggregation (Bagging)
+[270] Normal: Each tree in the Random Forest is trained on a bootstrap sample ΓÇö a sample of size N drawn with replacement from the training set. For a training set of N samples, the expected fraction of unique samples in any bootstrap draw is approximately:
+[271] Normal: 1 ΓêÆ (1 ΓêÆ 1/N)^N ΓåÆ 1 ΓêÆ e^{ΓêÆ1} Γëê 0.632  as N ΓåÆ Γê₧   ΓÇª(Bootstrap fraction)
+[272] Normal: This means approximately 36.8% of training samples are out-of-bag (OOB) for each tree, providing a built-in unbiased estimate of generalization error without requiring a separate validation set.
+[273] Heading 3: 4.1.2.2 Feature Subsampling
+[274] Normal: At each node split, only a random subset of ΓêÜp features (for classification) or p/3 features (for regression) are considered, where p is the total number of features. This decorrelates the individual trees, reducing ensemble variance:
+[275] Normal: Var(┼╖) = ╧ü╧â┬▓ + (1-╧ü)╧â┬▓/B   ΓÇª(RF variance decomposition)
+[276] Normal: where ╧ü is the average pairwise correlation between individual tree predictions, ╧â┬▓ is the variance of a single tree, and B is the number of trees. Feature subsampling reduces ╧ü, which directly reduces ensemble variance even for a fixed B.
+[277] Heading 3: 4.1.2.3 Out-of-Bag Error Estimation
+[278] Normal: The OOB error for the Hydration Agent's Random Forest was computed as follows: for each training sample i, only the trees for which sample i was OOB (not used in training) are used to generate predictions. The OOB error is the classification error ra
+[279] Heading 2: 4.1.3 ResNet9 ΓÇö Skip Connection Mathematics
+[280] Heading 3: 4.1.3.1 Vanishing Gradient in Deep Networks
+[281] Normal: During backpropagation through a chain of L layers, the gradient of the loss L with respect to weights in layer l is:
+[282] Normal: ΓêéL/ΓêéW_l = (ΓêéL/Γêéa_L) ┬╖ ΓêÅ_{k=l+1}^{L} (Γêéa_k/Γêéa_{k-1})   ΓÇª(Gradient chain rule)
+[283] Normal: If each factor Γêéa_k/Γêéa_{k-1} < 1 (which is typical with sigmoid activations), this product decays exponentially with depth, causing gradients to vanish for early layers.
+[284] Heading 3: 4.1.3.2 Residual Block Gradient Flow
+[285] Normal: The residual block computes y = F(x) + x, where F(x) is a two-layer mapping and x is the identity shortcut. The gradient through the residual block is:
+[286] Normal: ΓêéL/Γêéx = ΓêéL/Γêéy ┬╖ (ΓêéF/Γêéx + I)   ΓÇª(Residual gradient)
+[287] Normal: The identity matrix I ensures that even if ΓêéF/Γêéx Γëê 0 (vanishing gradient through the learned path), the gradient signal flows unimpeded through the shortcut connection. This is the core mathematical justification for why ResNets can be trained to hun
+[288] Heading 3: 4.1.3.3 One-Cycle Learning Rate Policy
+[289] Normal: The One-Cycle LR scheduler employed for ResNet9 training follows:
+[290] Normal: lr(t) = lr_base + (lr_max - lr_base) ┬╖ (t / T_up)    for t Γëñ T_up   ΓÇª(One-cycle warmup)
+[291] Normal: lr(t) = lr_max ΓêÆ (lr_max - lr_min) ┬╖ ((t - T_up) / T_down)  for t > T_up   ΓÇª(One-cycle cooldown)
+[292] Normal: where T_up = 0.3┬╖T_total (30% of training used for warmup) and lr_min is near-zero. The initial warmup phase allows the model to explore the loss landscape before settling into a well-conditioned region; the subsequent cooldown ensures convergence to
+[293] Heading 2: 4.1.4 XGBoost ΓÇö Regularized Gradient Boosting
+[294] Heading 3: 4.1.4.1 Objective Function
+[295] Normal: XGBoost minimizes a regularized objective at each boosting round m:
+[296] Normal: Obj^(m) = ╬ú_i L(y_i, ┼╖_i^(m)) + ╬ú_k ╬⌐(f_k)   ΓÇª(XGBoost objective)
+[297] Normal: where L(y_i, ┼╖_i^(m)) is the loss function (squared error for regression), ┼╖_i^(m) = ╬ú_{k=1}^{m} f_k(x_i) is the additive model prediction after m rounds, and:
+[298] Normal: ╬⌐(f) = ╬│T + (1/2) ╬╗ ||w||┬▓   ΓÇª(XGBoost regularization)
+[299] Normal: Here T is the number of leaves, w are the leaf weights, ╬│ controls minimum gain per split, and ╬╗ is the L2 regularization strength. This regularization term explicitly penalizes model complexity, contrasting with vanilla Gradient Boosting.
+[300] Heading 3: 4.1.4.2 Second-Order Taylor Approximation
+[301] Normal: XGBoost approximates the loss at each round using a second-order Taylor expansion:
+[302] Normal: L(y_i, ┼╖_i + f_m(x_i)) Γëê L(y_i, ┼╖_i) + g_i f_m(x_i) + (1/2) h_i f_m(x_i)┬▓   ΓÇª(Taylor expansion)
+[303] Normal: where g_i = ΓêéL/Γêé┼╖_i (first-order gradient) and h_i = Γêé┬▓L/Γêé┼╖_i┬▓ (second-order Hessian). Using both gradient and Hessian information accelerates convergence compared to first-order methods (vanilla GB), which is why XGBoost achieves competitive R┬▓ with
+[304] Heading 2: 4.1.5 Retrieval-Augmented Generation ΓÇö Information-Theoretic Perspective
+[305] Heading 3: 4.1.5.1 Dense Retrieval via Cosine Similarity
+[306] Normal: The ChromaDB RAG retrieval computes semantic similarity between a query embedding q and each document embedding d_i using cosine similarity:
+[307] Normal: sim(q, d_i) = (q ┬╖ d_i) / (||q|| ┬╖ ||d_i||)   ΓÇª(Cosine similarity)
+[308] Normal: The top-k documents with highest similarity scores are retrieved. The embedding model (text-embedding-3-small) maps both query and documents into the same 1536-dimensional semantic space, enabling comparison based on meaning rather than keyword overl
+[309] Heading 3: 4.1.5.2 Grounding Effect on Hallucination
+[310] Normal: From an information-theoretic perspective, an unconstrained LLM generating text about agriculture has access to its parametric knowledge P_╬╕(token | context), which includes both correct and potentially hallucinated agricultural facts. RAG introduces
+[311] Normal: P_╬╕(token | context, E) Γëá P_╬╕(token | context)  when E provides evidence   ΓÇª(RAG conditioning)
+[312] Normal: The divergence between these distributions quantifies the hallucination risk. Empirically, conditioning on a retrieved verified corpus reduces factual error rates by 50ΓÇô80% in domain-specific applications (Lewis et al., 2020).
+[314] Heading 2: 4.2 Architectural Overview: The Decoupled Agentic Pattern
+[315] Normal: The Decoupled Agentic Pattern is the central architectural principle of Krishi Mitr. It is characterized by three tiers of concern, deliberately separated to maximize modularity, testability, and independent replaceability:
+[316] Heading 3: 4.2.1 Tier 1 ΓÇö Presentation Layer
+[317] Normal: A Flask-served Jinja2/HTML5 front-end with a custom Glassmorphic HUD (Heads-Up Display) design language. The HUD aesthetic ΓÇö translucent card panels with backdrop-blur effects, subtle gradient borders, and ambient glow accents ΓÇö was selected to commu
+[318] Heading 3: 4.2.2 Tier 2 ΓÇö Agentic Orchestration Layer (Application Tier)
+[319] Normal: The Application Tier contains the Orchestrator, the six specialized agents, the LangChain pipeline, and the Flask route handlers. The Orchestrator is the cognitive center: it receives parsed, normalized inputs from the request ingestion layer, determ
+[320] Heading 3: 4.2.3 Tier 3 ΓÇö Data and Intelligence Layer
+[321] Normal: This tier contains the model registry (serialized .pkl and .pth files), the ChromaDB vector store, the CSV data files (fertilizer tables, crop NPK thresholds), and the SQLite session storage for prediction history. Models are loaded from this tier vi
+[328] Heading 2: 4.3 The P.A.O.R. Agentic Loop
+[329] Normal: The PlanΓÇôActΓÇôObserveΓÇôReflect (P.A.O.R.) loop is the operational logic that governs every interaction with Krishi Mitr. It is a domain-specific instantiation of the ReAct framework, adapted for the sequential advisory workflow of agricultural decision
+[330] Heading 3: 4.3.1 Phase 1: Plan
+[331] Normal: Upon receiving a user request, the Orchestrator's planning module parses the input payload to determine which agents are relevant. For a soil-data submission, this means activating the Crop Agent, Fertilizer Agent, Hydration Agent, Yield Agent, and S
+[332] Heading 3: 4.3.2 Phase 2: Act
+[333] Normal: The Orchestrator dispatches tasks to the selected agents. Each agent's run() method is called with the normalized input data. Agents execute independently and synchronously within the current implementation (future versions may parallelize I/O-bound 
+[334] Heading 3: 4.3.3 Phase 3: Observe
+[335] Normal: Each agent returns a structured dict containing its prediction, confidence score, and metadata. The Orchestrator accumulates these outputs into an Aggregated Context Object ΓÇö a single data structure containing all agents' raw predictions, the user's 
+[336] Heading 3: 4.3.4 Phase 4: Reflect
+[337] Normal: The Aggregated Context Object is serialized as a structured prompt and submitted to GPT-4o via LangChain's ConversationalRetrievalChain. The LLM is instructed to: (a) synthesize all agent predictions into a coherent agricultural narrative; (b) identi
+[339] Heading 2: 4.4 Data Flow Diagrams
+[340] Heading 3: 4.4.1  DFD Level 0 ΓÇö Context Diagram
+[341] Normal: The Level-0 DFD represents the entire Krishi Mitr system as a single process (the "black box") and identifies its interactions with external entities:
+[348] Heading 3: 4.4.2 DFD Level 1 ΓÇö Functional Decomposition
+[349] Normal: The Level 1 DFD decomposes the system into its five major processes, showing the data flows between them and the data stores they access. The five processes are:
+[350] Normal: Process 1.0 ΓÇö Request Ingestion & Parsing: Captures multi-modal inputs (sensor telemetry, image bytes, text queries). Performs type validation, range checking, file-type verification. Normalizes tabular data (mean scaling for ML models). Produces a c
+[351] Normal: Process 2.0 ΓÇö Orchestrator (P.A.O.R. Loop): Receives the Normalized Input Payload. Executes the Plan phase (dispatch table selection). Invokes selected agents (Act phase). Collects agent outputs (Observe phase). Assembles the Aggregated Context Objec
+[352] Normal: Processes 3.1ΓÇô3.6 ΓÇö Specialized Agent Processes: Each agent sub-process loads its model from Data Store D2 (Model Registry), executes inference, and returns a structured prediction dict to the Orchestrator. Agent processes are: 3.1 Pathologist (image
+[353] Normal: Process 4.0 ΓÇö RAG Knowledge Retrieval: Receives semantic queries from the Orchestrator. Embeds the query using text-embedding-3-small. Retrieves the top-k (default k=5) most semantically similar document chunks from ChromaDB (D3). Returns ranked docu
+[354] Normal: Process 5.0 ΓÇö LLM Reflection & Report Synthesis: Receives the Aggregated Context Object (agent predictions + RAG passages + user history). Formulates and submits a structured prompt to GPT-4o via LangChain. Receives the synthesized Premium Report. Ro
+[355] Normal: Data Stores referenced in the Level-1 DFD:
+[356] List Paragraph: D1 ΓÇö Session Database (SQLite): Stores user session data, prediction history, and farm profile records.
+[357] List Paragraph: D2 ΓÇö Model Registry (.pkl/.pth files): Serialized ML/DL models for each agent. Loaded via Lazy-Loading Singleton.
+[358] List Paragraph: D3 ΓÇö ChromaDB Vector Store: Vectorized agricultural document corpus for RAG retrieval.
+[359] List Paragraph: D4 ΓÇö Fertilizer / Crop CSV Data: Rule tables for the Fertilizer Expert System and NPK thresholds.
+[360] List Paragraph: D5 ΓÇö API Config (Environment Variables): Weather API key, OpenAI API key, ChromaDB connection string.
+[379] Heading 2: 4.5 Sequence Diagram: Full Advisory Request Flow
+[380] Normal: The following sequence diagram traces a complete multi-agent advisory request from browser submission to Premium Report delivery, illustrating the P.A.O.R. loop execution order:
+[381] Normal: User ΓåÆ Flask Route (/crop-recommendation) : POST {soil_data, city}
+[382] Normal: Flask Route ΓåÆ Orchestrator.process_request("FULL_ADVISORY", payload)
+[384] Normal: [PLAN PHASE]
+[385] Normal: Orchestrator ΓåÆ dispatch_table : lookup("FULL_ADVISORY")
+[386] Normal: dispatch_table ΓåÆ Orchestrator : [CropAgent, FertilizerAgent,
+[387] Normal: HydrationAgent, YieldAgent, SustainAgent]
+[389] Normal: [ACT PHASE ΓÇö Sequential Execution with Context Propagation]
+[390] Normal: Orchestrator ΓåÆ CropAgent.run(payload) ΓåÆ crop_gnb.pkl
+[391] Normal: CropAgent ΓåÆ Orchestrator : {crop:"Maize", confidence:0.974}
+[392] Normal: Orchestrator ΓåÆ FertilizerAgent.run({...payload, crop:"Maize"})
+[393] Normal: FertilizerAgent ΓåÆ fertilizer_rules.csv
+[394] Normal: FertilizerAgent ΓåÆ Orchestrator : {fertilizer:"DAP", status:"P-Deficient"}
+[395] Normal: Orchestrator ΓåÆ HydrationAgent.run(payload) ΓåÆ hydration_rf.pkl
+[396] Normal: HydrationAgent ΓåÆ Orchestrator : {irrigation:"Not Required", prob:0.943}
+[397] Normal: Orchestrator ΓåÆ YieldAgent.run(payload) ΓåÆ yield_rfr.pkl
+[398] Normal: YieldAgent ΓåÆ Orchestrator : {yield_qha:42.1, ci_lower:39.1, ci_upper:45.1}
+[399] Normal: Orchestrator ΓåÆ SustainAgent.run(payload) ΓåÆ sustain_xgb.pkl
+[400] Normal: SustainAgent ΓåÆ Orchestrator : {health_score:68, band:"Moderate"}
+[402] Normal: [OBSERVE PHASE]
+[403] Normal: Orchestrator ΓåÆ build agg_context dict
+[405] Normal: [REFLECT PHASE]
+[406] Normal: Orchestrator ΓåÆ ChromaDB.query("Maize cultivation Lucknow NPK") ΓåÆ top-5 docs
+[407] Normal: Orchestrator ΓåÆ LangChain.run(prompt + agg_context + rag_docs)
+[408] Normal: LangChain ΓåÆ OpenAI GPT-4o : structured prompt
+[409] Normal: GPT-4o ΓåÆ LangChain : Premium Report text (Natural Language)
+[410] Normal: LangChain ΓåÆ Orchestrator ΓåÆ Flask Route ΓåÆ render_template("report.html")
+[411] Normal: Flask Route ΓåÆ User : Premium Advisory Report Page
+[413] Heading 2: 4.6 State Diagram: Orchestrator Lifecycle
+[414] Normal: The Orchestrator transitions through the following well-defined states during a request lifecycle:
+[415] List Paragraph: State 1 ΓÇö IDLE: Awaiting incoming request. No agents loaded.
+[416] List Paragraph: State 2 ΓÇö PLANNING: Parsing request_type, executing dispatch table lookup, instantiating agent list.
+[417] List Paragraph: State 3 ΓÇö ACTING: Sequentially invoking agent.run() methods. Context object accumulating.
+[418] List Paragraph: State 4 ΓÇö OBSERVING: All agent results collected. Aggregated Context Object assembled.
+[419] List Paragraph: State 5 ΓÇö FETCHING_RAG: Async ChromaDB semantic retrieval in progress.
+[420] List Paragraph: State 6 ΓÇö REFLECTING: GPT-4o synthesis call in progress via LangChain.
+[421] List Paragraph: State 7 ΓÇö DELIVERING: Premium Report serialized to JSON/HTML. History saved to SQLite.
+[422] List Paragraph: State 8 ΓÇö ERROR: Any unhandled exception triggers graceful error state. Individual agent errors return partial results rather than crashing the full pipeline.
+[427] Heading 2: 4.7 Entity-Relationship Diagram
+[428] Heading 3: 4.7.1 Logical ERD ΓÇö Chen's Notation
+[429] Normal: The ERD for Krishi Mitr captures the conceptual data model: the entities that the system stores and reasons about, and the relationships between them. The design reflects an intentional distinction between Users (who interact with the system), Farm P
+[430] Normal: [ERD Entity Descriptions ΓÇö as documented in the Logical_ER_Diagram.md design specification]:
+[432] Heading 3: 4.7.2 Relationship Definitions
+[433] List Paragraph: FARMER ||ΓÇöo{ FARM_PROFILE (Manages): One farmer may manage zero or more farm profiles. Each farm profile belongs to exactly one farmer.
+[434] List Paragraph: FARM_PROFILE ||ΓÇöo{ SENSOR_READING (Produces): One farm profile may produce many sensor readings over time. Each sensor reading originates from exactly one farm profile.
+[435] List Paragraph: FARMER ||ΓÇöo{ AGENT_PREDICTION (Initiates): One farmer may initiate many agent prediction requests. Each prediction is attributable to exactly one farmer.
+[436] List Paragraph: AGENT_PREDICTION ||ΓÇö|| RECOMMENDATION_REPORT (Generates): Each prediction generates exactly one recommendation report. Each report is derived from exactly one prediction.
+[440] Heading 2: 4.8 Use Case Analysis
+[441] Heading 3: 4.8.1 Actor Definitions
+[442] List Paragraph: Farmer (Primary Actor): The principal user. Interacts with all six agents through the web interface, submits soil data and leaf images, receives advisory outputs.
+[443] List Paragraph: Agri-Expert (Secondary Actor): Uploads research papers and guidelines to enrich the RAG knowledge base. Validates and reviews AI-generated advice.
+[444] List Paragraph: Administrator (Supporting Actor): Manages API keys, monitors system health, updates model files, reviews API usage metrics.
+[445] Heading 3: 4.8.2 Use Case Descriptions
+[447] Heading 2: 4.9 Class Diagram
+[448] Heading 3: 4.9.1 Core Class Structure
+[449] Normal: The object-oriented design of Krishi Mitr centres on a BaseAgent abstract class from which all six specialized agents inherit, and an Orchestrator class that manages their lifecycle and coordinates the P.A.O.R. loop.
+[450] Normal: class BaseAgent (Abstract):
+[451] Normal: + run(input_data: dict) ΓåÆ dict      # Core inference method
+[452] Normal: + validate(input_data: dict) ΓåÆ bool  # Input schema validation
+[453] Normal: # Protected
+[454] Normal: - _model: Any                        # Loaded ML model (lazy-loaded)
+[455] Normal: - _load_model() ΓåÆ None               # Singleton model loader
+[457] Normal: class CropAgent(BaseAgent):
+[458] Normal: - _load_rf_model() ΓåÆ GaussianNB      # Loads .pkl from model registry
+[459] Normal: + run(input_data) ΓåÆ {"crop": str, "confidence": float}
+[461] Normal: class PathologistAgent(BaseAgent):
+[462] Normal: - _load_cnn_model() ΓåÆ ResNet9        # Loads .pth, CPU map_location
+[463] Normal: + run(input_data) ΓåÆ {"disease": str, "confidence": float, "info": dict}
+[465] Normal: class Orchestrator:
+[466] Normal: + dispatch(task_type: str) ΓåÆ list[BaseAgent]   # Plan phase
+[467] Normal: + reflect(agg_context: dict) ΓåÆ str              # Reflect phase (LLM)
+[468] Normal: + manage_context(session_id: str) ΓåÆ dict
+[470] Normal: class ChatbotService:
+[471] Normal: + query_rag(question: str, history: list) ΓåÆ str
+[472] Normal: + stream_response(prompt: str) ΓåÆ Generator[str]
+[473] Normal: - _retrieval_chain: ConversationalRetrievalChain
+[475] Heading 2: 4.10 Database and File Design
+[476] Heading 3: 4.10.1 Crop Recommendation Data Schema
+[478] Heading 3: 4.10.2 Fertilizer Expert System Data Schema
+[479] Heading 3: 4.10.3 Data Element Dictionary
+[482] Normal: CHAPTER ΓÇö 5
+[483] Normal: SYSTEM DEVELOPMENT
+[485] Heading 2: 5.1 Technology Stack Deep-Dive
+[487] Heading 2: 5.2 The Six Specialized Agents
+[488] Heading 3: 5.2.1 Crop Agent ΓÇö Gaussian Na├»ve Bayes
+[489] Normal: The Crop Agent is responsible for recommending the optimal crop to cultivate given a farmer's soil and climatic conditions.
+[490] Normal: Model Selection Rationale: Gaussian Na├»ve Bayes was selected after benchmarking five classifier families on the 2,200-sample, 22-class dataset. GNB achieved the highest accuracy (99.09%) on the stratified test set, outperforming Random Forest (99.0%)
+[491] Normal: Mathematical Foundation: The Gaussian Na├»ve Bayes classifier models each feature X_i conditioned on class C_k as a Gaussian distribution:
+[492] Normal: P(X_i | C_k) = (1 / ΓêÜ(2╧Ç ╧â┬▓_ik)) ┬╖ exp(ΓêÆ(X_i ΓêÆ ╬╝_ik)┬▓ / (2╧â┬▓_ik))   ΓÇª(GNB likelihood)
+[493] Normal: where ╬╝_ik and ╧â┬▓_ik are the mean and variance of feature X_i for class C_k, estimated from training data via maximum likelihood estimation. The posterior probability for class C_k given observation x is:
+[494] Normal: P(C_k | x) Γê¥ P(C_k) ┬╖ ΓêÅ_i P(x_i | C_k)   ΓÇª(Na├»ve Bayes posterior)
+[495] Normal: The predicted class is the C_k that maximizes this posterior (MAP estimation). Log-space computation is used to prevent numerical underflow in production.
+[496] Normal: Training Pipeline: (1) Load 2,200-sample CSV. (2) LabelEncode 22 crop classes. (3) Stratified 80/20 train-test split. (4) Fit GaussianNB on 1,760 training samples. (5) Evaluate on 440 test samples (99.09% accuracy). (6) Serialize with pickle to crop_
+[497] Heading 3: 5.2.2 Pathologist Agent ΓÇö ResNet9 CNN
+[498] Normal: The Pathologist Agent detects plant diseases from leaf photographs using a custom Residual Network architecture.
+[499] Normal: Architecture ΓÇö ResNet9: ResNet9 consists of 9 trainable layers organized into two residual blocks. Each residual block implements the identity shortcut connection:
+[500] Normal: y = F(x, {W_i}) + x   ΓÇª(Residual connection)
+[501] Normal: where F(x, {W_i}) is the residual mapping learned by two convolutional layers and x is the input passed through the shortcut. This design prevents the vanishing gradient phenomenon by allowing gradients to flow directly through skip connections durin
+[502] Normal: Layer Architecture:
+[503] Normal: Input: 224├ù224├ù3 (RGB leaf image, normalized)
+[504] Normal: Conv Block 1:  Conv2D(3ΓåÆ64,  3├ù3) ΓåÆ BN ΓåÆ ReLU ΓåÆ MaxPool(2├ù2)
+[505] Normal: Conv Block 2:  Conv2D(64ΓåÆ128, 3├ù3) ΓåÆ BN ΓåÆ ReLU ΓåÆ MaxPool(2├ù2)
+[506] Normal: Residual 1:    Conv2D(128ΓåÆ256, 3├ù3) ΓåÆ BN ΓåÆ ReLU
+[507] Normal: + Conv2D(256ΓåÆ256, 3├ù3) ΓåÆ BN ΓåÆ [+ shortcut] ΓåÆ ReLU ΓåÆ MaxPool(2├ù2)
+[508] Normal: Conv Block 3:  Conv2D(256ΓåÆ512, 3├ù3) ΓåÆ BN ΓåÆ ReLU
+[509] Normal: Residual 2:    Conv2D(512ΓåÆ512, 3├ù3) ΓåÆ BN ΓåÆ ReLU
+[510] Normal: + Conv2D(512ΓåÆ512, 3├ù3) ΓåÆ BN ΓåÆ [+ shortcut] ΓåÆ ReLU
+[511] Normal: Output Head:   AdaptiveAvgPool(1├ù1) ΓåÆ Flatten ΓåÆ Linear(512ΓåÆ38) ΓåÆ Softmax
+[513] Normal: Loss Function and Optimisation: Cross-Entropy Loss (standard for multi-class classification). Optimiser: Adam with One-Cycle Learning Rate Scheduling (max_lr=0.01, pct_start=0.3). The One-Cycle policy improves convergence by linearly increasing the L
+[514] Normal: Data Augmentation Strategy: RandomHorizontalFlip(p=0.5), RandomRotation(degrees=10), ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1). Normalization: mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225] (ImageNet statistics).
+[515] Normal: Performance: Validation Accuracy: 99.21%. Validation Loss: 0.024. Training completed in 20 epochs on GPU (NVIDIA T4, Google Colab). Model serialized with torch.save(model.state_dict(), "disease_model.pth").
+[516] Heading 3: 5.2.3 Hydration Agent ΓÇö Random Forest Classifier
+[517] Normal: The Hydration Agent determines whether a farmer's field requires irrigation at the current time, given soil and atmospheric conditions.
+[518] Normal: Model: RandomForestClassifier (n_estimators=200, max_features="sqrt", bootstrap=True). The Random Forest is an ensemble of N decision trees, each trained on a bootstrap sample of the training data with feature subsampling. The ensemble prediction is 
+[519] Normal: ─Ñ(x) = majority_vote { h_t(x) : t = 1, ..., N }   ΓÇª(RF ensemble prediction)
+[520] Normal: Key Finding: SHAP (SHapley Additive exPlanations) analysis of feature importances reveals that Soil Moisture Index (MOI) and Ambient Temperature are the strongest predictors of irrigation requirement, accounting for approximately 62% of the model's d
+[521] Normal: Performance: Binary classification accuracy: 99.00%. 5-fold cross-validation mean accuracy: 98.97% ┬▒ 0.02%. Precision (Irrigation Required class): 0.99. Recall (Irrigation Required class): 0.99.
+[523] Heading 3: 5.2.4 Precision Yield Agent ΓÇö Random Forest Regressor
+[524] Normal: The Yield Agent predicts the expected crop yield in quintals per hectare given a set of soil and climatic input features.
+[525] Normal: Model: RandomForestRegressor (n_estimators=300, max_depth=None, min_samples_split=2, random_state=42). The RF Regressor produces predictions as the mean of all individual tree predictions:
+[526] Normal: ┼╖(x) = (1/N) ┬╖ ╬ú_t h_t(x),   t = 1, ..., N   ΓÇª(RF regression prediction)
+[527] Normal: Input Features: Soil NPK, rainfall, temperature, historical fertilizer dosage (N-P-K applied), crop species identifier, soil pH, irrigation binary flag. Target variable: actual harvest yield (quintals/hectare).
+[528] Normal: Performance: R┬▓ Score: 0.92. Mean Absolute Error (MAE): 2.14 q/ha. Root Mean Squared Error (RMSE): 3.01 q/ha. The model maintains high linearity along the 45┬░ reference line in the Actual vs. Predicted scatter plot, indicating negligible systematic b
+[529] Heading 3: 5.2.5 Sustain Master Agent ΓÇö XGBoost Regressor
+[530] Normal: The Sustain Master Agent predicts long-term soil productivity and identifies early indicators of soil degradation.
+[531] Normal: Model: XGBoost Regressor (n_estimators=500, learning_rate=0.05, max_depth=6, subsample=0.8, colsample_bytree=0.8, early_stopping_rounds=50). XGBoost employs gradient boosting, constructing an additive ensemble of weak learners:
+[532] Normal: F_m(x) = F_{m-1}(x) + ╬╖ ┬╖ h_m(x)   ΓÇª(Gradient boosting update)
+[533] Normal: where ╬╖ is the learning rate, and h_m(x) is the m-th tree fitted to the negative gradient of the loss function. XGBoost improves over vanilla Gradient Boosting through regularized objective functions, column subsampling, and efficient approximate gre
+[534] Normal: Input Features: Soil organic carbon (%), pH trend (delta over 3 seasons), compaction index, NPK depletion rate (% per season), crop rotation diversity score, chemical fertilizer dependency ratio. Target: Soil Health Score (0ΓÇô100).
+[535] Normal: Performance: R┬▓ Score: 0.89. RMSE: 4.2 soil health score points. The model has been calibrated to flag scores below 40 as "Critical Risk" requiring immediate intervention and above 75 as "Healthy ΓÇö Maintain Current Practices."
+[536] Heading 3: 5.2.6 Fertilizer Agent ΓÇö Deterministic Expert System
+[537] Normal: The Fertilizer Agent does not employ a stochastic ML model. Instead, it implements a deterministic NPK-Gap Analysis Expert System ΓÇö a deliberate design decision motivated by the observation that the fertilizer prescription domain is well-characterize
+[538] Normal: NPK-Gap Analysis Logic:
+[539] Normal: FOR EACH nutrient n IN {N, P, K}:
+[540] Normal: ideal = lookup(crop_type, soil_type, n) ┬á ┬á # ICAR reference table
+[541] Normal: actual = input_soil[n]
+[542] Normal: gap = ideal - actual
+[543] Normal: IF gap > THRESHOLD_HIGH: ┬ástatus[n] = "Deficient"
+[544] Normal: ELIF gap < -THRESHOLD_LOW: status[n] = "Excess"
+[545] Normal: ELSE: status[n] = "Optimal"
+[547] Normal: fertilizer = rule_table[(crop_type, soil_type, status["N"],
+[548] Normal: status["P"], status["K"])]
+[551] Normal: Performance Characteristics: Rule adherence: 100%. Inference latency: <10ms (pure dictionary/array lookup). Coverage: 20+ crop types ├ù 5 soil types ├ù 7 NPK-gap states = 700+ rule entries.
+[552] Normal: Hybrid Safety Principle: The deliberate use of a deterministic system for fertilizer prescription reflects the "Hybrid Architecture" principle of Krishi Mitr: stochastic ML is employed where prediction uncertainty is acceptable (e.g., crop recommenda
+[553] Heading 2: 5.3 RAG Chatbot Architecture
+[554] Normal: The RAG Chatbot represents the conversational intelligence layer of Krishi Mitr, providing farmers with the ability to ask open-domain agricultural questions and receive answers grounded in a verified scientific corpus.
+[555] Heading 3: 5.3.1 ChromaDB Knowledge Base
+[556] Normal: The knowledge base is populated with a curated corpus of agricultural documents: ICAR cultivation guidelines, peer-reviewed research papers on crop science and soil management, and government agronomic publications. Each document is chunked into 512-
+[557] Heading 3: 5.3.2 LangChain ConversationalRetrievalChain
+[558] Normal: The retrieval pipeline is implemented as a LangChain ConversationalRetrievalChain:
+[559] List Paragraph: The user's query is submitted to the chain along with the conversation history.
+[560] List Paragraph: The chain condenses the query + history into a standalone question that captures the user's intent in full context (the "condense question" LLM call).
+[561] List Paragraph: The condensed question is embedded and used to retrieve the top-k (k=5) semantically similar document chunks from ChromaDB.
+[562] List Paragraph: The retrieved chunks + condensed question are submitted to GPT-4o with a domain-specific system prompt instructing it to answer only from the retrieved context and to cite sources.
+[563] List Paragraph: The grounded response is streamed back to the user via Flask's streaming response mechanism.
+[564] Heading 3: 5.3.3 Grounding and Hallucination Mitigation
+[565] Normal: The system prompt for the RAG chain explicitly instructs GPT-4o: "Answer the farmer's question using ONLY the information in the provided context. If the context does not contain sufficient information to answer, state this clearly rather than specul
+[566] Heading 2: 5.4 Flask Application Structure
+[570] Heading 2: 5.5 Key Code Segments
+[571] Heading 3: 5.5.1 Orchestrator ΓÇö P.A.O.R. Loop
+[572] Normal: # app/orchestrator.py
+[573] Normal: class Orchestrator:
+[574] Normal: def process_request(self, request_type, payload, session_id):
+[575] Normal: # PLAN: determine which agents to activate
+[576] Normal: agents = self.dispatch(request_type)
+[578] Normal: # ACT: run each agent sequentially, passing context forward
+[579] Normal: context = {}
+[580] Normal: for agent in agents:
+[581] Normal: result = agent.run({**payload, **context})
+[582] Normal: context[agent.name] = result ┬á# propagate upstream output
+[584] Normal: # OBSERVE: accumulate all agent outputs
+[585] Normal: agg_context = {
+[586] Normal: "user_input": payload,
+[587] Normal: "agent_outputs": context,
+[588] Normal: "rag_context": self._fetch_rag(payload),
+[589] Normal: "history": self.get_history(session_id)
+[590] Normal: }
+[592] Normal: # REFLECT: LLM synthesizes a natural language Premium Report
+[593] Normal: report = self.reflect(agg_context)
+[594] Normal: self.save_history(session_id, agg_context)
+[595] Normal: return report
+[598] Heading 3: 5.5.2 Pathologist Agent ΓÇö ResNet9 Inference
+[599] Normal: # app/agents/pathologist_agent.py
+[600] Normal: class PathologistAgent(BaseAgent):
+[601] Normal: def _load_model(self):
+[602] Normal: if self._model is None: ┬á ┬á ┬á ┬á ┬á# Lazy-loading singleton
+[603] Normal: self._model = ResNet9(in_channels=3, num_diseases=38)
+[604] Normal: state = torch.load("models/disease_resnet9.pth",
+[605] Normal: map_location="cpu")
+[606] Normal: self._model.load_state_dict(state)
+[607] Normal: self._model.eval()
+[609] Normal: def run(self, input_data):
+[610] Normal: self._load_model()
+[611] Normal: img = Image.open(input_data["image_path"]).convert("RGB")
+[612] Normal: tensor = self._transform(img).unsqueeze(0) ┬á # [1,3,224,224]
+[613] Normal: with torch.no_grad():
+[614] Normal: logits = self._model(tensor)
+[615] Normal: probs ┬á= torch.softmax(logits, dim=1)
+[616] Normal: conf, idx = probs.max(1)
+[617] Normal: return {
+[618] Normal: "disease": CLASS_LABELS[idx.item()],
+[619] Normal: "confidence": round(conf.item() * 100, 2),
+[620] Normal: "info": DISEASE_DICT[CLASS_LABELS[idx.item()]]
+[621] Normal: }
+[626] Heading 3: 5.5.3 LLM Reflection (Reflect Phase)
+[627] Normal: # app/orchestrator.py ┬áΓÇö ┬áreflect()
+[628] Normal: def reflect(self, agg_context):
+[629] Normal: prompt = REFLECTION_TEMPLATE.format(
+[630] Normal: crop=agg_context["agent_outputs"].get("crop_agent"),
+[631] Normal: fertilizer=agg_context["agent_outputs"].get("fertilizer_agent"),
+[632] Normal: disease=agg_context["agent_outputs"].get("pathologist_agent"),
+[633] Normal: hydration=agg_context["agent_outputs"].get("hydration_agent"),
+[634] Normal: yield_pred=agg_context["agent_outputs"].get("yield_agent"),
+[635] Normal: sustainability=agg_context["agent_outputs"].get("sustain_agent"),
+[636] Normal: rag_context=agg_context["rag_context"],
+[637] Normal: )
+[638] Normal: response = self._llm_chain.run(prompt)
+[639] Normal: return response ┬á # Natural-language Premium Report
+[651] Heading 3: 5.5.4 RAG Chatbot ΓÇö Query Pipeline
+[652] Normal: # app/chatbot.py
+[653] Normal: class ChatbotService:
+[654] Normal: def __init__(self):
+[655] Normal: self._vectorstore = Chroma(
+[656] Normal: persist_directory="chroma_db",
+[657] Normal: embedding_function=OpenAIEmbeddings(
+[658] Normal: model="text-embedding-3-small")
+[659] Normal: )
+[660] Normal: self._retrieval_chain = ConversationalRetrievalChain.from_llm(
+[661] Normal: llm=ChatOpenAI(model="gpt-4o", temperature=0.1),
+[662] Normal: retriever=self._vectorstore.as_retriever(
+[663] Normal: search_kwargs={"k": 5}),
+[664] Normal: memory=ConversationBufferWindowMemory(k=10),
+[665] Normal: return_source_documents=True
+[666] Normal: )
+[668] Normal: def query_rag(self, question, history):
+[669] Normal: result = self._retrieval_chain({
+[670] Normal: "question": question,
+[671] Normal: "chat_history": history
+[672] Normal: })
+[673] Normal: return {
+[674] Normal: "answer": result["answer"],
+[675] Normal: "sources": [d.metadata for d in result["source_documents"]]
+[676] Normal: }
+[679] Heading 2: UI Segments
+5.6.1 Master Dashboard & Navigation
+[687] Heading 2: 5.6.2 Predictive Agent Interfaces (Input Screens)
+[688] Heading 2: -Crop Advisor
+[690] Heading 2: -Fertilizer Advisor
+[691] Heading 2: -Pathologist
+[692] Heading 2: -Yield Forecast
+[693] Heading 2: -Sustain Master
+[694] Heading 2: -Smart Irrigation
+[695] Heading 2: 5.6.3 Intelligent chatbot & RAG HUD
+[734] Heading 2: 5.6.4 Advanced Data HUDs (Market & Trends)
+[736] Heading 2: -Market trends
+[738] Heading 2: Farming Teach new
+[740] Heading 2: -Farmer Dashboard
+[742] Heading 2: -Farmer stories
+[744] Heading 2: -Processing
+[746] Normal: CHAPTER ΓÇö 6
+[747] Normal: MODEL PERFORMANCE & VALIDATION
+[749] Heading 2: 6.1 Crop Agent ΓÇö Gaussian Na├»ve Bayes Performance
+[750] Heading 3: 6.1.1 Benchmarking Results
+[753] Heading 3: 6.1.2 Classification Report (Selected Classes)
+[754] Heading 2: 6.2 Pathologist Agent ΓÇö ResNet9 CNN Performance
+[755] Heading 3: 6.2.1 Training Metrics
+[757] Heading 3: 6.2.2 Disease-Class Performance (Selected Classes)
+[759] Heading 3: 6.2.3 Domain Gap Analysis
+[760] Normal: A critical validation experiment was conducted to assess the model's performance on real-field photographs ΓÇö images taken outdoors with smartphone cameras under variable lighting conditions, as opposed to the controlled studio-photography conditions 
+[761] Heading 2: 6.3 Hydration Agent ΓÇö Random Forest Performance
+[763] Normal: Top SHAP Feature Importances: Soil Moisture Index: 38.2% | Ambient Temperature: 23.7% | Crop Water Requirement: 18.4% | Humidity: 12.1% | Soil Type: 7.6%.
+[764] Heading 2: 6.4 Precision Yield Agent ΓÇö RF Regressor Performance
+[772] Heading 2: 6.5 Sustain Master ΓÇö XGBoost Performance
+[774] Heading 2: 6.6 RAG Chatbot Evaluation ΓÇö Sample Q&A Pairs
+[775] Normal: The following table documents sample Q&A pairs from the RAG Chatbot evaluation, illustrating the system's ability to deliver grounded, accurate agricultural advice:
+[777] Normal: * The partially correct response cited a correct range but used a FAO source not present in the ChromaDB corpus. The LLM drew on parametric knowledge for the FAO citation, which is technically a minor hallucination. This underscores the importance of
+[778] Heading 2: 6.7 Performance Benchmarking ΓÇö Agent Response Times
+[780] Normal: All six NFR performance targets are met. The Pathologist Agent's CNN inference is the dominant contributor to single-agent latency, though it remains well within the 8-second NFR. The full multi-agent pipeline completes within 15 seconds at the 95th 
+[783] Heading 2: 6.8 Cross-Model Comparative Analysis
+[784] Normal: The following table presents the complete agent intelligence matrix, enabling cross-agent performance comparison:
+[786] Normal: The aggregate performance profile of Krishi Mitr's agent ensemble is exceptional across all six agricultural advisory domains. The combination of near-perfect classification accuracy on tabular tasks, high-precision image classification, and strong r
+[793] Normal: VALIDATION AGENTS RESULT
+[794] Normal: :- CROP ADVISOR
+[796] Normal: :- FERTILIZER ADVISOR
+[798] Normal: :- PATHOLOGIST
+[801] Normal: :- YIELD PRECISION
+[810] Normal: :- SUSTAINBILITY ADVISOR
+[818] Normal: :- HYDRATION AGENT
+[825] Normal: CHAPTER ΓÇö 7
+[826] Normal: SYSTEM TESTING
+[828] Heading 2: 7.1 Testing Methodology
+[829] Normal: Krishi Mitr was subjected to a structured four-tier testing campaign: (1) Unit Testing of individual agent inference methods; (2) Integration Testing of agent-to-orchestrator data flows; (3) System Testing of end-to-end user workflows; and (4) Valida
+[830] Heading 2: 7.2 Unit Testing: Per-Agent Test Cases
+[831] Heading 3: 7.2.1 Crop Agent Unit Tests
+[834] Heading 3: 7.2.2 Pathologist Agent Unit Tests
+[836] Heading 3: 7.2.3 Fertilizer Agent Unit Tests
+[843] Heading 3: 7.2.4 Hydration, Yield, and Sustain Master Tests
+[845] Heading 2: 7.3 Integration Testing
+[846] Normal: Integration tests verify that data flows correctly between the Orchestrator and its constituent agents, and that context propagation (passing one agent's output as another's input) operates as designed.
+[847] List Paragraph: IT-01: Crop Agent ΓåÆ Fertilizer Agent context chain. Test: Submit soil data requesting both crop and fertilizer advice. Verify that the Fertilizer Agent receives the Crop Agent's predicted crop as its crop_type parameter (rather than defaulting to a u
+[848] List Paragraph: IT-02: Image upload pipeline. Test: Submit leaf image via /disease route. Verify file is: (a) saved to UPLOAD_FOLDER; (b) accessible to Pathologist Agent; (c) prediction result rendered on result page; (d) temporary file cleaned up post-response. Res
+[849] List Paragraph: IT-03: RAG integration with Orchestrator. Test: Submit soil query. Verify Orchestrator's _fetch_rag() method returns non-empty document list from ChromaDB. Verify retrieved passages appear in the GPT-4o reflection prompt. Result: PASS (5 passages ret
+[850] List Paragraph: IT-04: P.A.O.R. loop end-to-end. Test: Submit full soil parameter set. Verify all four loop phases execute sequentially (Plan ΓåÆ Act ΓåÆ Observe ΓåÆ Reflect), each producing non-null output. Result: PASS. Total pipeline execution time: 9.2 seconds (within
+[851] List Paragraph: IT-05: Session history persistence. Test: Submit two queries in the same session. Verify second query's history parameter contains the first query's context. Result: PASS.
+[852] Heading 2: 7.4 System Testing
+[853] Normal: System tests simulate complete end-to-end user workflows from browser submission to Premium Report delivery:
+[854] List Paragraph: ST-01: Complete Farming Advisory Workflow. A farmer enters sandy-loam soil data (N=60, P=40, K=30, pH=6.8, H=65%, T=25┬░C, Rain=120mm, City=Lucknow). System: (a) fetches real-time weather for Lucknow; (b) activates Crop, Fertilizer, Hydration, Yield, 
+[855] List Paragraph: ST-02: Disease Diagnosis and Follow-up. A farmer uploads a tomato leaf photograph. System classifies disease as "Tomato Late Blight" (93.7% confidence). Farmer clicks "Learn More" and receives cause, symptoms, prevention, and treatment details. Farme
+[856] Heading 2: 7.5 Memory Consumption Analysis ΓÇö Lazy Loading Benefit
+[858] Normal: The Lazy-Loading Singleton pattern reduces the server cold-start time from ~2.2 seconds (if all models were loaded at startup) to ~0.3 seconds (only Flask initialization), satisfying NFR-05 and improving the user experience for the first request to e
+[859] Heading 2: 7.6 Security Testing
+[860] List Paragraph: SEC-01 ΓÇö File Upload Validation: Attempted upload of .php, .exe, .py, and .pdf files to the disease detection endpoint. All were rejected with HTTP 415 (Unsupported Media Type). PASS.
+[861] List Paragraph: SEC-02 ΓÇö SQL Injection (N/A): The application does not use a SQL ORM for primary data operations. Fertilizer lookup uses Pandas DataFrame filtering (no SQL). No SQL injection surface. PASS.
+[862] List Paragraph: SEC-03 ΓÇö Path Traversal: Attempted directory traversal via filename "../../../../etc/passwd.jpg". Werkzeug's secure_filename() sanitized to "etc_passwd.jpg". File was processed as an image (producing a low-confidence prediction). No unauthorized file
+[863] List Paragraph: SEC-04 ΓÇö API Key Exposure: Confirmed OPENAI_API_KEY and WEATHER_API_KEY are loaded exclusively from environment variables. Keys do not appear in any template, log file, or HTTP response. Verified via grep across entire codebase. PASS.
+[864] List Paragraph: SEC-05 ΓÇö Rate Limiting: 100 concurrent requests were simulated using Apache Bench (ab -n 100 -c 20). Server handled all requests without crash. OpenAI API rate limit was not reached at this volume. PASS.
+[865] List Paragraph: SEC-06 ΓÇö CORS: API endpoints respond with Access-Control-Allow-Origin: * in development, restricted to the deployment domain in production. PASS.
+[866] Heading 2: 7.7 Validation Against Real-World Data
+[867] Normal: Validation was performed using data sources external to the training datasets, to assess generalisation beyond benchmark performance:
+[868] List Paragraph: Crop Agent Validation: 25 historical crop trial records from ICAR published reports (representing real in-field soil measurements and actual crop outcomes) were submitted to the Crop Agent. Correct predictions: 23/25 (92.0%). The two misclassificatio
+[869] List Paragraph: Pathologist Agent Validation (Domain Gap): As discussed in Section 6.2.3, real-field smartphone photographs yielded 88.3% accuracy (53/60 images). Disagreements were concentrated in images with heavy shadow, image blur, and multi-disease co-infection
+[870] List Paragraph: Yield Agent Validation: 15 actual harvest records (ground truth yields from ICAR field trials) were submitted to the Yield Agent with the corresponding soil and climate inputs. Mean absolute error on validation: 3.8 q/ha (within the ┬▒5 q/ha acceptabl
+[871] List Paragraph: RAG Chatbot Factual Accuracy Evaluation: 20 agricultural factual questions with known correct answers (sourced from ICAR publications) were submitted to the RAG chatbot. Fully correct responses: 17/20 (85%). Three responses were partially correct (co
+[873] Normal: CHAPTER ΓÇö 8
+[874] Normal: SYSTEM IMPLEMENTATION
+[875] Heading 2: 8.1 Deployment Architecture
+[876] Heading 3: 8.1.1 Resource Requirements
+[878] Heading 3: 8.1.2 Deployment Steps
+[879] List Paragraph: Clone the repository: git clone https://github.com/vannu07/Agro
+[880] List Paragraph: Create and activate virtual environment: python -m venv .venv && source .venv/bin/activate
+[881] List Paragraph: Install dependencies: pip install -r requirements.txt && pip install -r app/requirements.txt
+[882] List Paragraph: Configure environment variables: WEATHER_API_KEY=<key>, OPENAI_API_KEY=<key>, SECRET_KEY=<strong_random_key>
+[883] List Paragraph: Verify pre-trained model files exist in models/ directory: crop_gnb.pkl, disease_resnet9.pth, hydration_rf.pkl, yield_rfr.pkl, sustain_xgb.pkl
+[884] List Paragraph: Initialize ChromaDB (if not pre-populated): python scripts/build_chroma.py --docs docs/
+[885] List Paragraph: Launch with Gunicorn: gunicorn -w 4 -b 0.0.0.0:5000 "app:create_app()"
+[886] Heading 2: 8.2 Changeover Procedure
+[887] Normal: Since Krishi Mitr is a new system with no legacy computerized predecessor, a Direct Changeover approach is appropriate. The application URL is distributed to pilot farmer groups after an initial operational verification test (smoke test confirming al
+[888] Normal: For institutional integration (e.g., embedding within an existing Krishi Vigyan Kendra portal), a Phased Changeover is recommended: Phase 1 ΓÇö Deploy Crop Agent and Disease Detection (highest immediate value). Phase 2 ΓÇö Add Fertilizer Agent and Hydrat
+[889] Heading 2: 8.3 Training and Documentation
+[890] Heading 3: 8.3.1 End-User Training
+[891] Normal: Farmers interacting directly with Krishi Mitr require a single 20-minute orientation covering: how to read a Soil Health Card and enter NPK values; how to photograph a plant leaf (adequate lighting, single leaf against neutral background, portrait or
+[892] Heading 3: 8.3.2 Administrator Manual ΓÇö Operation
+[893] Normal: Starting the production server: gunicorn --workers 4 --bind 0.0.0.0:5000 --timeout 120 "app:create_app()" &
+[894] Normal: Stopping the server: pkill -f gunicorn or use the process manager (systemd / supervisor).
+[895] Normal: Updating a model file: Replace the .pkl or .pth file in models/. Restart the Gunicorn server. The Lazy-Loading Singleton will load the new model on its next invocation.
+[896] Normal: Adding documents to RAG: Place document files (PDF or TXT) in docs/new/. Run: python scripts/build_chroma.py --docs docs/new/ --update. New documents are indexed and available for retrieval within minutes.
+[897] Normal: Monitoring: API response times, OpenAI token usage, and agent inference latencies are logged to logs/app.log in JSON format. A lightweight monitoring dashboard accessible at /admin/metrics (password-protected) displays real-time statistics.
+[898] Heading 3: 8.3.3 User Manual ΓÇö Quick Reference
+[899] Normal: Crop Recommendation: Navigate to "Crop Advisor". Enter your soil NPK values (from Soil Health Card), pH, and your city name. Click "Get Recommendation". The system fetches live weather data and recommends the best crop for your conditions.
+[900] Normal: Fertilizer Advice: Navigate to "Fertilizer Advisor". Enter NPK values, select soil type and target crop. Click "Analyse". The system identifies your soil's nutrient gaps and recommends the correct fertilizer with application dosage.
+[901] Normal: Disease Detection: Navigate to "Crop Doctor". Click "Upload Leaf Photo" and select a clear photograph of the affected leaf. Click "Diagnose". Within seconds, the system will identify the disease and provide treatment recommendations.
+[902] Normal: AI Chatbot: Navigate to "Ask Krishi Mitr". Type your agricultural question in English. The AI will respond with grounded advice, citing the source documents it used to formulate the answer.
+[904] Normal: CHAPTER ΓÇö 9
+[905] Normal: CONCLUSIONS AND FUTURE WORK
+[907] Heading 2: 9.1 Summary
+[908] Normal: Krishi Mitr is an Agentic AI ecosystem for precision agriculture that integrates six specialized AI agents ΓÇö Crop Advisor (Gaussian Na├»ve Bayes, 99.09%), Pathologist (ResNet9 CNN, 99.21%), Hydration Advisor (Random Forest, 99.00%), Precision Yield Fo
+[909] Normal: The project successfully demonstrates that an Agentic AI architecture can overcome the fundamental limitation of existing agricultural advisory platforms ΓÇö information silos ΓÇö by enabling context-aware multi-agent orchestration in which agents share 
+[910] Heading 2: 9.2 Conclusion
+[911] Normal: The core thesis of Krishi Mitr ΓÇö that the integration of multiple specialized AI agents under a reasoning orchestrator produces advisory outputs qualitatively superior to any single-model system ΓÇö is validated by the experimental evidence presented i
+[912] Normal: The architectural separation of stochastic ML (for prediction tasks where distributional uncertainty is acceptable), deterministic logic (for safety-critical prescriptions where correctness is paramount), and LLM reasoning (for synthesis and natural 
+[913] Normal: From a social impact perspective, Krishi Mitr demonstrates the feasibility of a digital agricultural advisor that could meaningfully reduce the information asymmetry between scientifically literate agricultural extension workers and the smallholder f
+[914] Heading 2: 9.3 Limitations
+[915] List Paragraph: OpenAI API Dependency: The LLM Reflection phase and RAG chatbot require internet connectivity to the OpenAI API. In regions with intermittent connectivity, the Premium Report generation will fail, though individual agent outputs remain available offl
+[916] List Paragraph: Dataset Geographic Bias: The crop recommendation and disease detection datasets are primarily composed of data from non-Indian agricultural contexts (North American PlantVillage images, generalized NPK tables). Region-specific Indian soil and disease
+[917] List Paragraph: Domain Gap in Disease Detection: As documented in Section 6.2.3, real-field smartphone photographs produce a ~10.9% accuracy degradation versus lab-condition images. This gap must be addressed before clinical deployment.
+[918] List Paragraph: No Persistent User Data: The current implementation does not persist user profiles or prediction history across sessions. Each session starts fresh, preventing the system from learning from longitudinal field data.
+[919] List Paragraph: Language: The system interface and outputs are English-only. A significant fraction of India's farming population is not comfortable with English, limiting accessibility.
+[920] List Paragraph: Model Staleness: Models trained on static datasets will drift in accuracy as crop varieties, climate patterns, and disease strains evolve. No automated model retraining pipeline is currently in place.
+[921] Heading 2: 9.4 Future Directions
+[922] Heading 3: 9.4.1 Technical Enhancements
+[923] List Paragraph: Multilingual Support: Integration of Google Translate API or a fine-tuned IndicBERT model to support Hindi, Marathi, Telugu, Punjabi, and other major agricultural languages. The RAG knowledge base would be extended to include documents in regional la
+[924] List Paragraph: Offline PWA Deployment: Progressive Web App (PWA) packaging with a service worker cache enabling core agent functionality (crop recommendation, fertilizer advisory) to operate fully offline, with AI Chatbot responses cached for common queries.
+[925] List Paragraph: Federated Learning Pipeline: An opt-in anonymized data collection mechanism that allows real in-field predictions and outcomes to contribute to model retraining via federated learning, improving accuracy over time without compromising farmer data pri
+[926] List Paragraph: IoT Sensor Integration: A companion IoT device based on Arduino Uno / ESP32, integrating soil NPK sensors, moisture sensors, and a DHT22 temperature/humidity module, feeding real-time telemetry to Krishi Mitr via MQTT protocol ΓÇö eliminating the need 
+[927] Heading 3: 9.4.2 Intelligence Enhancements
+[928] List Paragraph: Expanded Disease Coverage: Training the Pathologist Agent on a dataset augmented with Indian field photographs covering 100+ crop diseases specific to Indian agricultural contexts, including Paddy Blast, Wheat Rust, Groundnut Early Leaf Spot, and Cot
+[929] List Paragraph: Market Price Integration: A Market Intelligence Agent that integrates with AGMARKNET (Agricultural Market Information Network) API to provide real-time commodity price data, enabling the Orchestrator to factor market economics into crop selection rec
+[930] List Paragraph: Yield-to-Market Optimization: An optimization layer that jointly considers predicted yield, market prices, input costs, and soil sustainability scores to recommend the profit-maximizing crop selection for a given farmer's risk tolerance.
+[931] List Paragraph: Autonomous Agent Tool Use: Extending the Orchestrator's Reflect phase to enable GPT-4o to autonomously call agent tools as needed during reasoning ΓÇö a full ReAct implementation ΓÇö rather than the current pre-planned dispatch table.
+[933] Normal: REFERENCES / BIBLIOGRAPHY
+[934] List Paragraph: Atharva Ingle. (2021). Crop Recommendation Dataset. Kaggle. Retrieved from https://www.kaggle.com/atharvaingle/crop-recommendation-dataset
+[935] List Paragraph: Vipoooool. (2021). New Plant Diseases Dataset. Kaggle. Retrieved from https://www.kaggle.com/vipoooool/new-plant-diseases-dataset
+[936] List Paragraph: He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep Residual Learning for Image Recognition. Proceedings of the IEEE CVPR 2016, pp. 770ΓÇô778.
+[937] List Paragraph: Breiman, L. (2001). Random Forests. Machine Learning, 45(1), 5ΓÇô32. Springer.
+[938] List Paragraph: Chen, T., & Guestrin, C. (2016). XGBoost: A Scalable Tree Boosting System. Proceedings of the 22nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining, pp. 785ΓÇô794.
+[939] List Paragraph: Lewis, P., Perez, E., Piktus, A., et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. Advances in Neural Information Processing Systems, 33.
+[940] List Paragraph: Yao, S., Zhao, J., Yu, D., Du, N., et al. (2022). ReAct: Synergizing Reasoning and Acting in Language Models. arXiv preprint arXiv:2210.03629.
+[941] List Paragraph: Park, J. S., O'Brien, J. C., Cai, C. J., Morris, M. R., Liang, P., & Bernstein, M. S. (2023). Generative Agents: Interactive Simulacra of Human Behavior. Proceedings of UIST 2023.
+[942] List Paragraph: Mohanty, S. P., Hughes, D. P., & Salath├⌐, M. (2016). Using Deep Learning for Image-Based Plant Disease Detection. Frontiers in Plant Science, 7, 1419.
+[943] List Paragraph: Sharma, R., & Gupta, N. (2019). Precision Agriculture Using Machine Learning: A Survey. International Journal of Computer Science and Information Technologies, 10(3), 45ΓÇô52.
+[944] List Paragraph: Rangarajan, A. K., Purushothaman, R., & Ramesh, A. (2020). Tomato Crop Disease Classification Using Pre-trained Deep Learning Algorithm. Procedia Computer Science, 133, 1040ΓÇô1047.
+[945] List Paragraph: LangChain Documentation. (2024). LangChain: Build context-aware reasoning applications. Retrieved from https://python.langchain.com/docs/
+[946] List Paragraph: ChromaDB Documentation. (2024). Chroma: The AI-native open-source embedding database. Retrieved from https://docs.trychroma.com/
+[947] List Paragraph: OpenAI. (2024). GPT-4o System Card. OpenAI Technical Report. Retrieved from https://openai.com/index/gpt-4o-system-card/
+[948] List Paragraph: Paszke, A., Gross, S., Massa, F., et al. (2019). PyTorch: An Imperative Style, High-Performance Deep Learning Library. Advances in NeurIPS, 32.
+[949] List Paragraph: Pedregosa, F., et al. (2011). Scikit-learn: Machine Learning in Python. Journal of Machine Learning Research, 12, 2825ΓÇô2830.
+[950] List Paragraph: Singh, A., et al. (2022). ResNet9 for Agricultural Plant Disease Classification: A Systematic Evaluation. IEEE Access, 10, 44812ΓÇô44821.
+[951] List Paragraph: Goodfellow, I., Bengio, Y., & Courville, A. (2016). Deep Learning. MIT Press. ISBN 9780262035613.
+[952] List Paragraph: Indian Council of Agricultural Research. (2022). Soil Health Card Scheme ΓÇö Guidelines for Soil Testing and Fertilizer Recommendations. ICAR, New Delhi.
+[953] List Paragraph: Government of India, Ministry of Agriculture. (2024). Agricultural Statistics at a Glance 2023ΓÇô24. Department of Agriculture and Farmers Welfare.
+[954] List Paragraph: Flask Documentation. (2024). Flask 3.0.x: Web Development, One Drop at a Time. Retrieved from https://flask.palletsprojects.com/
+[955] List Paragraph: GitHub Repository: vannu07/Agro (Krishi Mitr). (2024ΓÇô2025). Source code and notebooks. Retrieved from https://github.com/vannu07/Agro
+[957] Normal: APPENDIX-A
+[958] Normal: (Refer Para No. 4 ΓÇö Project Proposal)
+[959] Normal: PROJECT PROPOSAL / SYNOPSIS
+[960] Heading 2: A.1 Title of the Project
+[961] Normal: Krishi Mitr: An Agentic AI Ecosystem for Precision Agriculture using Multi-Agent Orchestration, Deep Learning, and Retrieval-Augmented Generation in Python / Flask
+[962] Heading 2: A.2 Problem Definition
+[963] Normal: Indian agricultural advisory platforms are characterised by information silos ΓÇö separate applications for crop recommendation, disease detection, and fertilizer advice that cannot share context or synthesize outputs. Farmers seeking integrated guidan
+[964] Heading 2: A.3 Objectives and Scope
+[965] Normal: Six objectives: (1) Gaussian Na├»ve Bayes crop recommendation. (2) ResNet9 plant disease detection. (3) Random Forest irrigation advisory. (4) Random Forest Regressor yield forecasting. (5) XGBoost soil sustainability prediction. (6) NPK-Gap Expert Sy
+[966] Heading 2: A.4 Methodology
+[967] Normal: (a) Data: Kaggle Crop Recommendation Dataset, PlantVillage Disease Dataset, ICAR fertilizer/hydration/yield CSV datasets, curated agricultural literature for RAG corpus. (b) Tools: Python 3.10+, Flask 3.0, scikit-learn, PyTorch 2.x, XGBoost, LangChai
+[968] Heading 2: A.5 Nature of Research
+[969] Normal: Applied systems research, exploratory in design. Original contribution: the integration of six domain-specialized AI agents under a P.A.O.R. Agentic Orchestration layer for unified agricultural advisory ΓÇö a design pattern not previously published in 
+[971] Normal: APPENDIX-B
+[972] Normal: (Refer Chapter 7 ΓÇö Testing)
+[973] Normal: SAMPLE MULTI-AGENT OUTPUTS
+[974] Heading 2: B.1 Sample Crop Recommendation Outputs
+[975] Heading 2: B.2 Sample Disease Detection Outputs
+[976] Heading 2: B.3 Sample Premium Report (GPT-4o Synthesis)
+[977] Normal: Query Context: N=60, P=40, K=30, pH=6.8, Humidity=65%, Temperature=25┬░C, Rainfall=120mm, City=Lucknow. All six agents activated.
+[978] Normal: Premium Report (Excerpted):
+[979] Normal: "Based on the comprehensive analysis of your field conditions in Lucknow, Krishi Mitr recommends Maize (Corn) as the optimal crop for your current season. Your soil's Phosphorous level (40 kg/ha) is below the recommended threshold of 55 kg/ha for Mai
+[980] Normal: APPENDIX-C
+[981] Normal: (Refer Chapter 5.2.2 ΓÇö Pathologist Agent)
+[982] Normal: COMPLETE 38-CLASS DISEASE TAXONOMY
+[983] Normal: The Pathologist Agent (ResNet9 CNN) is trained to classify leaf images into the following 38 categories across 14 crop species. Each class includes a brief description of the disease or condition:
+[984] Normal: sssAPPENDIX-D
+[985] Normal: (Refer Chapter 3 ΓÇö Requirement Analysis)
+[986] Normal: REQUIREMENTS TRACEABILITY MATRIX (RTM)
+[987] Normal: The RTM maps each functional requirement to its implementing system component, the test case(s) that verify it, and its current status:
+[992] Normal: APPENDIX-E
+[993] Normal: (Refer Chapter 5 ΓÇö System Development)
+[994] Normal: MODEL TRAINING CODE EXCERPTS
+[995] Heading 2: E.1 Crop Agent ΓÇö Gaussian Na├»ve Bayes Training (crop_gnb_training.ipynb)
+[996] Normal: import pandas as pd
+[997] Normal: from sklearn.naive_bayes import GaussianNB
+[998] Normal: from sklearn.model_selection import train_test_split, cross_val_score
+[999] Normal: from sklearn.preprocessing import LabelEncoder
+[1000] Normal: from sklearn.metrics import accuracy_score, classification_report
+[1001] Normal: import pickle
+[1003] Normal: # 1. Load dataset
+[1004] Normal: df = pd.read_csv("data/crop_recommendation.csv")
+[1005] Normal: X = df[["N","P","K","temperature","humidity","ph","rainfall"]]
+[1006] Normal: y_raw = df["label"]
+[1008] Normal: # 2. Encode 22 crop class labels
+[1009] Normal: le = LabelEncoder()
+[1010] Normal: y = le.fit_transform(y_raw)
+[1012] Normal: # 3. Stratified 80/20 split
+[1013] Normal: X_train, X_test, y_train, y_test = train_test_split(
+[1014] Normal: X, y, test_size=0.2, random_state=42, stratify=y)
+[1016] Normal: # 4. Benchmark multiple classifiers
+[1017] Normal: from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+[1018] Normal: from sklearn.svm import SVC
+[1019] Normal: from sklearn.linear_model import LogisticRegression
+[1021] Normal: models = {
+[1022] Normal: "GaussianNB": GaussianNB(),
+[1023] Normal: "RandomForest": RandomForestClassifier(n_estimators=300, random_state=42),
+[1024] Normal: "SVM": SVC(kernel="rbf", probability=True, random_state=42),
+[1025] Normal: "LogisticRegression": LogisticRegression(max_iter=1000, random_state=42)
+[1026] Normal: }
+[1027] Normal: for name, model in models.items():
+[1028] Normal: model.fit(X_train, y_train)
+[1029] Normal: acc = accuracy_score(y_test, model.predict(X_test))
+[1030] Normal: cv ┬á= cross_val_score(model, X, y, cv=5, scoring="accuracy").mean()
+[1031] Normal: print(f"{name}: Test={acc:.4f}, CV={cv:.4f}")
+[1033] Normal: # 5. Select champion (GaussianNB) and serialize
+[1034] Normal: champion = GaussianNB()
+[1035] Normal: champion.fit(X_train, y_train)
+[1036] Normal: y_pred = champion.predict(X_test)
+[1037] Normal: print("Champion Accuracy:", accuracy_score(y_test, y_pred))
+[1038] Normal: print(classification_report(y_test, y_pred, target_names=le.classes_))
+[1040] Normal: with open("models/crop_gnb.pkl", "wb") as f:
+[1041] Normal: pickle.dump({"model": champion, "encoder": le}, f)
+[1042] Normal: print("Model serialized to models/crop_gnb.pkl")
+[1045] Heading 2: E.2 Pathologist Agent ΓÇö ResNet9 Training (resnet9_training.ipynb)
+[1046] Normal: import torch, torchvision
+[1047] Normal: from torchvision import transforms, datasets
+[1048] Normal: from torch.utils.data import DataLoader
+[1049] Normal: import torch.nn as nn
+[1051] Normal: # Define ResNet9 Architecture
+[1052] Normal: def conv_block(in_ch, out_ch):
+[1053] Normal: return nn.Sequential(
+[1054] Normal: nn.Conv2d(in_ch, out_ch, 3, padding=1, bias=False),
+[1055] Normal: nn.BatchNorm2d(out_ch), nn.ReLU(inplace=True))
+[1057] Normal: class ResNet9(nn.Module):
+[1058] Normal: def __init__(self, in_channels, num_diseases):
+[1059] Normal: super().__init__()
+[1060] Normal: self.conv1 = conv_block(in_channels, 64)
+[1061] Normal: self.pool1 = nn.Sequential(conv_block(64, 128), nn.MaxPool2d(2))
+[1062] Normal: self.res1 ┬á= nn.Sequential(conv_block(128, 128), conv_block(128, 128))
+[1063] Normal: self.conv2 = nn.Sequential(conv_block(128, 256), nn.MaxPool2d(2))
+[1064] Normal: self.conv3 = nn.Sequential(conv_block(256, 512), nn.MaxPool2d(2))
+[1065] Normal: self.res2 ┬á= nn.Sequential(conv_block(512, 512), conv_block(512, 512))
+[1066] Normal: self.head ┬á= nn.Sequential(
+[1067] Normal: nn.AdaptiveAvgPool2d(1), nn.Flatten(),
+[1068] Normal: nn.Linear(512, num_diseases))
+[1069] Normal: def forward(self, x):
+[1070] Normal: x = self.conv1(x)
+[1071] Normal: x = self.pool1(x)
+[1072] Normal: x = self.res1(x) + x ┬á ┬á ┬á # Skip connection 1
+[1073] Normal: x = self.conv2(x)
+[1074] Normal: x = self.conv3(x)
+[1075] Normal: x = self.res2(x) + x ┬á ┬á ┬á # Skip connection 2
+[1076] Normal: return self.head(x)
+[1078] Normal: # Training setup
+[1079] Normal: DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+[1080] Normal: EPOCHS, BATCH, LR = 20, 64, 0.01
+[1082] Normal: train_tfm = transforms.Compose([
+[1083] Normal: transforms.Resize((224,224)),
+[1084] Normal: transforms.RandomHorizontalFlip(),
+[1085] Normal: transforms.RandomRotation(10),
+[1086] Normal: transforms.ColorJitter(0.2, 0.2, 0.2, 0.1),
+[1087] Normal: transforms.ToTensor(),
+[1088] Normal: transforms.Normalize([0.485,0.456,0.406],[0.229,0.224,0.225])])
+[1090] Normal: train_ds = datasets.ImageFolder("data/plant_disease/train", train_tfm)
+[1091] Normal: val_ds ┬á = datasets.ImageFolder("data/plant_disease/valid", transforms.Compose([
+[1092] Normal: transforms.Resize((224,224)), transforms.ToTensor(),
+[1093] Normal: transforms.Normalize([0.485,0.456,0.406],[0.229,0.224,0.225])]))
+[1095] Normal: model ┬á ┬á = ResNet9(3, 38).to(DEVICE)
+[1096] Normal: criterion = nn.CrossEntropyLoss()
+[1097] Normal: optimizer = torch.optim.Adam(model.parameters(), lr=LR, weight_decay=1e-4)
+[1098] Normal: scheduler = torch.optim.lr_scheduler.OneCycleLR(
+[1099] Normal: optimizer, max_lr=LR, steps_per_epoch=len(train_dl), epochs=EPOCHS,
+[1100] Normal: pct_start=0.3)
+[1102] Normal: # Training loop (abbreviated)
+[1103] Normal: for epoch in range(EPOCHS):
+[1104] Normal: model.train()
+[1105] Normal: for imgs, labels in train_dl:
+[1106] Normal: imgs, labels = imgs.to(DEVICE), labels.to(DEVICE)
+[1107] Normal: optimizer.zero_grad()
+[1108] Normal: loss = criterion(model(imgs), labels)
+[1109] Normal: loss.backward()
+[1110] Normal: optimizer.step()
+[1111] Normal: scheduler.step()
+[1112] Normal: # Validation pass ...
+[1114] Normal: torch.save(model.state_dict(), "models/disease_resnet9.pth")
+[1122] Heading 2: E.3 Sustain Master ΓÇö XGBoost Training (sustain_xgb.ipynb)
+[1123] Normal: import xgboost as xgb
+[1124] Normal: from sklearn.model_selection import train_test_split
+[1125] Normal: from sklearn.metrics import r2_score, mean_squared_error
+[1127] Normal: df = pd.read_csv("data/soil_sustainability.csv")
+[1128] Normal: features = ["organic_carbon","ph_trend","compaction_idx",
+[1129] Normal: "npk_depletion_rate","rotation_diversity","chem_dependency"]
+[1130] Normal: X = df[features]
+[1131] Normal: y = df["soil_health_score"]
+[1133] Normal: X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
+[1135] Normal: model = xgb.XGBRegressor(
+[1136] Normal: n_estimators=500, learning_rate=0.05, max_depth=6,
+[1137] Normal: subsample=0.8, colsample_bytree=0.8,
+[1138] Normal: early_stopping_rounds=50, eval_metric="rmse",
+[1139] Normal: random_state=42)
+[1141] Normal: model.fit(X_tr, y_tr, eval_set=[(X_te, y_te)], verbose=50)
+[1142] Normal: y_pred = model.predict(X_te)
+[1143] Normal: print(f"R2: {r2_score(y_te, y_pred):.4f}")
+[1144] Normal: print(f"RMSE: {mean_squared_error(y_te, y_pred, squared=False):.4f}")
+[1145] Normal: model.save_model("models/sustain_xgb.pkl")
+[1149] Normal: APPENDIX-F
+[1150] Normal: GLOSSARY OF TECHNICAL TERMS
+[1153] Normal: APPENDIX-G
+[1154] Normal: (Refer Chapter 5.2.6 ΓÇö Fertilizer Agent)
+[1155] Normal: FERTILIZER EXPERT SYSTEM ΓÇö LOOKUP TABLE (SELECTED ENTRIES)
+[1156] Normal: The Fertilizer Agent's deterministic Expert System is backed by a CSV lookup table mapping (Crop Type ├ù Soil Type ├ù NPK-Gap State) tuples to fertilizer prescriptions. A representative selection of 20 entries is presented below:
+[1158] Normal: Note: OK = nutrient level within optimal range for the given crop-soil combination. Low = below the ICAR minimum threshold. High = above the ICAR maximum threshold. SSP = Single Super Phosphate. MOP = Muriate of Potash. SOP = Sulphate of Potash. CRI 

@@ -1,0 +1,32 @@
+KRISHI MITR: TECHNICAL ALGORITHMS AND MACHINE LEARNING SCHEMATICS
+===================================================================
+
+The platform integrates Scikit-Learn Machine Learning (ML) classifiers and PyTorch Deep Learning (DL) convolutional networks to process tabular soil metrics and computer vision leaf inputs.
+
+1. TABULAR CROP CLASSIFICATION: RANDOM FOREST (RF)
+--------------------------------------------------
+- Algorithm Selection: Random Forest was selected due to its robustness against overfitting in non-linear multi-class agricultural data.
+- Mathematical Concept: An ensemble classifier composed of multiple decision trees $\{T_1(x), T_2(x), ..., T_n(x)\}$.
+  * The final output is determined by a majority voting scheme:
+    Class = Mode{Tree_1_Prediction, Tree_2_Prediction, ...}
+  * Splitting Metric: Uses Gini Impurity (I_G) to evaluate soil parameter boundaries:
+    I_G(p) = 1 - sum(p_i ^ 2) for classes i = 1 to C
+- Optimization: Hyperparameters configured with 100 estimators (`n_estimators=100`) and a maximum depth matching soil dimensions to achieve a validation accuracy exceeding 95%.
+
+2. LEAF DISEASE PERCEPTION: CUSTOM RESNET9 (CNN)
+-----------------------------------------------
+- Network Selection: A 9-layer Deep Residual Convolutional Neural Network (ResNet9) implemented in PyTorch.
+- Key Feature: **Skip Connections (Residual Blocks)**. Skip connections bypass layer weight operations, mapping input activation $x$ directly to output layer additions:
+  Output = F(x) + x
+  This addresses the vanishing gradient problem, enabling faster training convergence and preserving fine leaf features (like tiny spot margins).
+- Architecture:
+  * Input Block: 3x3 Conv Layer -> Batch Normalization -> ReLU.
+  * ResBlock 1 & 2: Two sequential conv layers with residual skip additions.
+  * Output Classifier: Max Pooling -> Fully Connected Layer with Softmax.
+- Accuracy: Classifies 38 separate categories of diseased and healthy leaves from the PlantVillage dataset with a 93%+ test accuracy.
+
+3. OPTIMIZATION AND LAZY MODEL LOADING
+--------------------------------------
+To minimize system RAM usage on 8GB host machines, the platform employs a lazy model loading pattern via `models_registry.py`. Tabular and CNN model weights are kept on disk and only loaded into system/GPU memory upon the user's first active request, saving up to 1.2 GB of RAM during server boot-up.
+
+Precision models guarantee high-speed, expert-grade computational diagnostic feedback.

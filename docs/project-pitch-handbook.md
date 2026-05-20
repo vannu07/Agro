@@ -1,18 +1,18 @@
-# Farm-IQ Pitch Handbook
+# Krishi Mitr Pitch Handbook
 
 ## 1) One-line Pitch
-Farm-IQ is an AI-powered agriculture decision platform that combines six specialized agents, machine learning models, deep learning disease diagnosis, and Gemini + RAG chatbot support to help farmers make better crop, fertilizer, irrigation, yield, and sustainability decisions.
+Krishi Mitr is an AI-powered agriculture decision platform that combines six specialized agents, machine learning models, deep learning disease diagnosis, and Gemini + RAG chatbot support to help farmers make better crop, fertilizer, irrigation, yield, and sustainability decisions.
 
 ## 2) Problem Statement
 Indian farmers often make high-impact decisions (crop choice, irrigation timing, fertilizer use, disease response, selling strategy) with fragmented information.
-Farm-IQ solves this by combining:
+Krishi Mitr solves this by combining:
 - Structured ML predictions for farm operations
 - Visual disease diagnosis with deep learning
 - Market and advisory pages for practical action
 - A domain-restricted chatbot with project-aware RAG
 
 ## 3) Solution Overview
-Farm-IQ is a Flask-based platform with:
+Krishi Mitr is a Flask-based platform with:
 - Multi-agent orchestration layer
 - Service pages for each agricultural workflow
 - Data-backed market trends and live-style insights

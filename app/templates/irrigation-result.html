@@ -1,21 +1,6 @@
 {% extends 'layout.html' %} {% block body %}
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&display=swap');
-
-    :root {
-        --h-lime: #E1F12E;
-        --h-orange: #FFB555;
-        --h-dark: #020617;
-        --h-green-deep: #004E42;
-        --h-green-glow: #10b981;
-    }
-
-    body {
-        font-family: 'Urbanist', sans-serif;
-        background: #020617;
-        color: #f8fafc;
-    }
 
     .h-viewport {
         min-height: 100vh;
@@ -45,6 +30,7 @@
         margin-bottom: 20px;
         background: linear-gradient(to bottom, #ffffff, #94a3b8);
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 
@@ -100,6 +86,75 @@
         font-weight: 900;
         color: #ffffff;
         line-height: 1;
+    }
+
+    .metric-row {
+        display: flex;
+        gap: 12px;
+        margin-top: 16px;
+        flex-wrap: wrap;
+    }
+
+    .metric-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #e2e8f0;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.4px;
+    }
+
+    .advice-panel {
+        grid-column: span 4;
+        background: linear-gradient(180deg, rgba(16, 185, 129, 0.1), rgba(15, 23, 42, 0.86));
+        border-radius: 28px;
+        padding: 34px;
+        border: 1px solid rgba(16, 185, 129, 0.18);
+    }
+
+    .advice-title {
+        font-size: 2rem;
+        font-weight: 950;
+        line-height: 1.1;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+
+    .advice-copy {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: #e2e8f0;
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+
+    .advice-subtext {
+        margin-top: 18px;
+        color: #94a3b8;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .factor-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+    }
+
+    .factor-chip {
+        padding: 9px 12px;
+        border-radius: 14px;
+        background: rgba(59, 130, 246, 0.12);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        color: #dbeafe;
+        font-size: 0.78rem;
+        font-weight: 800;
     }
 
     .h-chart-container {
@@ -255,15 +310,25 @@
                 <!-- Water Usage -->
                 <div class="h-bento-item">
                     <h6 class="h-label">Water Today</h6>
-                    <div class="h-value">{{ irr.water_need }}</div>
-                    <p class="small text-muted mt-2 font-weight-bold">Liters / Day, Field Total</p>
+                    <div class="h-value" style="font-size: 1.8rem;">{{ irr.water_depth_mm | default(0.0) | float | round(2) }} mm/day</div>
+                    <p class="small text-muted mt-2 font-weight-bold">Depth recommendation for the crop</p>
+                    <div class="metric-row">
+                        <span class="metric-pill"><i class="fas fa-tint"></i> {{ irr.water_total_liters | default(0.0) | float | round(0) | int | string | replace(',', ',') }} L total</span>
+                        <span class="metric-pill"><i class="fas fa-vector-square"></i> {{ irr.area | default(1.0) | float | round(2) }} ha</span>
+                    </div>
                 </div>
 
-                <div class="h-bento-item" style="grid-column: span 4; background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.25);">
+                <div class="advice-panel">
                     <h6 class="h-label">Simple Advice</h6>
-                    <div class="h-value" style="font-size: 2rem; line-height: 1.2; margin-bottom: 10px;">{{ irr.simple_title or 'Easy Water Guide' }}</div>
-                    <p class="mb-2" style="font-size: 1.15rem; color: #f8fafc; font-weight: 700;">{{ irr.simple_summary }}</p>
-                    <p class="small text-muted mb-0" style="font-weight: 600;">{{ irr.simple_action }}</p>
+                    <div class="advice-title">{{ irr.simple_title or 'Easy Water Guide' }}</div>
+                    <p class="advice-copy">{{ irr.simple_summary }}</p>
+                    <p class="advice-subtext">{{ irr.simple_action }}</p>
+                    <div class="factor-list">
+                        <span class="factor-chip">{{ irr.crop | default('Unknown crop') }}</span>
+                        <span class="factor-chip">{{ harvest.stage | default('N/A') | title }}</span>
+                        <span class="factor-chip">Moisture: {{ irr.moi | default(0) }}%</span>
+                        <span class="factor-chip">{{ irr.weather.temp | default(0) }}°C / {{ irr.weather.humidity | default(0) }}% RH</span>
+                    </div>
                 </div>
 
                 <!-- Hydration Forecast Chart -->
@@ -271,7 +336,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div>
                             <h3 style="font-weight: 900; letter-spacing: -1.5px; margin: 0; font-size: 1.8rem; color: #ffffff;">Water <span style="color: #3b82f6;">Trend</span></h3>
-                            <p class="small text-muted font-weight-bold" style="letter-spacing: 1px; text-transform: uppercase;">7-day water need estimate</p>
+                            <p class="small text-muted font-weight-bold" style="letter-spacing: 1px; text-transform: uppercase;">7-day water depth estimate</p>
                         </div>
                         <span class="badge-scientific">XGBoost Optimized</span>
                     </div>
@@ -281,20 +346,20 @@
                 <!-- Growth Stage -->
                 <div class="h-bento-item">
                     <h6 class="h-label">Growth Stage</h6>
-                    <div class="h-value" style="font-size: 1.5rem; color: var(--h-orange);">{{ harvest.stage | upper }}</div>
+                    <div class="h-value" style="font-size: 1.5rem; color: var(--h-orange);">{{ harvest.stage | default('Unknown') | upper }}</div>
                     <div class="h-progress-wrap">
                         <div class="h-progress-bar" style="width: 0%;" data-width="{{ harvest.progress }}%"></div>
                     </div>
-                    <p class="mt-3 small text-muted font-weight-bold">{{ harvest.progress }}% Maturity</p>
+                    <p class="mt-3 small text-muted font-weight-bold">{{ harvest.progress | default(0) }}% Maturity</p>
                 </div>
                 
                 <!-- Harvest Prediction -->
                 <div class="h-bento-item" style="grid-column: span 2;">
                     <h6 class="h-label">Harvest Time</h6>
                     <div class="d-flex align-items-center gap-4">
-                        <div class="h-value" style="font-size: 3rem; letter-spacing: -2px;">{{ harvest.harvest_date }}</div>
+                        <div class="h-value" style="font-size: 3rem; letter-spacing: -2px;">{{ harvest.harvest_date | default('N/A') }}</div>
                         <div style="background: rgba(225, 241, 46, 0.1); color: var(--h-lime); border: 1px solid rgba(225, 241, 46, 0.3); padding: 10px 20px; border-radius: 12px; font-weight: 900; font-size: 1.2rem;">
-                            T-{{ harvest.days_remaining }} Days
+                            T-{{ harvest.days_remaining | default(0) }} Days
                         </div>
                     </div>
                     <p class="mt-3 small text-muted font-weight-bold">Estimated harvest date from today.</p>
@@ -346,12 +411,15 @@
                             <div class="step-icon"><i class="fas fa-brain"></i></div>
                             <span class="step-title">Step 3</span>
                             <div class="step-content">
-                                {{ loop_data.reflection.explanation[:180] }}...
-                                <div class="mt-3">
+                                    {{ loop_data.reflection.explanation }}
+                                    <div class="mt-3">
                                     {% for factor in loop_data.reflection.key_factors[:2] %}
-                                    <span class="badge bg-dark border border-secondary p-2 me-1 mb-1">{{ factor }}</span>
+                                        <span class="badge bg-dark border border-secondary p-2 me-1 mb-1">{{ factor }}</span>
                                     {% endfor %}
                                 </div>
+                                    {% if loop_data.reflection.warnings %}
+                                    <div class="mt-3 small text-warning font-weight-bold">{{ loop_data.reflection.warnings | join(', ') }}</div>
+                                    {% endif %}
                             </div>
                         </div>
                     </div>
@@ -404,7 +472,7 @@
             margin: { t: 20, b: 60, l: 40, r: 20 },
             hovermode: 'closest',
             xaxis: { gridcolor: 'rgba(255,255,255,0.05)', tickfont: { color: 'rgba(255,255,255,0.5)', weight: 700 } },
-            yaxis: { gridcolor: 'rgba(255,255,255,0.05)', tickfont: { color: 'rgba(255,255,255,0.5)', weight: 700 }, title: { text: 'Liters / m²', font: { size: 10, color: 'rgba(255,255,255,0.3)' } } }
+            yaxis: { gridcolor: 'rgba(255,255,255,0.05)', tickfont: { color: 'rgba(255,255,255,0.5)', weight: 700 }, title: { text: 'Water depth / mm/day', font: { size: 10, color: 'rgba(255,255,255,0.3)' } } }
         };
 
         Plotly.newPlot('hydrationChart', data, layout, { responsive: true, displayModeBar: false });

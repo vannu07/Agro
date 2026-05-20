@@ -1,39 +1,13 @@
 {% extends 'layout.html' %} {% block body %}
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800;900&display=swap');
-
     :root {
         --h-red: #ef4444;
         --h-red-dark: #7f1d1d;
-        --h-dark: #020617;
-        --h-glass: rgba(15, 23, 42, 0.6);
-        --h-border: rgba(255, 255, 255, 0.1);
     }
 
-    body {
-        font-family: 'Urbanist', sans-serif;
-        background: var(--h-dark) !important;
-        color: #f8fafc;
-    }
-
-    .h-viewport {
-        min-height: 100vh;
-        background: transparent;
-        display: flex;
-        flex-direction: column;
-        padding: 120px 20px 60px;
-        position: relative;
-        z-index: 1;
-    }
-
-    .h-viewport::before {
-        content: "";
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
+    .h-viewport.theme-disease::before {
         background: linear-gradient(rgba(127, 29, 29, 0.5), rgba(2, 6, 23, 0.8)), url('/static/images/farm_background_1.jpg') center/cover no-repeat;
-        filter: blur(6px) brightness(0.6);
-        z-index: -1;
     }
 
     .h-scanner-container {
@@ -42,11 +16,8 @@
         width: 100%;
     }
 
-    .h-glass-card {
-        background: var(--h-glass);
-        backdrop-filter: blur(40px);
-        -webkit-backdrop-filter: blur(40px);
-        border: 1px solid var(--h-border);
+    /* Disease page uses a custom glass card with rotating border */
+    .h-viewport.theme-disease .h-glass-card {
         border-radius: 48px;
         padding: 60px;
         box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
@@ -54,7 +25,7 @@
         overflow: hidden;
     }
 
-    .h-glass-card::before {
+    .h-viewport.theme-disease .h-glass-card::before {
         content: '';
         position: absolute;
         top: -50%;
@@ -69,22 +40,6 @@
     @keyframes rotate {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
-    }
-
-    .h-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        background: rgba(239, 68, 68, 0.15);
-        border: 1px solid rgba(239, 68, 68, 0.3);
-        color: var(--h-red);
-        padding: 10px 20px;
-        border-radius: 99px;
-        font-size: 0.8rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 32px;
     }
 
     .pulse-dot {
@@ -102,7 +57,8 @@
         100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
-    .h-title {
+    /* Disease page has a larger title override */
+    .h-viewport.theme-disease .h-title {
         font-size: clamp(3rem, 8vw, 4.5rem);
         font-weight: 950;
         letter-spacing: -4px;
@@ -110,6 +66,7 @@
         margin-bottom: 24px;
         background: linear-gradient(to bottom, #ffffff 30%, #64748b);
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 
@@ -171,7 +128,7 @@
     .btn-diagnostic {
         width: 100%;
         background: #ffffff;
-        color: var(--h-dark);
+        color: var(--h-dark, #020617);
         border: none;
         padding: 28px;
         border-radius: 24px;
@@ -203,7 +160,7 @@
         margin-top: 24px;
         display: none;
         object-fit: contain;
-        border: 2px solid var(--h-border);
+        border: 2px solid rgba(255, 255, 255, 0.1);
         box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     }
 
@@ -234,7 +191,7 @@
     }
 </style>
 
-<div class="h-viewport">
+<div class="h-viewport theme-disease">
     <div class="h-scanner-container" data-aos="fade-up">
         {% if error %}
         <div class="error-alert">

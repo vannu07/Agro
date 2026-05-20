@@ -51,16 +51,63 @@
 			height: 70px;
 		}
 
+		.navbar-elite .navbar-nav .nav-link {
+			font-size: 0.94rem !important;
+			white-space: nowrap !important;
+			display: inline-block !important;
+			padding-left: 12px !important;
+			padding-right: 12px !important;
+			transition: all 0.25s ease;
+		}
+
         .navbar-elite .nav-link, 
         .navbar-elite .brand-text {
             color: #ffffff !important;
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
-        .navbar-elite.scrolled .nav-link,
-        .navbar-elite.scrolled .brand-text {
-            color: #ffffff !important;
-        }
+		/* Default theme & Dark theme Scrolled link text contrast */
+		html:not([data-theme="light"]) .navbar-elite.scrolled .nav-link {
+			color: rgba(255, 255, 255, 0.9) !important;
+			text-shadow: none !important;
+		}
+		html:not([data-theme="light"]) .navbar-elite.scrolled .brand-text {
+			color: #ffffff !important;
+			text-shadow: none !important;
+		}
+
+		/* Light theme Scrolled link text high-contrast support */
+		html[data-theme="light"] .navbar-elite.scrolled .nav-link {
+			color: #121c17 !important;
+			text-shadow: none !important;
+		}
+		html[data-theme="light"] .navbar-elite.scrolled .brand-text {
+			color: #0b1a12 !important;
+			text-shadow: none !important;
+		}
+		html[data-theme="light"] .navbar-elite.scrolled .nav-link:hover {
+			color: #10b981 !important;
+		}
+
+		/* Tablet/Medium Screen Spacing Guard (992px to 1200px) */
+		@media (max-width: 1200px) and (min-width: 992px) {
+			.navbar-elite .nav-link {
+				padding-left: 6px !important;
+				padding-right: 6px !important;
+				font-size: 0.86rem !important;
+			}
+			.navbar-elite .logo-container {
+				width: 48px !important;
+				height: 48px !important;
+				margin-right: 4px !important;
+			}
+			.navbar-elite .brand-text {
+				font-size: 1.12rem !important;
+			}
+			.nav-socials {
+				display: none !important; /* Temporarily drop social links to gain critical horizontal width */
+			}
+		}
 
 		/* Magnetic Button Container */
 		.magnetic {
@@ -119,6 +166,7 @@
 	<link href="{{ url_for('static', filename='css/landing.css') }}?v=3.0" rel='stylesheet' type='text/css' />
 	<link href="{{ url_for('static', filename='css/polish.css') }}?v=3.0" rel='stylesheet' type='text/css' />
 	<link href="{{ url_for('static', filename='css/krishi-mitr-modern.css') }}?v=3.0" rel='stylesheet' type='text/css' />
+	<link href="{{ url_for('static', filename='css/harvesta-agents.css') }}?v=1.0" rel='stylesheet' type='text/css' />
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<!-- Chart.js -->
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -177,7 +225,7 @@
 	] %}
 	<!-- Navigation -->
 	{% if not hide_nav %}
-	<nav class="navbar navbar-expand-lg fixed-top navbar-elite {% if request.endpoint in agent_nav_endpoints %}navbar-agent-green{% endif %}" id="mainNav">
+	<nav class="navbar navbar-expand-xl fixed-top navbar-elite {% if request.endpoint in agent_nav_endpoints %}navbar-agent-green{% endif %}" id="mainNav">
 		<div class="container-fluid px-lg-5">
 			<a class="navbar-brand d-flex align-items-center" href="{{ url_for('home') }}">
                 <div class="logo-container" style="width: 62px; height: 62px; margin-right: 8px;">
@@ -199,6 +247,9 @@
 				<ul class="navbar-nav mx-auto align-items-center">
 					<li class="nav-item">
 						<a class="nav-link" href="{{ url_for('home') }}">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-gradient-primary font-weight-bold" href="/chatbot" style="color: var(--h-lime) !important; font-weight: 700 !important; text-shadow: 0 0 12px rgba(225, 241, 46, 0.45);">DOST 🌾</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ url_for('about') }}">About Us</a>
@@ -401,13 +452,13 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url("{{ url_for('static', filename='images/3.jpg') }}");
+    background-image: url("{{ url_for('static', filename='images/chatbot_bg.png') }}");
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
-    filter: blur(5px) saturate(1.08) brightness(0.72);
-    transform: scale(1.04);
-    opacity: 0.78;
+    filter: blur(8px) saturate(1.1) brightness(0.65);
+    transform: scale(1.06);
+    opacity: 0.85;
     z-index: 0;
     pointer-events: none;
 }
