@@ -1,11 +1,17 @@
-# Krishi Mitr: AI-Powered Smart Farming Ecosystem 🌾🤖
+# Krishi Mitr: Agentic AI Smart Farming Ecosystem
 
 <div align="center">
+  <!-- Tractor SVG Logo -->
+  <img src="app/static/Tractor.svg" alt="Krishi Mitr Logo" width="250" height="250" />
+
+  <br><br>
+
   <img src="https://img.shields.io/badge/Agentic%20AI-Orchestrated-blueviolet?style=for-the-badge&logo=openai" alt="Agentic AI">
   <img src="https://img.shields.io/badge/RAG-Powered-green?style=for-the-badge&logo=chromadb" alt="RAG">
+  <img src="https://img.shields.io/badge/Ollama-Local%20LLM-orange?style=for-the-badge&logo=ollama" alt="Ollama">
   <img src="https://img.shields.io/badge/Framework-Flask-black?style=for-the-badge&logo=flask" alt="Flask">
   <img src="https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python" alt="Python">
-  <img src="https://img.shields.io/badge/UI-Glassmorphism-orange?style=for-the-badge&logo=css3" alt="UI">
+  <img src="https://img.shields.io/badge/UI-Glassmorphism-purple?style=for-the-badge&logo=css3" alt="UI">
 </div>
 
 ---
@@ -24,7 +30,13 @@
 
 ## 🌟 Overview
 
-**Krishi Mitr** (The Farmer's Friend) is a state-of-the-art **Agentic AI** ecosystem designed to bridge the gap between advanced agricultural science and grassroots farming. By leveraging a multi-agent orchestration layer and **Retrieval-Augmented Generation (RAG)**, Krishi Mitr provides highly personalized, reasoned, and data-backed strategies for precision agriculture.
+**Krishi Mitr** (The Farmer's Friend) is a state-of-the-art **Agentic AI** ecosystem designed to bridge the gap between advanced agricultural science and grassroots farming. By leveraging a multi-agent orchestration layer and **Retrieval-Augmented Generation (RAG)** with local Ollama models, Krishi Mitr provides highly personalized, reasoned, and data-backed strategies for precision agriculture.
+
+### Key Highlights:
+- 🔧 **Local AI with Ollama**: Runs entirely offline using Ollama's Gemma2 model (2B parameters) + Nomic embeddings (4GB GPU optimized for GTX 1650 Ti)
+- 📚 **RAG with Tools**: Integrated vector store (Chroma/FAISS) for grounded answers from verified agricultural guides, plus built-in tools for NPK calculations & real-time weather
+- 🤖 **Multi-Agent Orchestration**: 6 specialized AI agents working autonomously
+- 🎨 **Glassmorphism UI**: Modern, responsive frontend
 
 This comprehensive platform empowers farmers with:
 - AI-driven crop recommendations
@@ -35,6 +47,28 @@ This comprehensive platform empowers farmers with:
 - Sustainable farming practices
 - Live market trends analysis
 - Weather intelligence
+
+---
+
+## 🧠 Local AI Stack: RAG + Ollama + Tools
+
+Krishi Mitr features a completely local AI pipeline powered by Ollama, eliminating any reliance on cloud LLMs for core chat functionality.
+
+| Component | Technology | Details |
+|-----------|------------|---------|
+| **LLM** | Ollama `gemma2:2b` | 2B‑parameter model optimized for GTX 1650 Ti (4GB VRAM) |
+| **Embeddings** | Ollama `nomic-embed-text` | Local semantic embeddings for RAG |
+| **Vector Store** | ChromaDB / FAISS | Persistent vector index for fast retrieval |
+| **Built‑in Tools** | NPK Calculator, Weather Fetcher | Dedicated tools for direct answers to common farming queries |
+| **Knowledge Base** | 14+ domain‑specific guides | Verified agricultural research & system information |
+
+### How Local RAG Works:
+1. **Ingestion**: Documents from `app/chatbot_docs/` are split into chunks
+2. **Embedding**: Each chunk is vectorized using Ollama embeddings
+3. **Storage**: Vectors are stored in ChromaDB for fast similarity search
+4. **Retrieval**: For a user query, top‑3 relevant chunks are fetched
+5. **Synthesis**: Gemma2 generates grounded answers using the retrieved context
+6. **Tool Integration**: Direct answers for NPK/weather queries bypass RAG for speed
 
 ---
 
@@ -51,7 +85,7 @@ Our system is powered by a team of specialized AI agents, each an expert in its 
 | **Sustain Master** | Plan crop rotation & long-term soil health. | **Sustainability Scoring Engine** |
 | **Hydration Agent** | Optimize irrigation schedules for water efficiency. | **ML-driven Hydration Predictor** |
 | **Market Analyst** | Real-time mandi prices and sell/hold advice. | **Data.gov.in API Integration** |
-| **Agri-Bot (RAG)** | Answer complex queries via verified research. | **OpenAI GPT-4o + ChromaDB** |
+| **Agri-Bot (RAG)** | Answer complex queries via verified research. | **Ollama Gemma2 (2B) + ChromaDB** |
 
 ---
 
@@ -65,7 +99,7 @@ sequenceDiagram
     participant ORCH as 🧠 Orchestrator
     participant ML as 🤖 ML Agents (RF/CNN)
     participant RAG as 📚 RAG Knowledge Base
-    participant LLM as ✍️ Reasoning Engine (GPT-4o)
+    participant LLM as ✍️ Reasoning Engine (Ollama Gemma2)
 
     Farmer->>ORCH: Soil Data + Query
     Note over ORCH: Plan: Identify required agents
@@ -79,17 +113,6 @@ sequenceDiagram
     ORCH->>LLM: Pass Metrics + RAG Context + History
     LLM-->>Farmer: Structured, Natural Language Advice
 ```
-
----
-
-## 📚 RAG Architecture (Retrieval-Augmented Generation)
-
-To eliminate "AI Hallucinations", our **Agri-Bot** utilizes a high-fidelity RAG pipeline:
-1.  **Ingestion**: 100+ verified research papers and government guidelines.
-2.  **Vectorization**: Processed via `text-embedding-3-small`.
-3.  **Storage**: Persistent vector search via **ChromaDB**.
-4.  **Retrieval**: Finds the top 3 most relevant context chunks for every query.
-5.  **Synthesis**: The LLM uses these chunks as a "Ground Truth" to generate advice.
 
 ---
 
@@ -125,6 +148,7 @@ To eliminate "AI Hallucinations", our **Agri-Bot** utilizes a high-fidelity RAG 
 | Category | Technologies |
 | :--- | :--- |
 | **Backend** | Flask, Python 3.10+ |
+| **Local LLM & RAG** | Ollama, LangChain, ChromaDB, FAISS |
 | **Machine Learning** | scikit-learn, XGBoost, PyTorch, TorchVision |
 | **Data Processing** | NumPy, Pandas |
 | **Visualization** | Matplotlib, Seaborn |
@@ -136,7 +160,7 @@ To eliminate "AI Hallucinations", our **Agri-Bot** utilizes a high-fidelity RAG 
 
 ---
 
-## � Project Structure
+## 📁 Project Structure
 
 ```
 Krishi-Mitr/
@@ -183,7 +207,7 @@ Krishi-Mitr/
 ### Prerequisites
 - Python 3.10 or higher
 - Git
-- (Optional) Ollama for local LLM support
+- **Ollama** (for local LLM & RAG) - [Download Ollama](https://ollama.com/)
 
 ### Step 1: Clone the Repository
 ```bash
@@ -191,7 +215,19 @@ git clone https://github.com/itsshaliniS/Agro.git
 cd Agro
 ```
 
-### Step 2: Environment Setup
+### Step 2: Set Up Ollama (Local AI)
+1. Install Ollama from [ollama.com](https://ollama.com/)
+2. Pull the required models:
+   ```bash
+   ollama pull gemma2:2b
+   ollama pull nomic-embed-text
+   ```
+3. Verify Ollama is running:
+   ```bash
+   ollama list
+   ```
+
+### Step 3: Environment Setup
 Create and activate a virtual environment:
 
 **Windows (PowerShell):**
@@ -208,7 +244,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Step 3: Configure Environment Variables
+### Step 4: Configure Environment Variables
 Copy `.env.example` to `.env` and fill in your API keys:
 
 ```bash
@@ -217,7 +253,7 @@ cp .env.example .env
 
 Edit `.env` with your credentials:
 ```env
-# API Keys
+# API Keys (Optional for local RAG chatbot)
 OPENAI_API_KEY=your_openai_key_here
 WEATHER_API_KEY=your_openweathermap_key_here
 GEMINI_API_KEY=your_gemini_key_here
@@ -234,7 +270,7 @@ AUTH0_CLIENT_SECRET=your_auth0_client_secret_here
 AUTH0_DOMAIN=your_auth0_domain_here
 ```
 
-### Step 4: Run the Application
+### Step 5: Run the Application
 ```bash
 cd app
 python app.py
